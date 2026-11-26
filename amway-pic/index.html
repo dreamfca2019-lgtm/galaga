@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<meta name="theme-color" content="#0b2a55">
+<title>그림으로 보는 암웨이 제품 사용법</title>
+<style>
+  :root{
+    --fs:22px;
+    --ink:#101d33; --ink2:#33425c; --dim:#5a6880;
+    --navy:#0b2a55; --blue:#1256b8; --sky:#eaf3ff; --line:#8fa5c3;
+    --soft:#eef4fd; --gold:#8a5200; --bg:#f4f7fc; --card:#ffffff;
+    --min:64px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    font-size:var(--fs); line-height:1.55; letter-spacing:-0.2px;
+    padding-bottom:34px;
+  }
+  body.big{--fs:27px;}
+  button, input{font-family:inherit;}
+  button{cursor:pointer;}
+  button:focus-visible, input:focus-visible{outline:4px solid #ffbf47; outline-offset:3px;}
+
+  /* ---------- 상단 ---------- */
+  header{background:var(--navy); color:#fff; padding:18px 16px 20px;}
+  .hin{max-width:760px; margin:0 auto;}
+  header h1{font-size:1.18em; margin:0 0 4px; letter-spacing:-0.6px; line-height:1.3;}
+  header .sub{margin:0 0 14px; font-size:0.78em; color:#c6d9f5; line-height:1.4;}
+  .searchwrap{position:relative;}
+  .searchwrap input{
+    width:100%; min-height:var(--min); border:3px solid #fff; border-radius:16px;
+    padding:12px 16px; font-size:0.9em; color:var(--ink); background:#fff;
+  }
+  .tools{display:flex; gap:10px; margin-top:12px;}
+  .tools button{
+    flex:1; min-height:var(--min); border-radius:14px; font-size:0.82em; font-weight:800;
+    border:3px solid #8fb2e0; background:transparent; color:#fff; padding:8px;
+  }
+  .tools button.on{background:#fff; color:var(--navy); border-color:#fff;}
+
+  /* ---------- 목록 ---------- */
+  .wrap{max-width:760px; margin:0 auto; padding:18px 16px 0;}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .card{
+    display:flex; flex-direction:column; width:100%; padding:10px 10px 14px;
+    background:var(--card); border:3px solid var(--line); border-radius:22px; text-align:center;
+  }
+  .card:active{background:var(--soft);}
+  .card .pic{
+    width:100%; aspect-ratio:1 / 1; border-radius:16px; background:#fff;
+    display:block; object-fit:contain;
+  }
+  .card .nm{
+    display:block; margin-top:8px; font-size:1.05em; font-weight:900; line-height:1.25;
+    color:var(--navy); letter-spacing:-0.6px; word-break:keep-all;
+  }
+  .empty{text-align:center; color:var(--dim); padding:48px 0; font-size:0.95em;}
+  .foot{
+    margin:22px 0 10px; padding:14px 12px; border-radius:14px; background:#fff;
+    border:2px dashed var(--line); color:var(--dim); font-size:0.72em; line-height:1.55; text-align:center;
+  }
+
+  /* ---------- 상세 ---------- */
+  #detail{display:none;}
+  .bar{
+    position:sticky; top:0; z-index:20; display:flex; gap:10px; padding:10px 0;
+    background:rgba(244,247,252,.97); border-bottom:2px solid #dbe4f0;
+  }
+  .bar button{
+    flex:1; min-height:var(--min); border-radius:16px; font-size:0.85em; font-weight:900;
+    border:3px solid var(--navy); background:#fff; color:var(--navy); padding:8px 6px;
+  }
+  .bar .go{background:var(--navy); color:#fff;}
+  .hero{margin:8px 0 6px; text-align:center;}
+  .hero img{width:100%; max-width:400px; aspect-ratio:1/1; object-fit:contain; display:block; margin:0 auto;}
+  .hero .brand{
+    display:inline-block; margin:2px 0 6px; padding:4px 12px; border-radius:9px;
+    background:var(--sky); color:var(--blue); font-size:0.68em; font-weight:900;
+  }
+  .hero h2{margin:0 0 8px; font-size:1.55em; line-height:1.2; letter-spacing:-1px; color:var(--navy);}
+  .what{background:#fff; border:3px solid var(--line); border-radius:18px; padding:14px 16px; margin-bottom:16px;}
+  .what .k{font-size:0.68em; font-weight:900; color:var(--blue); display:block; margin-bottom:4px;}
+  .what .v{margin:0; font-size:1.0em; font-weight:700; line-height:1.5;}
+
+  /* 단계 슬라이더 */
+  .steps{background:#fff; border:4px solid var(--navy); border-radius:22px; padding:14px 12px 16px; margin-bottom:16px;}
+  .stepTop{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px;}
+  .stepTop .lab{font-size:0.72em; font-weight:900; color:var(--blue); letter-spacing:0;}
+  .stepTop .cnt{font-size:0.9em; font-weight:900; color:var(--navy);}
+  .stage{position:relative; display:flex; align-items:center; justify-content:center;}
+  .stage .num{
+    position:absolute; left:0; top:0; z-index:2; width:1.85em; height:1.85em; border-radius:50%;
+    background:var(--navy); color:#fff; font-size:1.5em; font-weight:900; line-height:1.85em;
+    text-align:center; box-shadow:0 2px 0 #061a35;
+  }
+  .stage svg{width:100%; max-width:330px; height:auto; display:block;}
+  .sayStep{
+    margin:12px 4px 14px; font-size:1.42em; font-weight:900; line-height:1.35;
+    text-align:center; color:#0b1b33; letter-spacing:-1.2px; word-break:keep-all;
+  }
+  .navs{display:flex; gap:12px;}
+  .navs button{
+    flex:1; min-height:78px; border-radius:18px; font-size:1.0em; font-weight:900;
+    border:4px solid var(--navy); background:#fff; color:var(--navy);
+  }
+  .navs button:disabled{opacity:.38; border-color:#9fb0c6; color:#6b7a90;}
+  .navs .nx{background:var(--blue); border-color:var(--blue); color:#fff;}
+  .dots{display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+  .dots i{
+    width:16px; height:16px; border-radius:50%; background:#c3d0e2; display:block;
+  }
+  .dots i.on{background:var(--navy); width:34px; border-radius:8px;}
+
+  .sec{background:#fff; border:3px solid var(--line); border-radius:18px; padding:14px 16px; margin-bottom:14px;}
+  .sec h3{margin:0 0 10px; font-size:0.86em; color:var(--blue); letter-spacing:-0.3px;}
+  .sec ul{margin:0; padding:0; list-style:none;}
+  .sec li{
+    position:relative; padding-left:30px; margin-bottom:12px; font-size:0.92em; line-height:1.5; font-weight:600;
+  }
+  .sec li:last-child{margin-bottom:0;}
+  .sec li::before{
+    content:""; position:absolute; left:4px; top:.42em; width:16px; height:16px; border-radius:50%;
+    background:#1256b8;
+  }
+  .qa .q{font-size:0.9em; font-weight:900; margin-bottom:6px;}
+  .qa .a{font-size:0.85em; color:var(--ink2); line-height:1.5;}
+
+  /* ---------- 크게 보여주기 ---------- */
+  #show{display:none; position:fixed; inset:0; z-index:60; background:#0b1b33; color:#fff;}
+  #show.on{display:flex; flex-direction:column;}
+  .showTop{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; border-bottom:2px solid rgba(255,255,255,.18);}
+  .showTop .pname{font-size:0.8em; font-weight:900; color:#bcd4f5; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .showTop .cnt{font-size:0.9em; font-weight:900; color:#ffd166; flex:0 0 auto;}
+  .showTop button{
+    min-height:60px; min-width:76px; border-radius:14px; border:3px solid #8fb2e0; background:transparent;
+    color:#fff; font-size:0.85em; font-weight:900; padding:6px 12px; flex:0 0 auto;
+  }
+  .showBody{flex:1; display:flex; flex-direction:column; justify-content:center; padding:14px 16px 6px; overflow:auto;}
+  .showCard{
+    position:relative; background:#fff; border-radius:26px; padding:10px; margin:0 auto; width:100%; max-width:520px;
+  }
+  .showCard svg{width:100%; height:auto; display:block; max-height:52vh;}
+  .showCard .num{
+    position:absolute; left:10px; top:10px; width:1.6em; height:1.6em; line-height:1.6em; text-align:center;
+    border-radius:50%; background:var(--navy); color:#fff; font-size:1.55em; font-weight:900;
+  }
+  .showSay{
+    margin:16px auto 0; max-width:560px; text-align:center; font-size:1.75em; font-weight:900;
+    line-height:1.3; letter-spacing:-1.4px; word-break:keep-all; color:#fff;
+  }
+  .showBtns{display:flex; gap:12px; padding:14px 16px 22px;}
+  .showBtns button{
+    flex:1; min-height:86px; border-radius:18px; border:4px solid #8fb2e0; background:rgba(255,255,255,.12);
+    color:#fff; font-size:1.05em; font-weight:900;
+  }
+  .showBtns .nx{background:#ffd166; border-color:#ffd166; color:#0b1b33;}
+  .showBtns button:disabled{opacity:.35;}
+
+  .endmsg{margin:6px auto 0; text-align:center; font-size:0.75em; color:#9fb4d4; max-width:520px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hin">
+    <h1>그림으로 보는 제품 사용법</h1>
+    <p class="sub">사진 대신 그림으로 한 단계씩 보여 줍니다</p>
+    <div class="searchwrap">
+      <input id="q" type="search" placeholder="제품 이름을 적어 주세요" aria-label="제품 이름 검색">
+    </div>
+    <div class="tools">
+      <button id="sizeBtn" aria-pressed="false">글씨 더 크게</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="listView">
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none;">찾는 제품이 없습니다.<br>다른 말로 적어 보세요.</div>
+    <div class="foot">
+      효능 문구와 가격은 제품 라벨과 공식몰에서 확인해 주세요.<br>
+      그림은 제품을 알아보기 쉽게 그린 것으로 실제 모양과 다를 수 있습니다.
+    </div>
+  </div>
+  <div id="detail"></div>
+</div>
+
+<div id="show" role="dialog" aria-label="고객에게 크게 보여주기">
+  <div class="showTop">
+    <button id="sClose">✕ 닫기</button>
+    <span class="pname" id="sName"></span>
+    <span class="cnt" id="sCnt">1 / 4</span>
+  </div>
+  <div class="showBody">
+    <div class="showCard" id="sCard"></div>
+    <div class="showSay" id="sSay"></div>
+    <div class="endmsg" id="sEnd"></div>
+  </div>
+  <div class="showBtns">
+    <button id="sPrev">◀ 이전</button>
+    <button class="nx" id="sNext">다음 ▶</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   1) 단계 그림(SVG) 모음 — 외부 파일 없이 직접 그린 도형
+   ========================================================= */
+var INK = "#33303f";
+function A(fill, extra){ return 'fill="' + fill + '" stroke="' + INK + '" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" ' + (extra || ''); }
+function N(fill){ return 'fill="' + fill + '" stroke="none" '; }
+function LN(extra){ return 'fill="none" stroke="' + INK + '" stroke-width="7" stroke-linecap="round" ' + (extra || ''); }
+function BG(c){ return '<rect x="6" y="6" width="288" height="288" rx="34" fill="' + c + '"/>'; }
+
+function headArt(hairColor){
+  var h = hairColor || "#7a5a44";
+  return ''
+    + '<circle cx="70" cy="158" r="15" ' + A('#f7d6bc') + '/>'
+    + '<circle cx="230" cy="158" r="15" ' + A('#f7d6bc') + '/>'
+    + '<ellipse cx="150" cy="152" rx="80" ry="90" ' + A('#f7d6bc') + '/>'
+    + '<path d="M70 128 Q82 56 150 54 Q218 56 230 128 Q198 100 150 100 Q102 100 70 128 Z" ' + A(h) + '/>'
+    + '<circle cx="122" cy="150" r="9" ' + N(INK) + '/>'
+    + '<circle cx="178" cy="150" r="9" ' + N(INK) + '/>'
+    + '<path d="M128 184 Q150 204 172 184" ' + LN() + '/>'
+    + '<circle cx="104" cy="176" r="12" ' + N('#f6b3b3') + '/>'
+    + '<circle cx="196" cy="176" r="12" ' + N('#f6b3b3') + '/>';
+}
+function glassArt(fillColor, topY){
+  var t = topY || 150;
+  var lx = 106 + 10 * ((t - 96) / 154), rx = 194 - 10 * ((t - 96) / 154);
+  return ''
+    + '<path d="M106 96 H194 L184 252 Q150 262 116 252 Z" ' + A('#f4fbff') + '/>'
+    + '<path d="M' + lx.toFixed(1) + ' ' + t + ' H' + rx.toFixed(1) + ' L184 252 Q150 262 116 252 Z" ' + N(fillColor) + '/>'
+    + '<ellipse cx="150" cy="96" rx="44" ry="10" ' + A('#e6f5ff') + '/>';
+}
+function clockArt(cx, cy, r, hAng, mAng, face){
+  var s = '';
+  s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" ' + A(face || '#ffffff') + '/>';
+  for (var i = 0; i < 12; i++){
+    var a = i * Math.PI / 6, r1 = r - 12, r2 = r - (i % 3 === 0 ? 26 : 20);
+    s += '<line x1="' + (cx + r1 * Math.sin(a)).toFixed(1) + '" y1="' + (cy - r1 * Math.cos(a)).toFixed(1)
+      + '" x2="' + (cx + r2 * Math.sin(a)).toFixed(1) + '" y2="' + (cy - r2 * Math.cos(a)).toFixed(1)
+      + '" stroke="' + INK + '" stroke-width="' + (i % 3 === 0 ? 7 : 4) + '" stroke-linecap="round"/>';
+  }
+  var ha = hAng * Math.PI / 180, ma = mAng * Math.PI / 180;
+  s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + r * 0.45 * Math.sin(ha)).toFixed(1) + '" y2="' + (cy - r * 0.45 * Math.cos(ha)).toFixed(1) + '" stroke="' + INK + '" stroke-width="11" stroke-linecap="round"/>';
+  s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + r * 0.68 * Math.sin(ma)).toFixed(1) + '" y2="' + (cy - r * 0.68 * Math.cos(ma)).toFixed(1) + '" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>';
+  s += '<circle cx="' + cx + '" cy="' + cy + '" r="9" ' + N(INK) + '/>';
+  return s;
+}
+function sunArt(cx, cy, r){
+  var s = '';
+  for (var i = 0; i < 8; i++){
+    var a = i * Math.PI / 4;
+    s += '<line x1="' + (cx + (r + 16) * Math.sin(a)).toFixed(1) + '" y1="' + (cy - (r + 16) * Math.cos(a)).toFixed(1)
+      + '" x2="' + (cx + (r + 34) * Math.sin(a)).toFixed(1) + '" y2="' + (cy - (r + 34) * Math.cos(a)).toFixed(1)
+      + '" stroke="' + INK + '" stroke-width="7" stroke-linecap="round"/>';
+  }
+  s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" ' + A('#ffcd4d') + '/>';
+  return s;
+}
+function moonArt(cx, cy, r){
+  return '<path d="M' + (cx + r * 0.35) + ' ' + (cy - r) + ' A' + r + ' ' + r + ' 0 1 0 ' + (cx + r * 0.35) + ' ' + (cy + r)
+    + ' A' + (r * 0.78) + ' ' + (r * 0.78) + ' 0 1 1 ' + (cx + r * 0.35) + ' ' + (cy - r) + ' Z" ' + A('#ffe9a8') + '/>';
+}
+function tabletArt(cx, cy, r, color){
+  return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" ' + A(color || '#ffffff') + '/>'
+    + '<line x1="' + (cx - r * 0.55) + '" y1="' + cy + '" x2="' + (cx + r * 0.55) + '" y2="' + cy + '" stroke="#9aa7b8" stroke-width="5" stroke-linecap="round"/>';
+}
+function capsuleArt(cx, cy, rot, c1, c2){
+  return '<g transform="rotate(' + rot + ' ' + cx + ' ' + cy + ')">'
+    + '<rect x="' + (cx - 34) + '" y="' + (cy - 17) + '" width="34" height="34" rx="17" ' + A(c1 || '#ffd15c') + '/>'
+    + '<rect x="' + cx + '" y="' + (cy - 17) + '" width="34" height="34" rx="17" ' + A(c2 || '#ffe9a8') + '/>'
+    + '</g>';
+}
+function arrowDown(cx, y1, y2, color){
+  return '<path d="M' + cx + ' ' + y1 + ' V' + y2 + ' M' + (cx - 16) + ' ' + (y2 - 20) + ' L' + cx + ' ' + y2 + ' L' + (cx + 16) + ' ' + (y2 - 20)
+    + '" fill="none" stroke="' + (color || INK) + '" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>';
+}
+function dropArt(cx, cy, s, color){
+  return '<path d="M' + cx + ' ' + (cy - s) + ' Q' + (cx + s) + ' ' + (cy + s * 0.3) + ' ' + cx + ' ' + (cy + s * 0.7)
+    + ' Q' + (cx - s) + ' ' + (cy + s * 0.3) + ' ' + cx + ' ' + (cy - s) + ' Z" ' + A(color || '#7fc8f0') + '/>';
+}
+function bubbles(pts){
+  var s = '';
+  pts.forEach(function(p){ s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + p[2] + '" ' + A('#ffffff') + '/>'; });
+  return s;
+}
+
+var SC = {
+  morning: function(){
+    return BG('#fdf1d6')
+      + '<line x1="34" y1="214" x2="266" y2="214" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>'
+      + '<path d="M86 214 A64 64 0 0 1 214 214 Z" ' + A('#ffcd4d') + '/>'
+      + '<line x1="150" y1="140" x2="150" y2="112" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="106" y1="152" x2="92" y2="132" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="194" y1="152" x2="208" y2="132" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="88" y1="170" x2="68" y2="158" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="212" y1="170" x2="232" y2="158" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<ellipse cx="86" cy="96" rx="30" ry="18" ' + A('#ffffff') + '/>'
+      + '<ellipse cx="116" cy="88" rx="22" ry="15" ' + A('#ffffff') + '/>';
+  },
+  cupWater: function(){ return BG('#e3f2ff') + glassArt('#8fd0f5', 150) + bubbles([[150,190,9],[138,215,6],[162,220,7]]); },
+  cupPill: function(){
+    return BG('#eef7ff') + glassArt('#8fd0f5', 176)
+      + capsuleArt(120, 92, -18, '#ffd15c', '#fff0bd') + capsuleArt(178, 92, 20, '#ffd15c', '#fff0bd')
+      + arrowDown(150, 116, 152);
+  },
+  packet: function(){
+    return BG('#eef8e6')
+      + '<rect x="84" y="66" width="132" height="176" rx="14" ' + A('#fff8e8') + '/>'
+      + '<path d="M84 96 H216" ' + LN() + '/>'
+      + '<path d="M170 66 L216 66 L216 112 Z" ' + A('#f3e4c4') + '/>'
+      + '<circle cx="150" cy="164" r="34" ' + A('#bfe3a4') + '/>'
+      + '<path d="M150 184 Q148 156 168 144" ' + LN() + '/>'
+      + '<path d="M150 168 Q132 160 132 148" ' + LN() + '/>'
+      + capsuleArt(226, 232, -30, '#ffd15c', '#fff0bd');
+  },
+  clockDay: function(){ return BG('#eaf3ff') + clockArt(148, 156, 84, 240, 0) + sunArt(240, 66, 26); },
+  plateMeal: function(){
+    return BG('#fdf1e0')
+      + '<ellipse cx="150" cy="180" rx="106" ry="64" ' + A('#ffffff') + '/>'
+      + '<ellipse cx="150" cy="180" rx="80" ry="46" ' + LN('stroke-width="5"') + '/>'
+      + '<path d="M110 176 Q112 138 150 138 Q188 138 190 176 Z" ' + A('#fffaf0') + '/>'
+      + '<circle cx="116" cy="196" r="16" ' + A('#a8d98b') + '/>'
+      + '<circle cx="186" cy="196" r="16" ' + A('#f6b3b3') + '/>'
+      + '<line x1="230" y1="96" x2="282" y2="182" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>'
+      + '<line x1="252" y1="86" x2="292" y2="168" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>';
+  },
+  pills: function(){
+    return BG('#eef7e6')
+      + tabletArt(104, 108, 36, '#ffffff') + tabletArt(196, 104, 30, '#ffffff')
+      + tabletArt(150, 186, 40, '#fff4d6') + capsuleArt(120, 246, -12, '#ffd15c', '#fff0bd')
+      + '<path d="M170 196 l18 14 -18 14" ' + LN() + '/>';
+  },
+  doctor: function(){
+    return BG('#eaf3ff')
+      + '<path d="M42 88 h120 a18 18 0 0 1 18 18 v54 a18 18 0 0 1 -18 18 h-74 l-28 26 v-26 h-18 a18 18 0 0 1 -18 -18 v-54 a18 18 0 0 1 18 -18 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="86" y="118" width="14" height="44" ' + A('#e8695f','stroke-width="5"') + '/>'
+      + '<rect x="71" y="133" width="44" height="14" ' + A('#e8695f','stroke-width="5"') + '/>'
+      + '<path d="M180 168 h84 a16 16 0 0 0 16 -16 v-38 a16 16 0 0 0 -16 -16 h-52" ' + A('#dcecff') + '/>'
+      + '<circle cx="204" cy="150" r="8" ' + N(INK) + '/>'
+      + '<circle cx="232" cy="150" r="8" ' + N(INK) + '/>'
+      + '<circle cx="260" cy="150" r="8" ' + N(INK) + '/>'
+      + '<path d="M196 204 Q150 244 104 204" ' + LN('stroke-width="6"') + '/>';
+  },
+  label: function(){
+    return BG('#f2f0fb')
+      + '<path d="M108 72 h84 v34 a26 26 0 0 1 0 52 v70 h-84 v-70 a26 26 0 0 1 0 -52 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="118" y="150" width="64" height="76" rx="8" ' + A('#cfe3fb') + '/>'
+      + '<line x1="128" y1="170" x2="172" y2="170" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
+      + '<line x1="128" y1="188" x2="164" y2="188" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
+      + '<line x1="128" y1="206" x2="168" y2="206" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
+      + '<circle cx="212" cy="212" r="40" ' + A('#dff0ff','fill-opacity="0.75"') + '/>'
+      + '<line x1="240" y1="240" x2="272" y2="272" stroke="' + INK + '" stroke-width="14" stroke-linecap="round"/>';
+  },
+  milkCup: function(){
+    return BG('#eef4ff')
+      + glassArt('#fdfdff', 132)
+      + '<path d="M84 66 h56 l-6 32 h-44 Z" ' + A('#cfe3fb') + '/>'
+      + '<line x1="128" y1="98" x2="132" y2="124" stroke="#8fb2e0" stroke-width="7" stroke-linecap="round"/>'
+      + '<circle cx="136" cy="130" r="7" ' + N('#8fb2e0') + '/>';
+  },
+  spoonPowder: function(){
+    return BG('#fdf5e4')
+      + '<ellipse cx="120" cy="120" rx="58" ry="40" ' + A('#ffffff') + '/>'
+      + '<path d="M96 104 Q120 78 146 104 Q130 118 104 118 Z" ' + A('#e6d3a8') + '/>'
+      + '<line x1="164" y1="146" x2="256" y2="232" stroke="' + INK + '" stroke-width="16" stroke-linecap="round"/>'
+      + '<path d="M70 220 q26 -18 52 0 q-26 20 -52 0 Z" ' + A('#e6d3a8') + '/>'
+      + '<circle cx="196" cy="86" r="10" ' + N('#e6d3a8') + '/>'
+      + '<circle cx="226" cy="112" r="7" ' + N('#e6d3a8') + '/>';
+  },
+  shaker: function(){
+    return BG('#e8f6ef')
+      + '<path d="M114 100 h72 l-8 148 q-28 12 -56 0 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="110" y="70" width="80" height="34" rx="12" ' + A('#a8d98b') + '/>'
+      + '<path d="M128 140 q22 26 44 0 q22 26 44 0" ' + LN('stroke="#7fb3e8" stroke-width="8"') + '/>'
+      + '<path d="M124 214 q26 22 52 0" ' + LN('stroke="#7fb3e8" stroke-width="8"') + '/>'
+      + '<path d="M226 132 a44 44 0 1 1 -14 -32" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M206 88 l6 16 -18 2" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>';
+  },
+  box: function(){
+    return BG('#eef4fb')
+      + '<rect x="68" y="118" width="164" height="126" rx="10" ' + A('#e8d6b4') + '/>'
+      + '<rect x="68" y="96" width="164" height="40" rx="8" ' + A('#f3e6c9') + '/>'
+      + '<rect x="136" y="96" width="28" height="148" ' + A('#ffffff','stroke-width="5"') + '/>'
+      + arrowDown(150, 34, 82, '#1256b8');
+  },
+  wait: function(){
+    return BG('#f3f1fb')
+      + '<path d="M104 62 h92 M104 250 h92" ' + LN('stroke-width="10"') + '/>'
+      + '<path d="M112 62 h76 l-38 92 Z" ' + A('#cfe3fb') + '/>'
+      + '<path d="M112 250 h76 l-38 -92 Z" ' + A('#cfe3fb') + '/>'
+      + '<path d="M124 78 h52 l-26 62 Z" ' + A('#8fb2e0','stroke-width="5"') + '/>'
+      + '<path d="M124 234 h52 l-26 -58 Z" ' + A('#8fb2e0','stroke-width="5"') + '/>'
+      + clockArt(228, 148, 42, 220, 30, '#fff6d9');
+  },
+  machineOn: function(){
+    return BG('#eaf3ff')
+      + '<rect x="66" y="56" width="168" height="200" rx="24" ' + A('#ffffff') + '/>'
+      + '<rect x="82" y="76" width="136" height="88" rx="14" ' + A('#dcecff','stroke-width="5"') + '/>'
+      + '<circle cx="150" cy="204" r="32" ' + A('#ffcd4d') + '/>'
+      + '<line x1="150" y1="184" x2="150" y2="204" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<circle cx="110" cy="228" r="7" ' + N('#8fb2e0') + '/>'
+      + '<circle cx="136" cy="228" r="7" ' + N('#8fb2e0') + '/>';
+  },
+  face: function(){ return BG('#fdeef3') + headArt(); },
+  faceCream: function(){
+    return BG('#fdeef3') + headArt()
+      + '<circle cx="92" cy="196" r="9" ' + N('#ffffff') + '/>'
+      + '<circle cx="132" cy="212" r="8" ' + N('#ffffff') + '/>'
+      + '<circle cx="176" cy="204" r="10" ' + N('#ffffff') + '/>'
+      + '<circle cx="206" cy="184" r="7" ' + N('#ffffff') + '/>'
+      + '<circle cx="150" cy="166" r="6" ' + N('#ffffff') + '/>';
+  },
+  faceWash: function(){
+    return BG('#e8f5ff') + headArt()
+      + bubbles([[88,86,16],[216,84,14],[74,120,10],[228,124,11],[150,58,12]])
+      + dropArt(246, 200, 16) + dropArt(56, 210, 14);
+  },
+  pumpFoam: function(){
+    return BG('#eef7ff')
+      + '<path d="M116 128 h68 l-8 124 q-26 10 -52 0 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="128" y="104" width="44" height="26" rx="8" ' + A('#ffd0dc') + '/>'
+      + '<path d="M150 104 V84 h34 v14" ' + LN() + '/>'
+      + '<rect x="170" y="70" width="30" height="16" rx="6" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + bubbles([[92,74,20],[122,54,15],[60,102,13],[118,88,11]])
+      + '<path d="M176 92 q34 -6 34 26" ' + LN('stroke="#1256b8" stroke-width="7"') + '/>';
+  },
+  rinse: function(){
+    return BG('#e8f5ff')
+      + '<path d="M96 62 h108 a16 16 0 0 1 16 16 v18 h-140 v-18 a16 16 0 0 1 16 -16 Z" ' + A('#bfd8ef') + '/>'
+      + '<path d="M76 96 h148" ' + LN() + '/>'
+      + '<line x1="88" y1="98" x2="74" y2="140" stroke="#7fc8f0" stroke-width="9" stroke-linecap="round"/>'
+      + '<line x1="120" y1="98" x2="112" y2="152" stroke="#7fc8f0" stroke-width="9" stroke-linecap="round"/>'
+      + '<line x1="150" y1="98" x2="150" y2="158" stroke="#7fc8f0" stroke-width="9" stroke-linecap="round"/>'
+      + '<line x1="180" y1="98" x2="188" y2="152" stroke="#7fc8f0" stroke-width="9" stroke-linecap="round"/>'
+      + '<line x1="212" y1="98" x2="226" y2="140" stroke="#7fc8f0" stroke-width="9" stroke-linecap="round"/>'
+      + '<path d="M64 210 q86 46 172 0" ' + LN('stroke-width="6"') + '/>';
+  },
+  fingerDot: function(){
+    return BG('#fdf0f5')
+      + '<path d="M116 250 q-30 -46 -6 -62 q22 -14 34 12 l10 24 q6 -30 24 -26 q20 4 12 30 l-6 22 Z" ' + A('#f7d6bc') + '/>'
+      + '<path d="M142 200 q4 -52 22 -64 q16 -10 22 6 q6 16 -8 30 l-14 36" ' + A('#f7d6bc') + '/>'
+      + '<circle cx="182" cy="112" r="16" ' + A('#ffffff') + '/>';
+  },
+  sunMoon: function(){
+    return BG('#f3f1fb')
+      + '<line x1="150" y1="40" x2="150" y2="260" stroke="#c9d5e6" stroke-width="5" stroke-dasharray="10 12"/>'
+      + sunArt(84, 128, 46) + moonArt(214, 140, 50)
+      + '<circle cx="72" cy="222" r="7" ' + N('#c9d5e6') + '/>'
+      + '<circle cx="226" cy="228" r="7" ' + N('#c9d5e6') + '/>';
+  },
+  install: function(){
+    return BG('#eef7e6')
+      + '<path d="M150 54 L246 128 V250 H54 V128 Z" ' + A('#ffffff') + '/>'
+      + '<path d="M110 250 V176 h80 v74" ' + A('#cfe3fb','stroke-width="5"') + '/>'
+      + '<path d="M186 196 a30 30 0 0 1 40 -34 l-16 16 10 22 Z" ' + A('#bfd8ef') + '/>'
+      + '<circle cx="206" cy="212" r="20" ' + A('#8fa5c3','stroke-width="6"') + '/>'
+      + '<path d="M110 216 h22" ' + LN('stroke-width="6"') + '/>';
+  },
+  filterChange: function(){
+    return BG('#eaf3ff')
+      + '<rect x="106" y="86" width="88" height="132" rx="14" ' + A('#ffffff') + '/>'
+      + '<path d="M114 108 h72 M114 128 h72 M114 148 h72 M114 168 h72" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
+      + '<path d="M78 232 a72 72 0 0 1 -6 -72" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M64 146 l6 18 18 -6" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M222 232 a72 72 0 0 0 6 -72" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M236 146 l-6 18 -18 -6" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>';
+  },
+  calendar: function(){
+    var s = BG('#f3f1fb')
+      + '<rect x="56" y="72" width="188" height="164" rx="18" ' + A('#ffffff') + '/>'
+      + '<path d="M56 116 h188" ' + LN() + '/>'
+      + '<rect x="56" y="72" width="188" height="44" rx="18" ' + A('#cfe3fb','stroke-width="6"') + '/>'
+      + '<line x1="100" y1="56" x2="100" y2="92" stroke="' + INK + '" stroke-width="10" stroke-linecap="round"/>'
+      + '<line x1="200" y1="56" x2="200" y2="92" stroke="' + INK + '" stroke-width="10" stroke-linecap="round"/>';
+    for (var r = 0; r < 3; r++){
+      for (var c = 0; c < 4; c++){
+        s += '<circle cx="' + (96 + c * 36) + '" cy="' + (146 + r * 30) + '" r="7" ' + N('#a9b8cb') + '/>';
+      }
+    }
+    s += '<circle cx="168" cy="206" r="26" ' + LN('stroke="#e8695f" stroke-width="7"') + '/>';
+    return s;
+  },
+  windowAir: function(){
+    return BG('#e8f5ff')
+      + '<rect x="58" y="52" width="132" height="196" rx="10" ' + A('#ffffff') + '/>'
+      + '<line x1="124" y1="52" x2="124" y2="248" stroke="' + INK + '" stroke-width="8"/>'
+      + '<line x1="58" y1="150" x2="190" y2="150" stroke="' + INK + '" stroke-width="8"/>'
+      + '<path d="M204 96 q34 8 34 40" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M204 140 q52 6 52 46" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M206 186 q34 8 34 40" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M236 78 q30 -26 46 -4 q-24 26 -46 4 Z" ' + A('#a8d98b','stroke-width="6"') + '/>';
+  },
+  filterClean: function(){
+    return BG('#eef8ee')
+      + '<rect x="96" y="80" width="86" height="130" rx="14" ' + A('#ffffff') + '/>'
+      + '<path d="M104 102 h70 M104 122 h70 M104 142 h70 M104 162 h70 M104 182 h70" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
+      + '<path d="M198 92 l16 30" stroke="' + INK + '" stroke-width="12" stroke-linecap="round"/>'
+      + '<rect x="180" y="120" width="52" height="26" rx="10" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + '<path d="M196 156 q-14 18 0 36 M212 156 q14 18 0 36" ' + LN('stroke="#7fb3e8" stroke-width="6"') + '/>'
+      + '<path d="M74 210 q14 -14 28 0 M74 232 q14 -14 28 0" ' + LN('stroke="#a8d98b" stroke-width="6"') + '/>';
+  },
+  toothpaste: function(){
+    return BG('#eef4ff')
+      + '<path d="M96 74 h96 l14 26 v118 q-62 16 -124 0 V100 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="86" y="52" width="116" height="26" rx="10" ' + A('#8fb2e0','stroke-width="6"') + '/>'
+      + '<path d="M118 210 q10 -20 24 -2 q12 -18 22 2 q-10 14 -22 6 q-14 8 -24 -6 Z" ' + A('#a8d98b','stroke-width="5"') + '/>'
+      + '<line x1="150" y1="128" x2="150" y2="168" stroke="#7fb3e8" stroke-width="8" stroke-linecap="round"/>'
+      + '<path d="M226 96 q18 -18 30 0 q-16 18 -30 0 Z" ' + A('#ffffff','stroke-width="5"') + '/>';
+  },
+  brush3: function(){
+    return BG('#eef4ff')
+      + '<rect x="96" y="228" width="120" height="24" rx="12" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + '<rect x="118" y="96" width="76" height="140" rx="16" ' + A('#ffffff') + '/>'
+      + '<path d="M118 108 h76" ' + LN('stroke-width="6"') + '/>'
+      + '<path d="M128 140 q10 -16 22 -2 q12 -14 22 4 q-14 16 -22 6 q-12 8 -22 -8 Z" ' + A('#a8d98b','stroke-width="5"') + '/>'
+      + clockArt(232, 130, 44, 90, 0, '#fff6d9');
+  },
+  washer: function(){
+    return BG('#eaf3ff')
+      + '<rect x="62" y="52" width="176" height="200" rx="20" ' + A('#ffffff') + '/>'
+      + '<rect x="74" y="64" width="152" height="30" rx="10" ' + A('#dcecff','stroke-width="5"') + '/>'
+      + '<circle cx="204" cy="79" r="9" ' + N('#8fb2e0') + '/>'
+      + '<circle cx="150" cy="172" r="54" ' + A('#e8f4ff') + '/>'
+      + '<circle cx="150" cy="172" r="34" ' + A('#bfd8ef','stroke-width="6"') + '/>'
+      + '<path d="M138 176 q12 -14 24 0" ' + LN('stroke="#7fb3e8" stroke-width="6"') + '/>';
+  },
+  cap: function(){
+    return BG('#eef7ff')
+      + '<path d="M96 150 h108 l-10 96 q-44 12 -88 0 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="90" y="110" width="120" height="34" rx="12" ' + A('#cfe3fb','stroke-width="6"') + '/>'
+      + '<path d="M104 190 h92 l-6 54 q-40 10 -80 0 Z" ' + N('#8fd0f5') + '/>'
+      + '<path d="M96 150 h108" ' + LN() + '/>'
+      + '<path d="M232 122 q16 20 0 40" ' + LN('stroke="#1256b8" stroke-width="7"') + '/>';
+  },
+  dropper: function(){
+    return BG('#eef7ff')
+      + '<path d="M118 118 h64 l-6 116 q-26 10 -52 0 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="128" y="96" width="44" height="24" rx="8" ' + A('#cfe3fb','stroke-width="5"') + '/>'
+      + '<path d="M150 96 V46" stroke="' + INK + '" stroke-width="10" stroke-linecap="round"/>'
+      + '<rect x="132" y="34" width="36" height="16" rx="8" ' + A('#ffd0dc','stroke-width="5"') + '/>'
+      + dropArt(226, 150, 14) + dropArt(226, 202, 12) + dropArt(226, 246, 10);
+  },
+  growth: function(){
+    return BG('#eef8e6')
+      + '<rect x="188" y="40" width="52" height="216" rx="10" ' + A('#fff8e8') + '/>'
+      + '<path d="M196 88 h36 M196 118 h36 M196 148 h36 M196 178 h36 M196 208 h36" ' + LN('stroke="#c9b98f" stroke-width="4"') + '/>'
+      + '<path d="M214 236 V64" ' + LN('stroke="#7fb069" stroke-width="9"') + '/>'
+      + '<path d="M200 80 l14 -20 14 20" ' + LN('stroke="#7fb069" stroke-width="9"') + '/>'
+      + '<circle cx="104" cy="118" r="30" ' + A('#f7d6bc') + '/>'
+      + '<path d="M86 108 q18 -18 36 0" ' + LN('stroke-width="6"') + '/>'
+      + '<circle cx="94" cy="118" r="5" ' + N(INK) + '/>'
+      + '<circle cx="114" cy="118" r="5" ' + N(INK) + '/>'
+      + '<path d="M96 130 q8 8 16 0" ' + LN('stroke-width="5"') + '/>'
+      + '<path d="M76 236 q0 -60 28 -60 q28 0 28 60" ' + A('#a8d98b') + '/>'
+      + '<line x1="76" y1="236" x2="132" y2="236" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>';
+  },
+  phoneApp: function(){
+    return BG('#eaf3ff')
+      + '<rect x="88" y="46" width="124" height="208" rx="22" ' + A('#ffffff') + '/>'
+      + '<rect x="102" y="70" width="96" height="152" rx="12" ' + A('#f4f8ff','stroke-width="5"') + '/>'
+      + '<rect x="112" y="170" width="18" height="38" rx="5" ' + A('#8fb2e0','stroke-width="4"') + '/>'
+      + '<rect x="140" y="140" width="18" height="68" rx="5" ' + A('#7fb069','stroke-width="4"') + '/>'
+      + '<rect x="168" y="108" width="18" height="100" rx="5" ' + A('#ffcd4d','stroke-width="4"') + '/>'
+      + '<path d="M112 108 q28 -20 56 -22" ' + LN('stroke="#e8695f" stroke-width="6"') + '/>'
+      + '<circle cx="150" cy="238" r="9" ' + N('#c9d5e6') + '/>';
+  },
+  family: function(){
+    return BG('#fdf0e6')
+      + '<circle cx="104" cy="140" r="34" ' + A('#f7d6bc') + '/>'
+      + '<path d="M78 250 q0 -62 26 -62 q26 0 26 62" ' + A('#cfe3fb') + '/>'
+      + '<circle cx="196" cy="158" r="30" ' + A('#f7d6bc') + '/>'
+      + '<path d="M172 250 q0 -54 24 -54 q24 0 24 54" ' + A('#ffd0dc') + '/>'
+      + '<path d="M120 76 h74 a16 16 0 0 1 16 16 v20 a16 16 0 0 1 -16 16 h-42 l-22 20 v-20 h-10 a16 16 0 0 1 -16 -16 v-20 a16 16 0 0 1 16 -16 Z" ' + A('#ffffff') + '/>'
+      + '<circle cx="144" cy="102" r="6" ' + N(INK) + '/>'
+      + '<circle cx="166" cy="102" r="6" ' + N(INK) + '/>'
+      + '<circle cx="188" cy="102" r="6" ' + N(INK) + '/>';
+  },
+  scale: function(){
+    return BG('#eef4fb')
+      + '<rect x="46" y="82" width="208" height="150" rx="34" ' + A('#ffffff') + '/>'
+      + '<rect x="62" y="98" width="176" height="118" rx="26" ' + A('#dcecff','stroke-width="5"') + '/>'
+      + '<circle cx="150" cy="156" r="42" ' + A('#ffffff','stroke-width="6"') + '/>'
+      + '<path d="M150 156 L128 136" ' + LN('stroke="#e8695f" stroke-width="7"') + '/>'
+      + '<circle cx="150" cy="156" r="6" ' + N(INK) + '/>'
+      + '<path d="M116 240 h68" ' + LN('stroke-width="8"') + '/>';
+  },
+  order123: function(){
+    var pts = [[86, 108], [150, 108], [214, 108]];
+    var s = BG('#eef7ff');
+    for (var i = 0; i < 3; i++){
+      s += '<circle cx="' + pts[i][0] + '" cy="' + pts[i][1] + '" r="40" ' + A(i === 0 ? '#ffd15c' : '#ffffff') + '/>'
+        + '<text x="' + pts[i][0] + '" y="' + (pts[i][1] + 16) + '" text-anchor="middle" font-size="46" font-weight="900" fill="' + INK + '" font-family="sans-serif">' + (i + 1) + '</text>';
+    }
+    s += '<path d="M132 166 h36 M156 154 l14 12 -14 12" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M196 166 h36 M220 154 l14 12 -14 12" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
+      + '<path d="M128 196 h44 M128 218 h44 M74 214 h152" ' + LN('stroke="#c9d5e6" stroke-width="6"') + '/>';
+    return s;
+  },
+  faucet: function(){
+    return BG('#e8f5ff')
+      + '<path d="M46 76 H140 Q170 76 170 106 V134" fill="none" stroke="' + INK + '" stroke-width="32" stroke-linecap="round"/>'
+      + '<path d="M46 76 H140 Q170 76 170 106 V134" fill="none" stroke="#cfe3fb" stroke-width="17" stroke-linecap="round"/>'
+      + '<rect x="52" y="38" width="14" height="40" rx="7" ' + A('#8fb2e0','stroke-width="6"') + '/>'
+      + '<circle cx="59" cy="34" r="15" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + '<line x1="170" y1="150" x2="170" y2="204" stroke="#7fc8f0" stroke-width="13" stroke-dasharray="20 14" stroke-linecap="round"/>'
+      + '<path d="M66 226 h168 a16 16 0 0 1 -16 16 h-136 a16 16 0 0 1 -16 -16 Z" ' + A('#dcecff') + '/>'
+      + '<line x1="66" y1="226" x2="234" y2="226" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>';
+  },
+  water: function(){
+    return BG('#e6f4ff')
+      + '<rect x="110" y="60" width="80" height="34" rx="12" ' + A('#7fb3e8') + '/>'
+      + '<path d="M114 94 h72 l-6 150 q-30 12 -60 0 Z" ' + A('#ffffff') + '/>'
+      + '<path d="M120 138 h60 l-4 102 q-26 10 -52 0 Z" ' + N('#8fd0f5') + '/>'
+      + '<path d="M114 94 h72" ' + LN() + '/>'
+      + dropArt(60, 176, 18) + dropArt(240, 200, 16);
+  }
+};
+
+/* =========================================================
+   2) 제품 자료 — 기존 'amway-easy' 앱의 설명을 이어 씀
+   ========================================================= */
+var P = [
+  { id:"doublex", brand:"뉴트리라이트", name:"더블엑스", img:"img/01-doublex.jpg",
+    one:"여러 영양제를 한 번에 챙기는 종합영양제입니다.",
+    steps:[["아침에 물 한 컵 준비해요","morning"],["팩에서 꺼내 한 번에","packet"],["물과 함께 드세요","cupPill"],["매일 같은 시간에","clockDay"]],
+    keep:["하루 한 팩이면 됩니다.","드시는 약이 있으면 의사·약사와 먼저 상의하세요.","서늘하고 건조한 곳에 보관하세요."],
+    faq:{q:"다른 종합비타민과 뭐가 다른가요?", a:"성분과 함량을 라벨에서 나란히 확인해 보세요. 같은 자리에서 비교해 드리면 됩니다."} },
+
+  { id:"joint", brand:"뉴트리라이트", name:"조인트 가드", img:"img/02-joint.jpg",
+    one:"관절이 신경 쓰이는 분께 먼저 꺼내는 제품입니다.",
+    steps:[["식사하고 나서 드세요","plateMeal"],["정해진 개수만큼","pills"],["물 한 컵과 함께","cupWater"],["약 드시면 먼저 물어보세요","doctor"]],
+    keep:["드시는 약이 있으면 의사나 약사에게 먼저 확인하세요.","라벨에 적힌 양만큼만 드세요.","꾸준히 드시는 것이 중요합니다."],
+    faq:{q:"약이랑 같이 먹어도 되나요?", a:"드시는 약이 있으면 의사나 약사에게 먼저 확인하시는 것이 안전합니다."} },
+
+  { id:"acerola", brand:"뉴트리라이트", name:"아세로라 C", img:"img/03-acerola.jpg",
+    one:"비타민C만 따로 챙기고 싶을 때 가장 단순한 제품입니다.",
+    steps:[["식사 뒤에 드세요","plateMeal"],["정 3개를 한 번에","pills"],["물을 충분히 함께","cupWater"],["라벨에 적힌 대로","label"]],
+    keep:["라벨의 섭취량을 확인하세요.","더위를 피해 서늘한 곳에 두세요.","오래 드시는 분께 맞는 구성입니다."],
+    faq:{q:"시중 비타민C와 차이가 뭔가요?", a:"원료와 함량을 라벨로 비교해 보시면 됩니다. 아세로라 열매 유래 원료를 쓰는 것이 특징입니다."} },
+
+  { id:"calmag", brand:"뉴트리라이트", name:"칼맥 디", img:"img/04-calmag.jpg",
+    one:"칼슘과 마그네슘, 비타민D를 함께 담은 제품입니다.",
+    steps:[["라벨에 적힌 양만큼","label"],["물 한 컵과 함께","cupWater"],["식사 뒤에 나눠 드세요","plateMeal"],["꾸준히 드시면 좋아요","calendar"]],
+    keep:["라벨에 적힌 양만큼 나눠 드세요.","우유를 잘 안 드시는 분께 자주 권합니다.","드시는 약이 있으면 먼저 상의하세요."],
+    faq:{q:"우유만 마시면 충분하지 않나요?", a:"드시는 양에 따라 다릅니다. 부족하다 싶을 때 보충하는 용도로 설명드립니다."} },
+
+  { id:"protein", brand:"뉴트리라이트", name:"뉴트리 파이토 푸로틴", img:"img/05-protein.jpg",
+    one:"단백질이 부족한 식사를 채워 주는 제품입니다.",
+    steps:[["물이나 우유 한 컵에","milkCup"],["스푼으로 한 번 넣어요","spoonPowder"],["잘 저어서 드세요","shaker"],["끼니 대신은 아니에요","plateMeal"]],
+    keep:["식사를 대신하는 제품이 아닙니다.","물이나 우유에 타서 드세요.","개봉 뒤에는 뚜껑을 꼭 닫아 두세요."],
+    faq:{q:"밥 대신 먹어도 되나요?", a:"식사를 대신하기보다 부족한 영양을 채우는 쪽입니다. 식사는 그대로 하시는 것이 좋습니다."} },
+
+  { id:"mylab", brand:"뉴트리라이트", name:"마이랩 바이 뉴트리라이트", img:"img/06-mylab.jpg",
+    one:"장내 미생물 분석을 바탕으로 맞추는 유산균입니다.",
+    steps:[["먼저 검체를 보내요","box"],["결과까지 기다려요","wait"],["결과에 맞춘 제품","label"],["라벨대로 드세요","pills"]],
+    keep:["분석과 결과 안내까지 시간이 걸립니다.","결과 안내에 따라 드세요.","궁금한 점은 상담으로 확인하세요."],
+    faq:{q:"분석은 어떻게 하나요?", a:"검체를 보내는 절차가 있고 결과까지 기간이 걸립니다. 순서를 같이 확인해 드리면 됩니다."} },
+
+  { id:"derma", brand:"아티스트리", name:"더마아키텍트", img:"img/07-derma.jpg",
+    one:"집에서 쓰는 피부 관리 기기입니다.",
+    steps:[["세안 후에 사용해요","faceWash"],["기기 전원을 켜요","machineOn"],["얼굴에 천천히 대요","face"],["크림으로 마무리해요","faceCream"]],
+    keep:["시술이 아니라 집에서 쓰는 기기입니다.","사용 설명서의 순서를 지켜 주세요.","피부가 예민하면 짧게 시작하세요."],
+    faq:{q:"피부과 시술과 비교하면 어떤가요?", a:"시술이 아니라 집에서 쓰는 기기입니다. 같은 것으로 비교하기는 어렵습니다."} },
+
+  { id:"cleanser", brand:"아티스트리", name:"무스 클렌저", img:"img/08-cleanser.jpg",
+    one:"세안하고 나면 피부가 당기는 분께 꺼내는 제품입니다.",
+    steps:[["손을 먼저 적셔요","faucet"],["한 번 눌러 거품을","pumpFoam"],["얼굴에 부드럽게","faceWash"],["미지근한 물로 헹궈요","rinse"]],
+    keep:["민감한 분은 팔 안쪽에 먼저 테스트하세요.","미지근한 물로 헹궈 주세요.","세안 뒤에는 보습을 해 주세요."],
+    faq:{q:"민감한 피부인데 괜찮을까요?", a:"먼저 팔 안쪽에 소량 발라 보시길 권합니다. 성분표도 같이 확인해 드리면 됩니다."} },
+
+  { id:"proteincream", brand:"아티스트리", name:"프로틴 아키텍처 크림", img:"img/09-proteincream.jpg",
+    one:"건조함이 고민인 분께 붙여서 설명하는 크림입니다.",
+    steps:[["세안 후 바로 발라요","face"],["콩알만큼만 덜어요","fingerDot"],["얼굴에 고루 펴 발라요","faceCream"],["아침저녁 두 번","sunMoon"]],
+    keep:["세안 뒤 물기가 남았을 때 바르면 좋습니다.","콩알만큼씩 덜어 쓰세요.","쓰던 제품과 순서가 겹치지 않게 정리하세요."],
+    faq:{q:"쓰던 크림이 있는데요?", a:"지금 쓰시는 제품과 순서가 겹치지 않게 정리해 드리면 됩니다."} },
+
+  { id:"esping", brand:"홈케어", name:"이스프링 정수기", img:"img/10-esping.jpg",
+    one:"설치와 관리가 따라오는 제품입니다.",
+    steps:[["설치 기사가 방문해요","install"],["물을 받아 드세요","faucet"],["필터를 갈아 줘요","filterChange"],["관리 날짜를 적어 두세요","calendar"]],
+    keep:["계약서의 금액과 기간을 함께 확인하세요.","필터 교체 주기를 적어 두세요.","만족 보증 기간을 미리 확인하세요."],
+    faq:{q:"설치비나 관리비가 따로 있나요?", a:"조건에 따라 다릅니다. 계약서에 적힌 금액과 관리 주기를 같이 확인해 드리면 됩니다."} },
+
+  { id:"atmosphere", brand:"홈케어", name:"엣모스피어 공기청정기", img:"img/11-atmosphere.jpg",
+    one:"미세먼지 철에 문의가 많은 제품입니다.",
+    steps:[["창가에 놓아 주세요","windowAir"],["전원을 켜 두세요","machineOn"],["필터를 청소해요","filterClean"],["교체 날짜를 확인해요","calendar"]],
+    keep:["필터 교체 주기와 비용을 미리 확인하세요.","놓을 자리를 함께 정해 두세요.","만족 보증 기간은 1개월입니다."],
+    faq:{q:"필터는 얼마나 자주 갈아야 하나요?", a:"사용 환경에 따라 다릅니다. 권장 주기와 교체 비용을 계약 전에 확인해 드리면 됩니다."} },
+
+  { id:"glister", brand:"퍼스널케어", name:"글리스터", img:"img/12-glister.jpg",
+    one:"치약과 구강청결제입니다. 설명이 짧아도 됩니다.",
+    steps:[["치약을 짜서 양치해요","toothpaste"],["3분 동안 꼼꼼히","brush3"],["물로 입을 헹궈요","rinse"],["하루 두 번, 아침저녁","sunMoon"]],
+    keep:["소모품이라 계속 쓰기 좋습니다.","아이에게는 라벨의 대상 연령을 확인하세요.","양치 뒤 물로 충분히 헹궈 주세요."],
+    faq:{q:"아이가 써도 되나요?", a:"연령별로 권장되는 제품이 다를 수 있습니다. 라벨의 대상 연령을 확인해 드리면 됩니다."} },
+
+  { id:"home", brand:"퍼스널케어", name:"암웨이홈", img:"img/13-home.jpg",
+    one:"세탁세제와 주방세제 같은 생활용품입니다.",
+    steps:[["뚜껑으로 계량해요","cap"],["세탁기에 넣고 돌려요","washer"],["주방엔 몇 방울만","dropper"],["라벨의 사용량을 보세요","label"]],
+    keep:["농축이라 조금만 써도 됩니다.","한 통으로 쓰는 기간을 계산해 보세요.","아이 손이 닿지 않는 곳에 두세요."],
+    faq:{q:"일반 세제보다 비싼 것 같은데요?", a:"한 통으로 쓰는 기간과 한 번에 쓰는 양을 같이 계산해서 보여드리면 됩니다."} },
+
+  { id:"growing", brand:"기타", name:"그로잉랩", img:"img/14-growing.jpg",
+    one:"아이 성장을 기록하고 관리하는 서비스입니다.",
+    steps:[["아이 키를 재어요","growth"],["앱에 기록해요","phoneApp"],["한 달에 한 번 확인","calendar"],["함께 보며 이야기해요","family"]],
+    keep:["키가 큰다고 보장하는 서비스가 아닙니다.","기록을 남기는 것이 먼저입니다.","이용 방법과 비용은 공식 채널에서 확인하세요."],
+    faq:{q:"키가 큰다고 보장되나요?", a:"그런 보장은 없습니다. 성장을 기록하고 생활 습관을 관리하는 것을 돕는 서비스입니다."} },
+
+  { id:"bodykey", brand:"기타", name:"바디키", img:"img/15-bodykey.jpg",
+    one:"체중 관리 프로그램입니다. 과정으로 설명합니다.",
+    steps:[["시작 전에 체중을 재요","scale"],["정해진 순서대로","order123"],["물을 자주 마셔요","water"],["매일 기록해 두세요","phoneApp"]],
+    keep:["제품이 아니라 몇 주 과정입니다.","순서와 기간을 먼저 확인하세요.","혼자보다 함께 기록하면 좋습니다."],
+    faq:{q:"운동도 같이 해야 하나요?", a:"프로그램 안내에 따라 하시면 되고, 활동량은 함께 조정하는 게 좋습니다."} }
+];
+
+/* =========================================================
+   3) 화면 동작
+   ========================================================= */
+var gridEl   = document.getElementById('grid');
+var emptyEl  = document.getElementById('empty');
+var listView = document.getElementById('listView');
+var detailEl = document.getElementById('detail');
+var qEl      = document.getElementById('q');
+var sizeBtn  = document.getElementById('sizeBtn');
+var showEl   = document.getElementById('show');
+var sCard    = document.getElementById('sCard');
+var sSay     = document.getElementById('sSay');
+var sCnt     = document.getElementById('sCnt');
+var sName    = document.getElementById('sName');
+var sNext    = document.getElementById('sNext');
+var sPrev    = document.getElementById('sPrev');
+
+var cur = null, si = 0, hi = 0, kw = '';
+
+function esc(s){
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function findP(id){
+  for (var i = 0; i < P.length; i++){ if (P[i].id === id) return P[i]; }
+  return null;
+}
+function matches(p){
+  if (!kw) return true;
+  var hay = (p.name + ' ' + p.brand + ' ' + p.one + ' ' + p.keep.join(' ') + ' ' +
+    p.steps.map(function(s){ return s[0]; }).join(' ')).toLowerCase();
+  return hay.indexOf(kw.toLowerCase()) >= 0;
+}
+
+/* ---------- 목록 ---------- */
+function renderList(){
+  var rows = P.filter(matches), h = '';
+  rows.forEach(function(p){
+    h += '<button class="card" data-id="' + p.id + '">'
+      + '<img class="pic" src="' + p.img + '" alt="' + esc(p.name) + ' 그림" loading="lazy">'
+      + '<span class="nm">' + esc(p.name) + '</span>'
+      + '</button>';
+  });
+  gridEl.innerHTML = h;
+  emptyEl.style.display = rows.length ? 'none' : 'block';
+}
+gridEl.addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.card') : null;
+  if (b) openDetail(b.getAttribute('data-id'));
+});
+
+/* ---------- 상세 ---------- */
+function openDetail(id){
+  var p = findP(id);
+  if (!p) return;
+  cur = p; si = 0;
+  listView.style.display = 'none';
+  detailEl.style.display = 'block';
+
+  var h = '';
+  h += '<div class="bar">'
+     + '<button id="backBtn">← 목록으로</button>'
+     + '<button id="showBtn" class="go">크게 보여주기</button>'
+     + '</div>';
+  h += '<div class="hero">';
+  h += '<img src="' + p.img + '" alt="' + esc(p.name) + ' 그림">';
+  h += '<div><span class="brand">' + esc(p.brand) + '</span></div>';
+  h += '<h2>' + esc(p.name) + '</h2>';
+  h += '</div>';
+  h += '<div class="what"><span class="k">이게 뭐예요?</span><p class="v">' + esc(p.one) + '</p></div>';
+  h += '<div class="steps">'
+     + '<div class="stepTop"><span class="lab">그림으로 보는 사용법</span><span class="cnt" id="stepCnt"></span></div>'
+     + '<div class="stage" id="stage"><div class="num" id="stepNum" aria-hidden="true">1</div><div id="art"></div></div>'
+     + '<div class="sayStep" id="say"></div>'
+     + '<div class="navs"><button id="prevBtn">◀ 이전</button><button id="nextBtn" class="nx">다음 ▶</button></div>'
+     + '<div class="dots" id="dots"></div>'
+     + '</div>';
+  h += '<div class="sec"><h3>꼭 지켜 주세요</h3><ul>'
+     + p.keep.map(function(t){ return '<li>' + esc(t) + '</li>'; }).join('')
+     + '</ul></div>';
+  h += '<div class="sec"><h3>고객이 물으면</h3><div class="qa"><div class="q">Q. ' + esc(p.faq.q) + '</div>'
+     + '<div class="a">' + esc(p.faq.a) + '</div></div></div>';
+  h += '<div class="foot">효능 문구와 가격은 제품 라벨과 공식몰에서 확인해 주세요.<br>그림은 제품을 알아보기 쉽게 그린 것으로 실제 모양과 다를 수 있습니다.</div>';
+
+  detailEl.innerHTML = h;
+
+  document.getElementById('backBtn').addEventListener('click', backToList);
+  document.getElementById('showBtn').addEventListener('click', openShow);
+  document.getElementById('prevBtn').addEventListener('click', function(){ setStep(si - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){
+    setStep(si === p.steps.length - 1 ? 0 : si + 1);
+  });
+  document.getElementById('dots').addEventListener('click', function(e){
+    var d = e.target.getAttribute && e.target.getAttribute('data-i');
+    if (d !== null && d !== undefined) setStep(parseInt(d, 10));
+  });
+  swipe(document.getElementById('stage'), function(){ setStep(si + 1 > p.steps.length - 1 ? 0 : si + 1); }, function(){ setStep(si - 1); });
+
+  setStep(0);
+  window.scrollTo(0, 0);
+  if (location.hash !== '#' + id){
+    try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
+  }
+}
+function setStep(i){
+  if (!cur) return;
+  var last = cur.steps.length - 1;
+  si = i < 0 ? 0 : (i > last ? last : i);
+  var st = cur.steps[si], art = SC[st[1]] || SC.morning;
+  document.getElementById('art').innerHTML =
+    '<svg viewBox="0 0 300 300" role="img" aria-label="' + esc(st[0]) + '">' + art() + '</svg>';
+  document.getElementById('stepNum').textContent = si + 1;
+  document.getElementById('stepCnt').textContent = '큰 숫자 ' + (si + 1) + ' / ' + cur.steps.length + ' 단계';
+  document.getElementById('say').textContent = st[0];
+  document.getElementById('prevBtn').disabled = si === 0;
+  document.getElementById('nextBtn').textContent = si === last ? '처음으로 ↺' : '다음 ▶';
+  var dots = '';
+  for (var d = 0; d <= last; d++){
+    dots += '<i data-i="' + d + '" class="' + (d === si ? 'on' : '') + '" style="cursor:pointer"></i>';
+  }
+  document.getElementById('dots').innerHTML = dots;
+}
+function backToList(){
+  cur = null;
+  detailEl.style.display = 'none';
+  detailEl.innerHTML = '';
+  listView.style.display = 'block';
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  window.scrollTo(0, 0);
+}
+
+/* ---------- 크게 보여주기 ---------- */
+function openShow(){
+  if (!cur) return;
+  hi = 0;
+  sName.textContent = cur.name + ' · 사용법';
+  showEl.classList.add('on');
+  renderShow();
+  if (document.documentElement.requestFullscreen){
+    var rq = document.documentElement.requestFullscreen();
+    if (rq && rq.catch) rq.catch(function(){});
+  }
+}
+function renderShow(){
+  var st = cur.steps[hi], last = cur.steps.length - 1;
+  sCard.innerHTML = '<div class="num" aria-hidden="true">' + (hi + 1) + '</div>'
+    + '<svg viewBox="0 0 300 300" role="img" aria-label="' + esc(st[0]) + '">' + (SC[st[1]] || SC.morning)() + '</svg>';
+  sSay.textContent = st[0];
+  sCnt.textContent = (hi + 1) + ' / ' + (last + 1);
+  sPrev.disabled = hi === 0;
+  sNext.textContent = hi === last ? '처음으로 ↺' : '다음 ▶';
+}
+function closeShow(){
+  showEl.classList.remove('on');
+  if (document.fullscreenElement && document.exitFullscreen){
+    var ex = document.exitFullscreen();
+    if (ex && ex.catch) ex.catch(function(){});
+  }
+}
+sNext.addEventListener('click', function(){
+  hi = hi >= cur.steps.length - 1 ? 0 : hi + 1; renderShow();
+});
+sPrev.addEventListener('click', function(){ if (hi > 0){ hi--; renderShow(); } });
+document.getElementById('sClose').addEventListener('click', closeShow);
+swipe(document.getElementById('show'), function(){
+  hi = hi >= cur.steps.length - 1 ? 0 : hi + 1; renderShow();
+}, function(){ if (hi > 0){ hi--; renderShow(); } });
+sCard.addEventListener('click', function(){
+  hi = hi >= cur.steps.length - 1 ? 0 : hi + 1; renderShow();
+});
+
+function swipe(el, onLeft, onRight){
+  var x0 = null, y0 = null;
+  el.addEventListener('touchstart', function(e){
+    var t = e.changedTouches[0]; x0 = t.clientX; y0 = t.clientY;
+  }, { passive: true });
+  el.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    x0 = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)){ (dx < 0 ? onLeft : onRight)(); }
+  }, { passive: true });
+}
+
+/* ---------- 검색 · 글씨 크기 · 키보드 ---------- */
+qEl.addEventListener('input', function(){ kw = qEl.value.trim(); renderList(); });
+sizeBtn.addEventListener('click', function(){
+  var big = document.body.classList.toggle('big');
+  sizeBtn.classList.toggle('on', big);
+  sizeBtn.setAttribute('aria-pressed', big ? 'true' : 'false');
+  sizeBtn.textContent = big ? '글씨 원래대로' : '글씨 더 크게';
+  try { localStorage.setItem('amwayPicBig', big ? '1' : '0'); } catch (e) {}
+});
+try {
+  if (localStorage.getItem('amwayPicBig') === '1'){
+    document.body.classList.add('big');
+    sizeBtn.classList.add('on');
+    sizeBtn.textContent = '글씨 원래대로';
+  }
+} catch (e) {}
+
+document.addEventListener('keydown', function(e){
+  if (showEl.classList.contains('on')){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); sNext.click(); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); sPrev.click(); }
+    if (e.key === 'Escape'){ closeShow(); }
+  } else if (cur){
+    if (e.key === 'ArrowRight'){ setStep(si + 1); }
+    if (e.key === 'ArrowLeft'){ setStep(si - 1); }
+  }
+});
+
+/* ---------- 첫 화면 / 주소로 바로 열기 ---------- */
+renderList();
+(function(){
+  var id = location.hash.replace('#', '');
+  if (id && findP(id)) openDetail(id);
+})();
+</script>
+</body>
+</html>
