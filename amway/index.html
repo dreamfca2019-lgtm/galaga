@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>암웨이 제품 설명 자료</title>
+<style>
+  :root{
+    --bg:#f6f7fb; --card:#ffffff; --line:#e3e7ef; --text:#1b2130; --dim:#6b7688;
+    --navy:#12305c; --blue:#2f6fd0; --gold:#c8892a; --soft:#eef3fb;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    background:var(--bg); color:var(--text); min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    padding-bottom:24px;
+  }
+  button{font-family:inherit; cursor:pointer;}
+  .wrap{padding:16px 16px 0; max-width:640px; margin:0 auto;}
+
+  /* 헤더 */
+  header{background:linear-gradient(160deg,#12305c 0%,#1d4c8f 100%); color:#fff; padding:18px 16px 16px;}
+  header .inner{max-width:640px; margin:0 auto;}
+  header h1{font-size:19px; margin:0 0 3px; letter-spacing:-0.4px;}
+  header p{font-size:11.5px; margin:0; color:#bcd0ee;}
+  .tools{display:flex; gap:8px; margin-top:14px;}
+  .search{flex:1; position:relative;}
+  .search input{
+    width:100%; border:0; border-radius:11px; padding:12px 12px 12px 36px;
+    font-size:14px; background:rgba(255,255,255,.14); color:#fff; font-family:inherit;
+  }
+  .search input::placeholder{color:#a9c0e0;}
+  .search .ic{position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; opacity:.8;}
+  .fav-btn{
+    border:0; border-radius:11px; padding:0 14px; background:rgba(255,255,255,.14);
+    color:#fff; font-size:12.5px; font-weight:700;
+  }
+  .fav-btn.on{background:var(--gold); color:#fff;}
+
+  /* 칩 */
+  .chips{display:flex; gap:7px; overflow-x:auto; padding:12px 0 4px; scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chips button{
+    flex:0 0 auto; border:1px solid var(--line); background:var(--card); color:var(--dim);
+    border-radius:99px; padding:8px 13px; font-size:12.5px; font-weight:600;
+  }
+  .chips button.sel{background:var(--navy); border-color:var(--navy); color:#fff;}
+
+  /* 목록 */
+  .list{display:flex; flex-direction:column; gap:9px; margin-top:10px;}
+  .item{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px;
+    display:flex; gap:12px; align-items:center; text-align:left; width:100%;
+  }
+  .item .em{font-size:24px; width:34px; text-align:center; flex:0 0 auto;}
+  .item .txt{flex:1; min-width:0;}
+  .item .nm{font-size:15px; font-weight:800; letter-spacing:-0.3px; margin-bottom:3px;}
+  .item .ds{font-size:12px; color:var(--dim); line-height:1.45;}
+  .item .pr{font-size:11.5px; color:var(--gold); font-weight:700; margin-top:4px;}
+  .item .star{font-size:17px; color:#d5dbe6; flex:0 0 auto; padding:4px;}
+  .item .star.on{color:var(--gold);}
+  .empty{text-align:center; color:var(--dim); font-size:13px; padding:40px 0;}
+
+  /* 상세 */
+  #detail{display:none;}
+  .back{
+    border:0; background:none; color:var(--navy); font-size:13.5px; font-weight:700;
+    padding:14px 0 6px;
+  }
+  .hero{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:10px;}
+  .brand{display:inline-block; font-size:10.5px; font-weight:800; color:var(--blue);
+    background:var(--soft); border-radius:6px; padding:3px 8px; margin-bottom:9px;}
+  .hero h2{font-size:20px; margin:0 0 6px; letter-spacing:-0.5px; line-height:1.35;}
+  .hero .tag{font-size:13.5px; color:#46536a; line-height:1.6; margin:0;}
+  .hero .price{margin-top:11px; font-size:12.5px; color:var(--gold); font-weight:700;}
+  .hero .price span{color:var(--dim); font-weight:500;}
+
+  .sec{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:10px;}
+  .sec h3{font-size:13px; margin:0 0 11px; color:var(--navy); letter-spacing:-0.2px;}
+  .sec ul{margin:0; padding:0; list-style:none;}
+  .sec li{font-size:13.5px; line-height:1.65; padding-left:18px; position:relative; margin-bottom:8px; color:#2b3444;}
+  .sec li:last-child{margin-bottom:0;}
+  .sec li::before{content:"·"; position:absolute; left:5px; top:0; color:var(--blue); font-weight:900;}
+
+  .script{font-size:14px; line-height:1.8; color:#2b3444; white-space:pre-line;}
+
+  .faq{border-top:1px solid var(--line); padding:12px 0; }
+  .faq:first-of-type{border-top:0; padding-top:0;}
+  .faq:last-of-type{padding-bottom:0;}
+  .faq .q{font-size:13.5px; font-weight:700; display:flex; gap:8px; align-items:flex-start; color:#1b2130;}
+  .faq .q .mq{color:var(--blue); font-weight:900; flex:0 0 auto;}
+  .faq .a{font-size:13px; line-height:1.7; color:#4a5568; margin-top:6px; padding-left:18px;}
+
+  .actions{display:flex; gap:8px; margin:4px 0 16px;}
+  .actions button{
+    flex:1; border-radius:13px; padding:15px; font-size:14.5px; font-weight:800; border:1px solid var(--line);
+    background:var(--card); color:var(--navy);
+  }
+  .actions .primary{background:var(--navy); border-color:var(--navy); color:#fff;}
+
+  /* 발표 모드 */
+  #show{
+    display:none; position:fixed; inset:0; background:#0d1626; color:#fff; z-index:50;
+    flex-direction:column; padding:0;
+  }
+  #show.on{display:flex;}
+  .slide{flex:1; display:flex; flex-direction:column; justify-content:center; padding:32px 26px; overflow-y:auto;}
+  .slide .kicker{font-size:13px; color:#7ea6e0; font-weight:800; margin-bottom:14px; letter-spacing:.2px;}
+  .slide .big{font-size:27px; font-weight:800; line-height:1.4; letter-spacing:-0.7px;}
+  .slide .big2{font-size:22px; font-weight:700; line-height:1.5; letter-spacing:-0.5px;}
+  .slide .sub{font-size:17px; color:#a9bcd6; line-height:1.7; margin-top:16px;}
+  .slide .pt{display:flex; gap:12px; align-items:flex-start; margin-bottom:18px;}
+  .slide .pt .num{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%; background:#2f6fd0; color:#fff;
+    font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:2px;
+  }
+  .slide .pt .t{font-size:20px; line-height:1.55; font-weight:700; letter-spacing:-0.4px;}
+  .showbar{
+    display:flex; align-items:center; gap:12px; padding:14px 20px 22px; background:#0d1626;
+    border-top:1px solid rgba(255,255,255,.1);
+  }
+  .showbar .pcount{font-size:12px; color:#7e8ea6; min-width:44px;}
+  .showbar .dots{flex:1; display:flex; gap:5px;}
+  .showbar .dots i{flex:1; height:4px; border-radius:99px; background:rgba(255,255,255,.18);}
+  .showbar .dots i.on{background:#4d8cff;}
+  .showbar button{
+    border:0; border-radius:11px; padding:12px 18px; font-size:14px; font-weight:800;
+    background:rgba(255,255,255,.14); color:#fff;
+  }
+  .showbar .nx{background:#2f6fd0;}
+
+  /* 하단 고지 */
+  .note{font-size:11px; color:#8a95a8; line-height:1.7; padding:14px 4px 4px; text-align:center;}
+  .note b{color:#6b7688;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <h1>암웨이 제품 설명 자료</h1>
+    <p>고객 앞에서 바로 보여주고, 그대로 읽어도 되는 설명 멘트</p>
+    <div class="tools">
+      <div class="search">
+        <span class="ic">🔍</span>
+        <input id="q" type="search" placeholder="제품 이름이나 고민으로 찾기 (예: 관절, 피부)">
+      </div>
+      <button class="fav-btn" id="favOnly">★ 즐겨찾기</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="chips" id="chips"></div>
+
+  <!-- 목록 -->
+  <div id="listView">
+    <div class="list" id="list"></div>
+    <div class="empty" id="empty" style="display:none;">찾는 제품이 없어요. 다른 말로 찾아보세요.</div>
+    <div class="note">
+      <b>참고용 자료입니다.</b><br>
+      건강기능식품의 기능성 내용은 제품 라벨과 식약처 인정 문구를 그대로 확인하세요.<br>
+      가격·용량은 바뀔 수 있으니 주문 전 공식몰에서 다시 확인하세요.
+    </div>
+  </div>
+
+  <!-- 상세 -->
+  <div id="detail"></div>
+</div>
+
+<!-- 발표 모드 -->
+<div id="show">
+  <div class="slide" id="slide"></div>
+  <div class="showbar">
+    <div class="pcount" id="pcount">1 / 1</div>
+    <div class="dots" id="dots"></div>
+    <button id="prevBtn">이전</button>
+    <button class="nx" id="nextBtn">다음</button>
+  </div>
+</div>
+
+<script>
+const P = [
+  /* ── 뉴트리라이트 ── */
+  {
+    id:"doublex", brand:"뉴트리라이트", em:"💊", name:"더블엑스",
+    tag:"종합영양제. 하루 한 번, 여러 종류를 한 번에 챙기는 기본 제품입니다.",
+    who:"여러 영양제를 따로 챙기기 번거로운 분, 부모님 선물을 찾는 분",
+    points:[
+      "뉴트리라이트는 1934년에 시작한 브랜드이고, 자체 농장에서 원료를 재배해 완제품까지 만듭니다.",
+      "124정 × 3팩 구성으로 31일분입니다. 아침·저녁처럼 나눠서 챙기는 방식이에요.",
+      "여러 제품을 하나씩 사는 대신 한 팩으로 정리하고 싶은 분에게 맞습니다.",
+      "국내에서 가장 많이 알려진 뉴트리라이트 제품이라 설명하기가 가장 편합니다."
+    ],
+    use:"31일분 기준으로 매일 정해진 시간에 챙기시면 됩니다. 정확한 섭취량은 제품 라벨을 확인하세요.",
+    price:"91,000원", size:"124정 × 3팩 (31일분)",
+    script:"이건 뉴트리라이트에서 제일 기본이 되는 종합영양제예요.\n비타민 하나, 미네랄 하나 이렇게 따로 사면 개수도 늘고 챙기기도 번거롭잖아요. 이건 한 팩으로 정리되는 구성이에요.\n한 달에 9만 1천 원이니까 하루로 계산하면 3천 원 정도예요.\n라벨에 적힌 함량을 같이 보시고, 드시던 게 있으면 겹치는지 확인해 드릴게요.",
+    faq:[
+      {q:"다른 종합비타민이랑 뭐가 달라요?", a:"성분과 함량을 나란히 놓고 비교해 보시는 게 제일 정확해요. 이 제품은 라벨을 같이 보면서 설명해 드릴게요."},
+      {q:"한 달에 9만 원이면 비싼 거 아닌가요?", a:"하루로 나누면 3천 원 정도예요. 대신 여러 제품을 따로 사는 것보다 개수가 줄어요. 부담되시면 소용량부터 시작하셔도 됩니다."}
+    ]
+  },
+  {
+    id:"joint", brand:"뉴트리라이트", em:"🦵", name:"조인트 가드",
+    tag:"관절이 신경 쓰이는 분께 먼저 꺼내는 제품입니다.",
+    who:"계단 오르내릴 때 무릎이 불편한 부모님, 운동을 꾸준히 하는 분",
+    points:[
+      "관절 쪽으로 고민이 있는 분이 가장 먼저 찾는 제품입니다.",
+      "180정 30일분 구성으로 63,000원입니다. 꾸준히 드시는 분에게 부담이 적은 편이에요.",
+      "효능·효과 표현은 라벨의 기능성 문구를 그대로 확인해서 안내하세요.",
+      "부모님 선물 상담에서 반응이 좋은 제품입니다."
+    ],
+    use:"30일분 구성입니다. 섭취 방법과 1일 섭취량은 라벨 표시를 따르세요.",
+    price:"63,000원", size:"180정 (30일분)",
+    script:"부모님 무릎이나 관절 때문에 계단이 불편하시다고 하면 이걸 먼저 보여드려요.\n한 달에 6만 3천 원이고, 꾸준히 드시는 걸 전제로 만든 구성이에요.\n다만 어떤 효능이 있다고 제가 말씀드리는 것보다, 라벨에 적힌 기능성 문구를 같이 읽어보시는 게 정확해요.\n드시고 계신 약이 있으면 꼭 같이 확인하세요.",
+    faq:[
+      {q:"약이랑 같이 먹어도 되나요?", a:"드시는 약이 있으면 의사나 약사에게 먼저 확인하시는 게 안전해요. 저는 제품 정보만 정확히 알려 드릴게요."},
+      {q:"언제부터 느껴지나요?", a:"제가 효과 시기를 말씀드리는 건 정확하지 않아요. 라벨의 섭취 방법과 권장 기간을 확인해서 안내해 드릴게요."}
+    ]
+  },
+  {
+    id:"acerola", brand:"뉴트리라이트", em:"🍒", name:"아세로라 C",
+    tag:"비타민C만 따로 챙기고 싶을 때 가장 단순한 선택입니다.",
+    who:"환절기마다 컨디션 관리하는 분, 비타민C를 오래 드시는 분",
+    points:[
+      "300정 100일분 구성으로 76,000원입니다. 오래 드시는 분에게 유리한 구성이에요.",
+      "하루로 나누면 800원이 채 안 됩니다.",
+      "아세로라 열매 유래 원료를 앞세운 제품입니다.",
+      "이미 다른 제품을 드시는 분에게 '하나만 추가' 할 때 쓰기 좋습니다."
+    ],
+    use:"100일분 구성입니다. 1일 섭취량은 라벨을 확인하세요.",
+    price:"76,000원", size:"300정 (100일분)",
+    script:"비타민C 하나만 챙기고 싶으시면 이게 제일 단순해요.\n300정에 100일분이라 하루 800원이 안 돼요.\n이미 드시는 게 있으면 이거 하나만 더하시는 걸로 정리해 드릴게요.",
+    faq:[
+      {q:"시중 비타민C랑 차이가 뭐예요?", a:"원료와 함량을 라벨로 비교해 보시면 돼요. 아세로라 열매 유래 원료를 쓰는 게 이 제품의 특징입니다."}
+    ]
+  },
+  {
+    id:"protein", brand:"뉴트리라이트", em:"🥤", name:"뉴트리 파이토 푸로틴",
+    tag:"단백질이 부족한 식사 패턴을 채워 주는 제품입니다.",
+    who:"끼니를 거르는 분, 운동하는 분, 식사량이 줄어든 어르신",
+    points:[
+      "900g 통에 85,000원입니다.",
+      "단백질은 물론 식물 유래 성분을 함께 담은 제품입니다.",
+      "끼니 대용이 아니라 '부족한 부분을 채우는' 용도로 설명하는 게 정확합니다.",
+      "물이나 우유에 타서 드시는 방식이라 어르신도 부담이 적어요."
+    ],
+    use:"물이나 음료에 타서 드세요. 1회 분량과 섭취 방법은 라벨을 확인하세요.",
+    price:"85,000원", size:"900g",
+    script:"끼니를 자주 거르시거나 단백질이 부족하다 싶으면 이걸 말씀드려요.\n밥을 대신하는 게 아니라, 부족한 부분을 채우는 쪽이에요.\n우유나 물에 타서 드시면 되니까 드시기 편하세요.",
+    faq:[
+      {q:"밥 대신 먹어도 되나요?", a:"식사를 대신하는 용도보다는 부족한 영양을 채우는 쪽으로 설명드려요. 식사는 그대로 하시는 게 좋습니다."}
+    ]
+  },
+  {
+    id:"calmag", brand:"뉴트리라이트", em:"🦴", name:"칼맥 디",
+    tag:"칼슘과 마그네슘, 비타민D를 함께 담은 제품입니다.",
+    who:"칼슘 섭취가 신경 쓰이는 분, 유제품을 잘 안 드시는 분",
+    points:[
+      "360정 90일분 구성입니다.",
+      "칼슘만 따로 사면 흡수를 돕는 성분을 따로 챙겨야 하는데, 이건 함께 들어 있습니다.",
+      "부모님 뼈 건강 상담에서 자주 나오는 제품입니다.",
+      "가격은 주문 전 공식몰에서 확인해 안내하세요."
+    ],
+    use:"90일분 구성입니다. 1일 섭취량은 라벨을 확인하세요.",
+    price:"가격 확인 필요", size:"360정 (90일분)",
+    script:"칼슘 챙기시는 분들한테 이걸 보여드려요.\n칼슘만 드시면 흡수를 돕는 성분을 따로 사야 하는데, 이건 같이 들어 있어요.\n3개월 구성이니까 한 번 사두면 오래 드실 수 있어요.",
+    faq:[
+      {q:"우유만 마시면 충분하지 않나요?", a:"식사로 드시는 양이 어느 정도인지에 따라 달라요. 부족하다 싶을 때 보충하는 용도로 설명드립니다."}
+    ]
+  },
+  {
+    id:"custom", brand:"뉴트리라이트", em:"🧩", name:"커스터마이즈드 팩",
+    tag:"7가지 제품을 조합해 한 팩에 담는 맞춤형 영양 팩입니다.",
+    who:"자기한테 맞는 구성만 챙기고 싶은 분, 팩 개수를 줄이고 싶은 분",
+    points:[
+      "2015년에 나온 맞춤형 구성입니다.",
+      "7가지 제품 중에서 필요한 걸 골라 한 팩에 담는 방식이에요.",
+      "제품을 여러 개 사면 통이 쌓이는데, 이건 팩으로 정리됩니다.",
+      "처음 상담할 때 무엇을 드시는지 확인하고 조합을 짜 드리면 설명이 쉬워요."
+    ],
+    use:"조합에 따라 섭취 방법이 달라집니다. 구성 확정 후 라벨을 확인하세요.",
+    price:"구성에 따라 다름", size:"맞춤 구성",
+    script:"제품을 하나씩 다 사면 통만 쌓이잖아요.\n이건 필요한 것만 골라서 한 팩에 담는 방식이에요.\n지금 드시는 게 뭔지 알려주시면, 겹치는 건 빼고 구성해 드릴게요.",
+    faq:[
+      {q:"제가 원하는 대로 다 고를 수 있나요?", a:"정해진 7가지 제품 안에서 조합하는 방식이에요. 어떤 제품이 있는지는 같이 보면서 정하시면 됩니다."}
+    ]
+  },
+  {
+    id:"allc", brand:"뉴트리라이트", em:"⏳", name:"올데이 비타민 C",
+    tag:"2025년 국내에 처음 선보인 서방형 비타민C입니다.",
+    who:"비타민C를 하루 종일 나눠 챙기고 싶은 분",
+    points:[
+      "서방형은 한 번에 다 나오지 않고 시간을 두고 나오는 방식입니다.",
+      "2025년 국내에 처음 선보인 제품이라 최신 제품을 찾는 분께 이야기하기 좋아요.",
+      "가격과 용량은 공식몰에서 확인해 안내하세요.",
+      "새 제품이라 설명할 때 라벨을 같이 보여주는 게 좋습니다."
+    ],
+    use:"섭취 방법은 라벨을 확인하세요.",
+    price:"가격 확인 필요", size:"라벨 확인",
+    script:"이건 작년에 새로 나온 비타민C예요.\n한 번에 확 나오는 게 아니라 시간을 두고 나오는 방식이라고 보시면 돼요.\n새 제품이라 라벨 보시면서 설명드리는 게 정확해요.",
+    faq:[
+      {q:"기존 아세로라 C랑 뭐가 달라요?", a:"나오는 방식이 다릅니다. 드시는 습관에 따라 골라 드리면 돼요."}
+    ]
+  },
+  {
+    id:"mylab", brand:"뉴트리라이트", em:"🧪", name:"마이랩 바이 뉴트리라이트",
+    tag:"장내 미생물 분석을 바탕으로 맞추는 프로바이오틱스입니다.",
+    who:"유산균을 이것저것 바꿔 보며 맞는 걸 못 찾은 분",
+    points:[
+      "2022년 국내 스타트업 에이치이엠파마와 함께 선보인 제품입니다.",
+      "분석 결과를 바탕으로 맞춘다는 점이 일반 유산균과 다른 부분이에요.",
+      "분석 절차와 기간을 먼저 설명해야 오해가 없습니다.",
+      "가격은 주문 전 공식몰에서 확인하세요."
+    ],
+    use:"분석 결과에 따라 안내되는 방법을 따르세요.",
+    price:"가격 확인 필요", size:"분석 연동",
+    script:"유산균을 여러 개 바꿔 드셔 봤는데 잘 모르겠다는 분한테 이걸 말씀드려요.\n그냥 파는 유산균이 아니라, 분석을 한 번 하고 그 결과에 맞춰 주는 방식이에요.\n분석에 시간이 좀 걸린다는 점은 미리 말씀드려요.",
+    faq:[
+      {q:"분석은 어떻게 하나요?", a:"검체를 보내는 절차가 있고 결과까지 기간이 걸립니다. 순서는 제가 같이 확인해 드릴게요."}
+    ]
+  },
+
+  /* ── 아티스트리 ── */
+  {
+    id:"derma", brand:"아티스트리", em:"✨", name:"더마아키텍트",
+    tag:"2025년 출시한 아티스트리의 뷰티 디바이스입니다.",
+    who:"홈케어 기기를 고민하던 분, 피부 관리를 집에서 하고 싶은 분",
+    points:[
+      "아티스트리에서 2025년에 내놓은 뷰티 디바이스입니다.",
+      "국내 제조사 닥터스텍이 만들고 암웨이 글로벌 유통망으로 36개국에 나가고 있어요.",
+      "기기라서 사용법 설명이 중요합니다. 손으로 보여주는 게 가장 잘 팔립니다.",
+      "가격과 구성품은 공식몰에서 확인하세요."
+    ],
+    use:"사용 방법과 주기는 제품 설명서를 따르세요.",
+    price:"가격 확인 필요", size:"디바이스",
+    script:"집에서 피부 관리를 하고 싶다는 분한테 이걸 보여드려요.\n아티스트리에서 작년에 낸 기기인데, 만든 건 국내 회사고 암웨이 유통망으로 해외 36개국에 나가고 있어요.\n기기라서 말로 설명하는 것보다 한 번 보여드리는 게 나아요.",
+    faq:[
+      {q:"피부과 시술이랑 비교하면 어떤가요?", a:"시술이 아니라 홈케어 기기예요. 같은 것으로 비교하기는 어렵고, 집에서 꾸준히 하는 용도로 설명드립니다."}
+    ]
+  },
+  {
+    id:"cleanser", brand:"아티스트리", em:"🧴", name:"스킨 뉴트리션 하이드레이팅 무스 클렌저",
+    tag:"세안 후 당김이 신경 쓰이는 분께 꺼내는 제품입니다.",
+    who:"세안하고 나면 피부가 당기는 분, 거품 세안을 좋아하는 분",
+    points:[
+      "145ml 제품입니다.",
+      "아티스트리는 1958년에 시작한 브랜드로, 뉴트리라이트의 식물 영양 연구를 피부에 적용한 쪽이에요.",
+      "무스 타입이라 거품 내는 게 편합니다.",
+      "세안제는 첫 구매로 부담이 적어서 진입 제품으로 좋아요."
+    ],
+    use:"적당량을 덜어 거품 내어 얼굴에 굴린 뒤 미지근한 물로 헹구세요.",
+    price:"가격 확인 필요", size:"145ml",
+    script:"세안하고 나면 당긴다는 분한테 이걸 먼저 보여드려요.\n아티스트리는 1958년부터 시작한 브랜드고, 뉴트리라이트의 식물 연구를 피부에 적용한 쪽이에요.\n거품형이라 쓰기 편하고, 세안제는 부담이 적어서 처음 시작하시기 좋아요.",
+    faq:[
+      {q:"민감한 피부인데 괜찮을까요?", a:"민감도가 있으면 먼저 팔 안쪽에 소량 테스트해 보시길 권해요. 성분표도 같이 확인해 드릴게요."}
+    ]
+  },
+  {
+    id:"proteincream", brand:"아티스트리", em:"🫧", name:"프로틴 아키텍처 크림",
+    tag:"건조함이 고민인 분께 붙여서 설명하는 크림입니다.",
+    who:"환절기마다 당김이 심한 분, 크림을 두껍게 바르는 걸 싫어하는 분",
+    points:[
+      "50g 제품입니다.",
+      "단백질 구조에 착안한 라인이라는 점을 설명 포인트로 씁니다.",
+      "크림은 세안제와 함께 세트로 제안하기 좋습니다.",
+      "가격은 공식몰에서 확인하세요."
+    ],
+    use:"세안·토너 후 적당량을 얼굴 전체에 펴 바르세요.",
+    price:"가격 확인 필요", size:"50g",
+    script:"세안하고 나서 당김이 심하다는 분한테는 세안제랑 이 크림을 같이 보여드려요.\n단백질 구조에 착안한 라인이라고 보시면 돼요.\n같이 쓰실 때 순서를 알려드리는 게 설명에 제일 도움이 돼요.",
+    faq:[
+      {q:"기존에 쓰던 크림이 있는데요?", a:"지금 쓰시는 제품이랑 순서가 겹치지 않게 정리해 드릴게요."}
+    ]
+  },
+
+  /* ── 홈케어 ── */
+  {
+    id:"esping", brand:"홈케어", em:"💧", name:"이스프링 정수기",
+    tag:"설치형 제품이라 '관리 조건'까지 설명해야 하는 제품입니다.",
+    who:"정수기 교체 시기를 앞둔 분, 물맛이 신경 쓰이는 분",
+    points:[
+      "이스프링은 암웨이의 정수기 브랜드입니다.",
+      "설치와 관리가 따르기 때문에 렌탈 조건과 관리 주기를 반드시 같이 설명하세요.",
+      "만족 보증 기간이 일반 제품과 다릅니다. 1개월이에요.",
+      "첫 방문에서 계약을 서두르기보다 조건을 적어 드리는 편이 낫습니다."
+    ],
+    use:"설치 후 관리 주기와 필터 교체 일정을 안내받으세요.",
+    price:"모델·조건에 따라 다름", size:"설치형",
+    script:"정수기는 물건만 파는 게 아니라 설치랑 관리가 따라와요.\n그래서 렌탈 조건, 관리 주기, 필터 교체 일정을 종이에 적어서 드려요.\n정수기·공기청정기는 만족 보증 기간이 한 달이라, 그 부분도 꼭 미리 말씀드립니다.",
+    faq:[
+      {q:"설치비나 관리비가 따로 있나요?", a:"조건에 따라 다릅니다. 계약서에 적힌 금액과 관리 주기를 같이 확인해 드릴게요."},
+      {q:"중간에 해지하면요?", a:"해지 조건은 계약서에 적혀 있어요. 사인 전에 그 조항을 같이 읽어보시는 게 좋습니다."}
+    ]
+  },
+  {
+    id:"atmosphere", brand:"홈케어", em:"🌬️", name:"엣모스피어 공기청정기",
+    tag:"미세먼지 철에 가장 문의가 많은 제품입니다.",
+    who:"아이가 있는 집, 반려동물이 있는 집, 환기하기 어려운 집",
+    points:[
+      "엣모스피어는 암웨이의 공기청정기 브랜드입니다.",
+      "필터 교체 주기와 소음, 설치 위치를 함께 설명해야 합니다.",
+      "만족 보증 기간은 1개월입니다.",
+      "정수기와 함께 홈케어 세트로 제안하기 좋습니다."
+    ],
+    use:"설치 위치와 필터 교체 주기를 안내받으세요.",
+    price:"모델·조건에 따라 다름", size:"설치형",
+    script:"아이나 반려동물이 있으면 공기청정기를 많이 찾으세요.\n엣모스피어는 필터 교체 주기가 중요해서 그 일정을 미리 알려드려요.\n설치 위치도 같이 봐 드리면 설명이 훨씬 쉬워집니다.",
+    faq:[
+      {q:"필터는 얼마나 자주 갈아야 하나요?", a:"사용 환경에 따라 다릅니다. 권장 주기와 교체 비용을 계약 전에 확인해 드릴게요."}
+    ]
+  },
+
+  /* ── 퍼스널케어 ── */
+  {
+    id:"glister", brand:"퍼스널케어", em:"🦷", name:"글리스터",
+    tag:"치약·구강청결제. 설명이 가장 짧아도 되는 제품입니다.",
+    who:"치약을 자주 사는 집, 구강 관리에 신경 쓰는 분",
+    points:[
+      "글리스터는 암웨이의 구강케어 브랜드입니다.",
+      "소모품이라 재구매가 꾸준한 게 가장 큰 장점이에요.",
+      "세트로 시작하면 다음 구매 주기가 자연스럽게 잡힙니다.",
+      "가격은 공식몰에서 확인하세요."
+    ],
+    use:"일반 치약과 같은 방식으로 사용합니다.",
+    price:"가격 확인 필요", size:"구강케어 라인",
+    script:"치약은 어차피 계속 사야 하잖아요.\n글리스터는 한 번 써보시고 맞으면 계속 쓰시는 제품이에요.\n부담 없이 시작하시라고 이걸 첫 제품으로 권해 드려요.",
+    faq:[
+      {q:"아이가 써도 되나요?", a:"연령별로 권장되는 제품이 다를 수 있어요. 라벨의 대상 연령을 확인해 드릴게요."}
+    ]
+  },
+  {
+    id:"home", brand:"퍼스널케어", em:"🧺", name:"암웨이홈",
+    tag:"세탁세제·주방세제 같은 생활용품 라인입니다.",
+    who:"소모품 지출이 큰 집, 아이 옷을 자주 빨래하는 집",
+    points:[
+      "암웨이홈은 세제와 주방세제 같은 생활용품 브랜드입니다.",
+      "농축 제품이라 한 통으로 쓰는 기간이 깁니다.",
+      "생활용품은 설명보다 '한 달에 얼마 쓰는지'로 이야기하면 잘 통합니다.",
+      "정기 구매로 이어지기 쉬운 제품군이에요."
+    ],
+    use:"제품별 표시된 사용량을 지켜 사용하세요.",
+    price:"가격 확인 필요", size:"생활용품 라인",
+    script:"세제 같은 건 매달 나가는 돈이에요.\n농축이라 한 통 쓰는 기간이 길어서, 한 달 기준으로 계산해서 보여드리면 반응이 좋아요.\n부담 없이 하나만 바꿔 보시는 걸로 시작하시면 돼요.",
+    faq:[
+      {q:"일반 세제보다 비싼 것 같은데요?", a:"한 통으로 쓰는 기간과 회당 사용량을 같이 계산해서 보여드릴게요."}
+    ]
+  },
+
+  /* ── 기타 ── */
+  {
+    id:"xs", brand:"기타", em:"⚡", name:"XS 에너지드링크",
+    tag:"운동하거나 밤늦게 일하는 분께 꺼내는 제품입니다.",
+    who:"운동 전 뭔가 마시고 싶은 분, 커피 대신 다른 걸 찾는 분",
+    points:[
+      "XS는 암웨이의 에너지드링크 브랜드입니다.",
+      "맛이 여러 가지라 취향을 물어보고 고르게 하면 반응이 좋습니다.",
+      "단품으로 가볍게 시작하기 좋은 가격대입니다.",
+      "가격은 공식몰에서 확인하세요."
+    ],
+    use:"제품 라벨의 섭취 권장량을 확인하세요.",
+    price:"가격 확인 필요", size:"에너지드링크",
+    script:"운동하시거나 밤에 일하시는 분한테는 이걸 먼저 보여드려요.\n커피 대신 마실 걸 찾으시는 분들이 많이들 드세요.\n맛이 여러 개라 한 번 골라보시게 하는 게 좋아요.",
+    faq:[
+      {q:"카페인 들어 있나요?", a:"성분표를 같이 확인해 드릴게요. 카페인에 민감하시면 저녁에는 피하시는 게 좋습니다."}
+    ]
+  },
+  {
+    id:"bodykey", brand:"기타", em:"⚖️", name:"바디키",
+    tag:"체중 관리 프로그램입니다. 제품 하나가 아니라 '과정'으로 설명합니다.",
+    who:"식사 관리가 어려운 분, 체중이 신경 쓰이는 분",
+    points:[
+      "바디키는 체중조절 프로그램입니다.",
+      "제품 설명이 아니라 '어떤 순서로 몇 주 동안 하는지'로 설명해야 이해가 빠릅니다.",
+      "혼자 하기 어려운 분에게 함께 기록하는 걸 제안하면 만족도가 높아요.",
+      "가격과 구성은 공식몰에서 확인하세요."
+    ],
+    use:"프로그램 단계별 안내에 따라 진행하세요.",
+    price:"구성에 따라 다름", size:"프로그램",
+    script:"바디키는 제품 하나가 아니라 몇 주 동안 하는 과정이에요.\n그래서 어떤 순서로 하는지를 먼저 설명드리는 게 좋아요.\n혼자 하면 중간에 놓치기 쉬워서, 기록하는 걸 같이 하자고 말씀드립니다.",
+    faq:[
+      {q:"운동도 같이 해야 하나요?", a:"프로그램 안내에 따라 진행하시면 되고, 활동량은 함께 조정하는 게 좋습니다."}
+    ]
+  },
+  {
+    id:"growing", brand:"기타", em:"🌱", name:"그로잉랩",
+    tag:"2023년에 나온 어린이 건강성장 플랫폼입니다.",
+    who:"키와 성장이 신경 쓰이는 초등 자녀를 둔 부모",
+    points:[
+      "2023년 출시한 어린이 건강성장 플랫폼입니다.",
+      "제품이 아니라 성장 기록과 관리를 돕는 서비스 성격이에요.",
+      "부모님 상담에서는 '기록해서 보여준다'는 점이 가장 잘 통합니다.",
+      "이용 방법과 비용은 공식 채널에서 확인하세요."
+    ],
+    use:"앱·서비스 안내에 따라 기록하고 확인하세요.",
+    price:"이용 조건 확인 필요", size:"플랫폼",
+    script:"아이 키나 성장이 신경 쓰인다는 부모님한테는 이걸 말씀드려요.\n제품이 아니라 성장을 기록하고 관리하는 서비스예요.\n막연히 키 크는 걸 찾기보다, 기록을 남기고 같이 보자는 쪽이 반응이 좋아요.",
+    faq:[
+      {q:"키가 큰다고 보장되나요?", a:"그런 보장은 없습니다. 성장을 기록하고 생활 습관을 관리하는 걸 돕는 서비스로 설명드려요."}
+    ]
+  },
+  {
+    id:"wellness", brand:"기타", em:"📈", name:"마이웰니스 랩",
+    tag:"2026년에 나온 개인맞춤 건강수명 플랫폼입니다.",
+    who:"건강검진 결과를 어떻게 관리할지 막막한 분",
+    points:[
+      "2026년 출시한 개인맞춤 건강수명 플랫폼입니다.",
+      "AI로 건강 상태와 노화 속도를 분석해 생활 습관 가이드를 제안합니다.",
+      "최신 서비스라 '무엇을 넣으면 무엇이 나오는지'를 먼저 설명해야 합니다.",
+      "이용 조건과 비용은 공식 채널에서 확인하세요."
+    ],
+    use:"서비스 안내에 따라 분석을 진행하고 결과를 확인하세요.",
+    price:"이용 조건 확인 필요", size:"플랫폼",
+    script:"건강검진은 받는데 그다음에 뭘 해야 할지 모르겠다는 분한테 이걸 말씀드려요.\nAI로 상태를 분석해서 생활 습관을 알려주는 방식이에요.\n올해 나온 서비스라, 뭘 넣고 뭘 받는지부터 차근차근 설명드릴게요.",
+    faq:[
+      {q:"진단을 해주는 건가요?", a:"진단이 아니라 분석과 가이드입니다. 몸 상태가 걱정되시면 병원 진료가 먼저예요."}
+    ]
+  }
+];
+
+const BRANDS = ["전체","뉴트리라이트","아티스트리","홈케어","퍼스널케어","기타"];
+let curBrand = "전체", favOnly = false, keyword = "";
+let favs = [];
+try{ favs = JSON.parse(localStorage.getItem("amwayFavs") || "[]"); }catch(e){ favs = []; }
+
+const listEl = document.getElementById("list");
+const emptyEl = document.getElementById("empty");
+const chipsEl = document.getElementById("chips");
+const listView = document.getElementById("listView");
+const detailEl = document.getElementById("detail");
+const qEl = document.getElementById("q");
+const favBtn = document.getElementById("favOnly");
+
+function saveFavs(){ try{ localStorage.setItem("amwayFavs", JSON.stringify(favs)); }catch(e){} }
+function isFav(id){ return favs.indexOf(id) >= 0; }
+
+chipsEl.innerHTML = "";
+BRANDS.forEach(b => {
+  const btn = document.createElement("button");
+  btn.textContent = b;
+  if(b === "전체") btn.classList.add("sel");
+  btn.addEventListener("click", () => {
+    curBrand = b;
+    Array.from(chipsEl.children).forEach(c => c.classList.remove("sel"));
+    btn.classList.add("sel");
+    renderList();
+  });
+  chipsEl.appendChild(btn);
+});
+
+function match(p){
+  if(favOnly && !isFav(p.id)) return false;
+  if(curBrand !== "전체" && p.brand !== curBrand) return false;
+  if(!keyword) return true;
+  const hay = (p.name + " " + p.tag + " " + p.who + " " + p.points.join(" ") + " " + p.brand).toLowerCase();
+  return hay.indexOf(keyword.toLowerCase()) >= 0;
+}
+
+function renderList(){
+  detailEl.style.display = "none";
+  listView.style.display = "block";
+  listEl.innerHTML = "";
+  const rows = P.filter(match);
+  emptyEl.style.display = rows.length ? "none" : "block";
+  rows.forEach(p => {
+    const b = document.createElement("button");
+    b.className = "item";
+    b.innerHTML =
+      '<span class="em">' + p.em + '</span>' +
+      '<span class="txt"><span class="nm">' + p.name + '</span>' +
+      '<span class="ds">' + p.tag + '</span>' +
+      '<span class="pr">' + p.price + '</span></span>' +
+      '<span class="star' + (isFav(p.id) ? ' on' : '') + '">★</span>';
+    b.addEventListener("click", e => {
+      if(e.target.classList.contains("star")){
+        const i = favs.indexOf(p.id);
+        if(i >= 0) favs.splice(i,1); else favs.push(p.id);
+        saveFavs(); renderList(); return;
+      }
+      openDetail(p.id);
+    });
+    listEl.appendChild(b);
+  });
+}
+
+function openDetail(id){
+  const p = P.find(x => x.id === id);
+  if(!p) return;
+  listView.style.display = "none";
+  detailEl.style.display = "block";
+  window.scrollTo(0,0);
+
+  let html = '';
+  html += '<button class="back" id="backBtn">← 목록으로</button>';
+  html += '<div class="hero">';
+  html += '<span class="brand">' + p.brand + '</span>';
+  html += '<h2>' + p.em + ' ' + p.name + '</h2>';
+  html += '<p class="tag">' + p.tag + '</p>';
+  html += '<div class="price">' + p.price + ' <span>· ' + p.size + '</span></div>';
+  html += '</div>';
+
+  html += '<div class="sec"><h3>이런 분께</h3><ul><li>' + p.who + '</li></ul></div>';
+  html += '<div class="sec"><h3>핵심 포인트</h3><ul>' + p.points.map(t => '<li>' + t + '</li>').join('') + '</ul></div>';
+  html += '<div class="sec"><h3>사용·섭취</h3><ul><li>' + p.use + '</li></ul></div>';
+  html += '<div class="sec"><h3>설명 멘트 (그대로 읽어도 됩니다)</h3><div class="script">' + p.script + '</div></div>';
+  if(p.faq && p.faq.length){
+    html += '<div class="sec"><h3>자주 나오는 질문</h3>' +
+      p.faq.map(f => '<div class="faq"><div class="q"><span class="mq">Q</span><span>' + f.q + '</span></div><div class="a">' + f.a + '</div></div>').join('') +
+      '</div>';
+  }
+  html += '<div class="actions">' +
+    '<button class="primary" id="showBtn">고객에게 크게 보여주기</button>' +
+    '<button id="favBtn2">' + (isFav(p.id) ? '★ 즐겨찾기 해제' : '☆ 즐겨찾기') + '</button>' +
+    '</div>';
+  html += '<div class="note"><b>참고용 자료입니다.</b> 기능성 문구·가격은 라벨과 공식몰에서 확인하세요.</div>';
+
+  detailEl.innerHTML = html;
+  document.getElementById("backBtn").addEventListener("click", renderList);
+  document.getElementById("showBtn").addEventListener("click", () => startShow(p));
+  document.getElementById("favBtn2").addEventListener("click", () => {
+    const i = favs.indexOf(p.id);
+    if(i >= 0) favs.splice(i,1); else favs.push(p.id);
+    saveFavs(); openDetail(p.id);
+  });
+}
+
+/* 발표 모드 */
+let slides = [], sIdx = 0;
+function buildSlides(p){
+  const s = [];
+  s.push({kicker:p.brand, big:p.name, sub:p.tag});
+  s.push({kicker:"이런 분께", big2:p.who});
+  p.points.forEach((t,i) => s.push({kicker:"포인트 " + (i+1), pn:String(i+1), big2:t}));
+  s.push({kicker:"가격", big:p.price, sub:p.size});
+  if(p.faq && p.faq.length){
+    p.faq.forEach(f => s.push({kicker:"질문 나오면", big2:"Q. " + f.q, sub:"→ " + f.a}));
+  }
+  return s;
+}
+function renderSlide(){
+  const s = slides[sIdx];
+  const el = document.getElementById("slide");
+  let h = '';
+  if(s.kicker) h += '<div class="kicker">' + s.kicker + '</div>';
+  if(s.pn){
+    h += '<div class="pt"><span class="num">' + s.pn + '</span><span class="t">' + s.big2 + '</span></div>';
+  } else if(s.big){
+    h += '<div class="big">' + s.big + '</div>';
+  } else if(s.big2){
+    h += '<div class="big2">' + s.big2 + '</div>';
+  }
+  if(s.sub) h += '<div class="sub">' + s.sub + '</div>';
+  el.innerHTML = h;
+  document.getElementById("pcount").textContent = (sIdx+1) + " / " + slides.length;
+  const dots = document.getElementById("dots");
+  dots.innerHTML = '';
+  slides.forEach((_,i) => {
+    const d = document.createElement("i");
+    if(i === sIdx) d.className = "on";
+    dots.appendChild(d);
+  });
+  document.getElementById("prevBtn").style.visibility = sIdx === 0 ? "hidden" : "visible";
+  document.getElementById("nextBtn").textContent = sIdx === slides.length - 1 ? "닫기" : "다음";
+}
+function startShow(p){
+  slides = buildSlides(p);
+  sIdx = 0;
+  document.getElementById("show").classList.add("on");
+  renderSlide();
+}
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if(sIdx >= slides.length - 1){ document.getElementById("show").classList.remove("on"); return; }
+  sIdx++; renderSlide();
+});
+document.getElementById("prevBtn").addEventListener("click", () => {
+  if(sIdx > 0){ sIdx--; renderSlide(); }
+});
+document.getElementById("slide").addEventListener("click", () => {
+  if(sIdx < slides.length - 1){ sIdx++; renderSlide(); }
+});
+
+/* 검색 / 즐겨찾기 */
+qEl.addEventListener("input", () => { keyword = qEl.value.trim(); renderList(); });
+favBtn.addEventListener("click", () => {
+  favOnly = !favOnly;
+  favBtn.classList.toggle("on", favOnly);
+  renderList();
+});
+
+renderList();
+</script>
+</body>
+</html>
