@@ -5,184 +5,108 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FCA YOUNG 원데이 세미나 · 전주 ABC</title>
 <style>
+  @page{size:A4 landscape; margin:0;}
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
-    background:#1b2434; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:#e6e4de; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     display:flex; justify-content:center; padding:24px 10px;
   }
   .poster{
-    width:210mm; height:297mm; position:relative; overflow:hidden; color:#fff;
-    display:flex; flex-direction:column; padding:11mm;
+    width:297mm; height:210mm; position:relative; overflow:hidden; color:#16273d;
     background:
-      radial-gradient(120% 70% at 88% -8%, rgba(72,132,214,.55) 0%, rgba(72,132,214,0) 55%),
-      radial-gradient(110% 60% at 0% 105%, rgba(196,146,52,.35) 0%, rgba(196,146,52,0) 60%),
-      linear-gradient(165deg,#04101f 0%,#071b34 38%,#0a2848 72%,#0d3159 100%);
-    box-shadow:0 10px 50px rgba(0,0,0,.5);
+      radial-gradient(70% 90% at 15% 0%, rgba(196,216,236,.55) 0%, rgba(196,216,236,0) 60%),
+      radial-gradient(60% 80% at 100% 100%, rgba(226,210,180,.5) 0%, rgba(226,210,180,0) 62%),
+      linear-gradient(150deg,#ffffff 0%,#fbf9f5 45%,#f4f1ea 100%);
+    box-shadow:0 10px 50px rgba(0,0,0,.18);
+    display:flex; padding:13mm;
   }
-
-  /* 눈 내리는 밤 */
-  .snow{
-    position:absolute; inset:0; pointer-events:none; opacity:.85;
-    background-image:
-      radial-gradient(1.6px 1.6px at 8% 12%, rgba(255,255,255,.9), transparent),
-      radial-gradient(1.2px 1.2px at 22% 34%, rgba(255,255,255,.7), transparent),
-      radial-gradient(2px 2px at 34% 8%, rgba(255,255,255,.8), transparent),
-      radial-gradient(1.1px 1.1px at 47% 26%, rgba(255,255,255,.6), transparent),
-      radial-gradient(1.7px 1.7px at 58% 6%, rgba(255,255,255,.75), transparent),
-      radial-gradient(1.3px 1.3px at 68% 22%, rgba(255,255,255,.65), transparent),
-      radial-gradient(2.2px 2.2px at 79% 11%, rgba(255,255,255,.85), transparent),
-      radial-gradient(1.2px 1.2px at 91% 30%, rgba(255,255,255,.6), transparent),
-      radial-gradient(1.5px 1.5px at 14% 52%, rgba(255,255,255,.55), transparent),
-      radial-gradient(1.1px 1.1px at 28% 66%, rgba(255,255,255,.45), transparent),
-      radial-gradient(1.8px 1.8px at 43% 47%, rgba(255,255,255,.6), transparent),
-      radial-gradient(1.2px 1.2px at 55% 63%, rgba(255,255,255,.5), transparent),
-      radial-gradient(1.6px 1.6px at 72% 55%, rgba(255,255,255,.55), transparent),
-      radial-gradient(1.1px 1.1px at 86% 68%, rgba(255,255,255,.45), transparent),
-      radial-gradient(2px 2px at 95% 48%, rgba(255,255,255,.6), transparent),
-      radial-gradient(1.3px 1.3px at 6% 78%, rgba(255,255,255,.5), transparent),
-      radial-gradient(1.5px 1.5px at 18% 92%, rgba(255,255,255,.45), transparent),
-      radial-gradient(1.2px 1.2px at 37% 84%, rgba(255,255,255,.4), transparent),
-      radial-gradient(1.8px 1.8px at 62% 90%, rgba(255,255,255,.5), transparent),
-      radial-gradient(1.2px 1.2px at 82% 86%, rgba(255,255,255,.45), transparent);
-  }
-  .flake{position:absolute; pointer-events:none; color:#cfe3ff;}
-  .flake.a{width:120px; height:120px; left:-34px; top:22%; opacity:.10; transform:rotate(12deg);}
-  .flake.b{width:190px; height:190px; right:-56px; bottom:16%; opacity:.09; transform:rotate(-8deg);}
-  .flake.c{width:74px; height:74px; right:26mm; top:20mm; opacity:.16;}
-
   .frame{
-    position:relative; z-index:3; flex:1; border:0.45mm solid rgba(214,168,74,.5);
-    display:flex; flex-direction:column; padding:14mm 15mm 12mm;
+    flex:1; border:0.35mm solid rgba(176,138,62,.45);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:16mm 20mm; position:relative;
   }
   .frame::before{
-    content:""; position:absolute; inset:2.2mm; border:0.25mm solid rgba(214,168,74,.22); pointer-events:none;
+    content:""; position:absolute; inset:2.6mm; border:0.2mm solid rgba(176,138,62,.22); pointer-events:none;
   }
 
-  /* 상단 */
-  .kicker{display:flex; justify-content:space-between; align-items:center;
-    font-size:8.5pt; letter-spacing:4px; color:#9dbde3; font-weight:800;}
-  .kicker .dot{width:4px; height:4px; background:#d6a84a; border-radius:50%;}
-  .kicker .right{color:#d6a84a;}
+  /* 은은한 눈 결정 */
+  .flake{position:absolute; color:#9dbad6; pointer-events:none;}
+  .flake.a{width:64mm; height:64mm; left:-16mm; top:-14mm; opacity:.16;}
+  .flake.b{width:44mm; height:44mm; right:-10mm; bottom:-8mm; opacity:.14;}
 
-  .title{margin-top:14mm;}
-  .latin{
-    font-size:46pt; font-weight:900; letter-spacing:7px; line-height:1;
-    background:linear-gradient(180deg,#ffffff 25%,#a8c8ee 100%);
-    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  .kicker{
+    font-size:9pt; letter-spacing:6px; color:#96825c; font-weight:700; text-transform:uppercase;
   }
-  .latin .y{
-    background:linear-gradient(180deg,#ffe3a3 10%,#d6a84a 90%);
-    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  .title{
+    margin-top:9mm; font-size:33pt; font-weight:800; letter-spacing:-0.6px; line-height:1.15;
+    text-align:center; white-space:nowrap;
   }
-  .kr{margin-top:6mm; font-size:27pt; font-weight:900; letter-spacing:1px; color:#f2d79a; line-height:1.2;
-    text-shadow:0 2px 18px rgba(0,0,0,.35);}
-  .rule{display:flex; align-items:center; gap:4mm; margin-top:11mm;}
-  .rule i{height:1px; flex:1; background:linear-gradient(90deg, rgba(214,168,74,.85), rgba(214,168,74,0));}
-  .rule b{width:6px; height:6px; background:#d6a84a; transform:rotate(45deg);}
+  .title .en{font-family:Georgia,"Times New Roman",serif; letter-spacing:3px; font-weight:700;}
+  .title .sep{color:#c0a05e; font-weight:400; margin:0 3mm;}
+  .title .kr{letter-spacing:1px;}
 
-  /* 정보 */
-  .info{margin-top:auto;}
-  .card{
-    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-    border:0.3mm solid rgba(168,200,238,.35); border-radius:3mm; padding:9mm 10mm;
-    backdrop-filter:blur(2px);
-  }
-  .row{display:flex; align-items:baseline; gap:7mm; padding:4.4mm 0;
-    border-bottom:1px solid rgba(168,200,238,.16);}
-  .row:first-child{padding-top:0;}
-  .row:last-child{border-bottom:0; padding-bottom:0;}
-  .lb{font-size:8.5pt; letter-spacing:2.5px; color:#8fb2da; font-weight:800; width:14mm; flex:0 0 auto;}
-  .val{font-size:15.5pt; font-weight:800; letter-spacing:-0.3px; line-height:1.35;}
-  .val em{font-style:normal; color:#f2d79a;}
-  .val small{font-size:10.5pt; color:#a7c3e0; font-weight:600; margin-left:3px;}
-  .addr{font-size:12.5pt;}
-  .addr small{font-size:10pt;}
+  .divider{display:flex; align-items:center; gap:4mm; width:64mm; margin:11mm 0 10mm;}
+  .divider i{height:0.3mm; flex:1; background:linear-gradient(90deg, rgba(176,138,62,0), rgba(176,138,62,.75), rgba(176,138,62,0));}
+  .divider b{width:3.4px; height:3.4px; background:#b08a3e; transform:rotate(45deg);}
 
-  /* 하단 */
+  .info{text-align:center;}
+  .info .date{
+    font-size:17pt; font-weight:800; letter-spacing:-0.3px; color:#16273d;
+  }
+  .info .date span{color:#a8813a;}
+  .info .date small{font-size:12pt; font-weight:600; color:#4d5b6e; margin-left:3mm;}
+  .info .place{
+    margin-top:5mm; font-size:12.5pt; font-weight:700; color:#2d3f56;
+  }
+  .info .place .bar{color:#cbb894; margin:0 3mm;}
+  .info .addr{
+    margin-top:2.5mm; font-size:10pt; font-weight:500; color:#6b7889; letter-spacing:0;
+  }
+
   .slogan{
-    margin-top:10mm; text-align:center; font-family:Georgia,"Times New Roman",serif; font-style:italic;
-    font-size:13.5pt; color:#e6c887; letter-spacing:.4px;
+    position:absolute; left:0; right:0; bottom:9mm; text-align:center;
+    font-family:Georgia,"Times New Roman",serif; font-style:italic; font-size:11pt;
+    color:#a8813a; letter-spacing:.4px;
   }
-  .points{display:flex; gap:0; margin-top:9mm; border-top:0.3mm solid rgba(168,200,238,.22); padding-top:7mm;}
-  .pt{flex:1; padding:0 5mm; border-right:1px solid rgba(168,200,238,.16);}
-  .pt:first-child{padding-left:0;}
-  .pt:last-child{border-right:0; padding-right:0;}
-  .pt b{display:block; font-size:10pt; color:#f2d79a; margin-bottom:1.8mm; letter-spacing:-0.2px;}
-  .pt span{font-size:9pt; color:#a7c3e0; line-height:1.5; font-weight:600;}
-
-  .contact{display:flex; justify-content:space-between; align-items:flex-end; margin-top:9mm;}
-  .contact .q{font-size:8pt; letter-spacing:2px; color:#8fb2da; font-weight:800; margin-bottom:1.5mm;}
-  .contact .name{font-size:12pt; font-weight:800;}
 
   @media print{
     body{background:#fff; padding:0;}
-    .poster{box-shadow:none; width:210mm; height:297mm;}
-    @page{size:A4 portrait; margin:0;}
+    .poster{box-shadow:none;}
     *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
   }
 </style>
 </head>
 <body>
 <div class="poster">
-  <div class="snow"></div>
 
-  <svg class="flake a" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-    <g><path d="M50 6V94"/><path d="M50 6 38 18M50 6l12 12"/><path d="M50 94 38 82M50 94l12-12"/>
-    <path d="M12 28 88 72"/><path d="M12 28l2 17M12 28l17-3"/><path d="M88 72l-2-17M88 72l-17 3"/>
-    <path d="M88 28 12 72"/><path d="M88 28l-2 17M88 28l-17-3"/><path d="M12 72l2-17M12 72l17 3"/>
-    <circle cx="50" cy="50" r="4" fill="currentColor" stroke="none"/></g>
+  <svg class="flake a" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
   </svg>
-  <svg class="flake b" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
-    <g><path d="M50 6V94"/><path d="M50 6 38 18M50 6l12 12"/><path d="M50 94 38 82M50 94l12-12"/>
-    <path d="M12 28 88 72"/><path d="M12 28l2 17M12 28l17-3"/><path d="M88 72l-2-17M88 72l-17 3"/>
-    <path d="M88 28 12 72"/><path d="M88 28l-2 17M88 28l-17-3"/><path d="M12 72l2-17M12 72l17 3"/>
-    <circle cx="50" cy="50" r="4" fill="currentColor" stroke="none"/></g>
-  </svg>
-  <svg class="flake c" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
-    <g><path d="M50 6V94"/><path d="M50 6 38 18M50 6l12 12"/><path d="M50 94 38 82M50 94l12-12"/>
-    <path d="M12 28 88 72"/><path d="M12 28l2 17M12 28l17-3"/><path d="M88 72l-2-17M88 72l-17 3"/>
-    <path d="M88 28 12 72"/><path d="M88 28l-2 17M88 28l-17-3"/><path d="M12 72l2-17M12 72l17 3"/>
-    <circle cx="50" cy="50" r="4" fill="currentColor" stroke="none"/></g>
+  <svg class="flake b" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
   </svg>
 
   <div class="frame">
 
-    <div class="kicker">
-      <span>JANUARY 2027</span>
-      <span class="right">JEONJU · KOREA</span>
-    </div>
+    <div class="kicker">2027 · January</div>
 
-    <div class="title">
-      <div class="latin">FCA <span class="y">YOUNG</span></div>
-      <div class="kr">원데이 세미나</div>
-      <div class="rule"><i></i><b></b></div>
-    </div>
+    <h1 class="title">
+      <span class="en">FCA YOUNG</span><span class="sep">|</span><span class="kr">원데이 세미나</span>
+    </h1>
+
+    <div class="divider"><i></i><b></b><i></i></div>
 
     <div class="info">
-      <div class="card">
-        <div class="row">
-          <div class="lb">일시</div>
-          <div class="val">2027년 1월 9일 토요일 <small>오전 10시 30분</small></div>
-        </div>
-        <div class="row">
-          <div class="lb">장소</div>
-          <div class="val">전주 ABC <small>암웨이 매장</small></div>
-        </div>
-        <div class="row">
-          <div class="lb">주소</div>
-          <div class="val addr">전북 전주시 덕진구 세병2길 10 <small>로마네시티 5차 6층</small></div>
-        </div>
-      </div>
-
-      <div class="slogan">Helping People Live Better Lives</div>
-
-      <div class="contact">
-        <div>
-          <div class="q">문의</div>
-          <div class="name">정승채</div>
-        </div>
-      </div>
+      <div class="date">2027년 <span>1월 9일</span> 토요일 <small>오전 10시 30분</small></div>
+      <div class="place">전주 ABC 암웨이 매장</div>
+      <div class="addr">전북 전주시 덕진구 세병2길 10 · 로마네시티 5차 6층</div>
     </div>
+
+    <div class="slogan">Helping People Live Better Lives</div>
 
   </div>
 </div>
