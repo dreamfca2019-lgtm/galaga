@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" style="color-scheme:only light; background:#ffffff;">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="only light">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCA YOUNG 원데이 세미나 · 전주 ABC</title>
+<style>
+  :root{ color-scheme: only light !important; }
+  @page{ size:A4 portrait; margin:0; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ width:100%; color-scheme:only light; }
+  html{ background:#ffffff !important; }
+  body{
+    background:#ffffff !important; color:#b3567f !important; margin:0; padding:14px 6px;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    display:flex; justify-content:center; align-items:flex-start;
+  }
+  .stage{ display:flex; justify-content:flex-start; align-items:flex-start; width:100%; overflow:hidden; }
+
+  .poster{
+    width:210mm; height:297mm; flex:0 0 auto; transform-origin:top left; position:relative;
+    overflow:hidden; display:flex; padding:9mm;
+    background:#ffffff !important;
+    background-image:
+      radial-gradient(70% 40% at 4% 0%, #fff3f8 0%, rgba(255,255,255,0) 58%),
+      radial-gradient(65% 38% at 100% 100%, #fff5fa 0%, rgba(255,255,255,0) 60%) !important;
+    border:0.25mm solid #ffe4f0;
+  }
+
+  .frame{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:18mm 10mm; position:relative; text-align:center;
+    background:#ffffff !important;
+    border:0.25mm solid #ffe9f2;
+  }
+
+  .kicker{
+    font-size:13pt; letter-spacing:8px; font-weight:800; text-transform:uppercase;
+    color:#f0a9c7 !important; white-space:nowrap;
+  }
+
+  .title{ margin-top:13mm; line-height:1.25; white-space:nowrap; }
+  .title .en{
+    display:block; font-family:Georgia,"Times New Roman",serif; font-weight:700;
+    font-size:37pt; letter-spacing:4px; color:#f19cc0 !important;
+  }
+  .title .kr{
+    display:block; margin-top:3mm; font-size:43pt; font-weight:900; letter-spacing:1px;
+    color:#e07fa8 !important;
+  }
+
+  .divider{ width:82mm; height:0.4mm; margin:13mm 0;
+    background:linear-gradient(90deg,rgba(255,255,255,0),#ffb9d8,rgba(255,255,255,0)) !important; }
+
+  .info{ white-space:nowrap; }
+  .info .date{ font-size:28pt; font-weight:900; letter-spacing:-0.8px; color:#e07fa8 !important; }
+  .info .date small{ display:block; margin-top:4mm; font-size:20pt; font-weight:800; color:#f0a9c7 !important; }
+  .info .place{ margin-top:9mm; font-size:21pt; font-weight:800; color:#e58fb4 !important; }
+  .info .addr{ margin-top:4mm; font-size:13pt; font-weight:600; color:#f2b3cb !important; }
+
+  .slogan{
+    position:absolute; left:0; right:0; bottom:11mm; text-align:center;
+    font-family:Georgia,"Times New Roman",serif; font-style:italic; font-size:14pt;
+    color:#f19cc0 !important; letter-spacing:.4px; white-space:nowrap;
+  }
+
+  @media print{
+    body{ background:#fff !important; padding:0; display:block; }
+    .stage{ display:block; overflow:visible; }
+    .poster{ transform:none !important; margin:0; }
+    *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="poster" id="poster">
+  <div class="frame">
+
+    <div class="kicker">2027 January</div>
+
+    <h1 class="title">
+      <span class="en">FCA YOUNG</span>
+      <span class="kr">원데이 세미나</span>
+    </h1>
+
+    <div class="divider"></div>
+
+    <div class="info">
+      <div class="date">2027년 1월 9일 토요일<small>오전 10시 30분</small></div>
+      <div class="place">전주 ABC 암웨이 매장</div>
+      <div class="addr">전북 전주시 덕진구 세병2길 10 · 로마네시티 5차 6층</div>
+    </div>
+
+    <div class="slogan">Helping People Live Better Lives</div>
+
+  </div>
+</div>
+</div>
+<script>
+  function fit(){
+    var p = document.getElementById("poster");
+    if(!p) return;
+    var stage = p.parentNode;
+    p.style.transform = "none";
+    stage.style.height = "auto";
+    var w = p.offsetWidth, h = p.offsetHeight;
+    var avail = Math.min(window.innerWidth - 12, w);
+    var s = Math.min(1, avail / w);
+    if(s < 1){
+      p.style.transform = "scale(" + s + ")";
+      stage.style.height = (h * s) + "px";
+    }
+  }
+  window.addEventListener("resize", fit);
+  window.addEventListener("orientationchange", function(){ setTimeout(fit, 250); });
+  window.addEventListener("load", fit);
+  fit(); setTimeout(fit, 100);
+</script>
+</body>
+</html>
