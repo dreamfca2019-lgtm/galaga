@@ -9,10 +9,11 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
     background:#e6e4de; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    display:flex; justify-content:center; padding:24px 10px;
+    display:flex; justify-content:center; align-items:flex-start; padding:24px 10px; margin:0;
   }
+  .stage{display:flex; justify-content:center; align-items:flex-start; width:100%; overflow:hidden;}
   .poster{
-    width:297mm; height:210mm; position:relative; overflow:hidden; color:#16273d;
+    width:297mm; height:210mm; flex:0 0 auto; transform-origin:top center; position:relative; overflow:hidden; color:#16273d;
     background:
       radial-gradient(70% 90% at 15% 0%, rgba(196,216,236,.55) 0%, rgba(196,216,236,0) 60%),
       radial-gradient(60% 80% at 100% 100%, rgba(226,210,180,.5) 0%, rgba(226,210,180,0) 62%),
@@ -70,14 +71,16 @@
   }
 
   @media print{
-    body{background:#fff; padding:0;}
-    .poster{box-shadow:none;}
+    body{background:#fff; padding:0; display:block;}
+    .stage{display:block; overflow:visible;}
+    .poster{box-shadow:none; transform:none !important;}
     *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
   }
 </style>
 </head>
 <body>
-<div class="poster">
+<div class="stage">
+<div class="poster" id="poster">
 
   <svg class="flake a" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
     <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
@@ -110,5 +113,28 @@
 
   </div>
 </div>
+</div>
+<script>
+  function fit(){
+    var p = document.getElementById("poster");
+    var stage = p.parentNode;
+    p.style.transform = "none";
+    stage.style.height = "auto";
+    var w = p.offsetWidth, h = p.offsetHeight;
+    var avail = Math.min(window.innerWidth - 16, w);
+    var s = Math.min(1, avail / w);
+    if(s < 1){
+      p.style.transform = "scale(" + s + ")";
+      stage.style.height = (h * s) + "px";
+    } else {
+      stage.style.height = "auto";
+    }
+  }
+  window.addEventListener("resize", fit);
+  window.addEventListener("orientationchange", function(){ setTimeout(fit, 120); });
+  window.addEventListener("load", fit);
+  fit();
+  setTimeout(fit, 60);
+</script>
 </body>
 </html>
