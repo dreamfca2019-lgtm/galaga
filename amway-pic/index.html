@@ -22,6 +22,7 @@
     padding-bottom:34px;
   }
   body.big{--fs:27px;}
+  body.inDetail header{display:none;}
   button, input{font-family:inherit;}
   button{cursor:pointer;}
   button:focus-visible, input:focus-visible{outline:4px solid #ffbf47; outline-offset:3px;}
@@ -56,7 +57,7 @@
     display:block; object-fit:contain;
   }
   .card .nm{
-    display:block; margin-top:8px; font-size:1.05em; font-weight:900; line-height:1.25;
+    display:block; margin-top:8px; font-size:1.2em; font-weight:900; line-height:1.25;
     color:var(--navy); letter-spacing:-0.6px; word-break:keep-all;
   }
   .empty{text-align:center; color:var(--dim); padding:48px 0; font-size:0.95em;}
@@ -296,15 +297,17 @@ function bubbles(pts){
 var SC = {
   morning: function(){
     return BG('#fdf1d6')
-      + '<line x1="34" y1="214" x2="266" y2="214" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>'
-      + '<path d="M86 214 A64 64 0 0 1 214 214 Z" ' + A('#ffcd4d') + '/>'
-      + '<line x1="150" y1="140" x2="150" y2="112" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
-      + '<line x1="106" y1="152" x2="92" y2="132" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
-      + '<line x1="194" y1="152" x2="208" y2="132" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
-      + '<line x1="88" y1="170" x2="68" y2="158" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
-      + '<line x1="212" y1="170" x2="232" y2="158" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
-      + '<ellipse cx="86" cy="96" rx="30" ry="18" ' + A('#ffffff') + '/>'
-      + '<ellipse cx="116" cy="88" rx="22" ry="15" ' + A('#ffffff') + '/>';
+      + '<line x1="34" y1="232" x2="266" y2="232" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>'
+      + '<path d="M88 232 A62 62 0 0 1 212 232 Z" ' + A('#ffcd4d') + '/>'
+      + '<line x1="150" y1="158" x2="150" y2="128" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="108" y1="168" x2="92" y2="146" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="192" y1="168" x2="208" y2="146" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="94" y1="190" x2="72" y2="178" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<line x1="206" y1="190" x2="228" y2="178" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>'
+      + '<ellipse cx="62" cy="72" rx="26" ry="16" ' + A('#ffffff','stroke-width="5"') + '/>'
+      + '<ellipse cx="88" cy="66" rx="18" ry="12" ' + A('#ffffff','stroke-width="5"') + '/>'
+      + '<ellipse cx="238" cy="92" rx="24" ry="15" ' + A('#ffffff','stroke-width="5"') + '/>'
+      + '<ellipse cx="216" cy="86" rx="16" ry="11" ' + A('#ffffff','stroke-width="5"') + '/>';
   },
   cupWater: function(){ return BG('#e3f2ff') + glassArt('#8fd0f5', 150) + bubbles([[150,190,9],[138,215,6],[162,220,7]]); },
   cupPill: function(){
@@ -335,9 +338,11 @@ var SC = {
   },
   pills: function(){
     return BG('#eef7e6')
-      + tabletArt(104, 108, 36, '#ffffff') + tabletArt(196, 104, 30, '#ffffff')
-      + tabletArt(150, 186, 40, '#fff4d6') + capsuleArt(120, 246, -12, '#ffd15c', '#fff0bd')
-      + '<path d="M170 196 l18 14 -18 14" ' + LN() + '/>';
+      + tabletArt(94, 128, 34, '#ffffff')
+      + tabletArt(152, 112, 28, '#ffffff')
+      + tabletArt(206, 132, 32, '#fff4d6')
+      + capsuleArt(140, 212, -10, '#ffd15c', '#fff0bd')
+      + capsuleArt(214, 228, 16, '#ffd15c', '#fff0bd');
   },
   doctor: function(){
     return BG('#eaf3ff')
@@ -352,38 +357,42 @@ var SC = {
   },
   label: function(){
     return BG('#f2f0fb')
-      + '<path d="M108 72 h84 v34 a26 26 0 0 1 0 52 v70 h-84 v-70 a26 26 0 0 1 0 -52 Z" ' + A('#ffffff') + '/>'
-      + '<rect x="118" y="150" width="64" height="76" rx="8" ' + A('#cfe3fb') + '/>'
-      + '<line x1="128" y1="170" x2="172" y2="170" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
-      + '<line x1="128" y1="188" x2="164" y2="188" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
-      + '<line x1="128" y1="206" x2="168" y2="206" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
-      + '<circle cx="212" cy="212" r="40" ' + A('#dff0ff','fill-opacity="0.75"') + '/>'
-      + '<line x1="240" y1="240" x2="272" y2="272" stroke="' + INK + '" stroke-width="14" stroke-linecap="round"/>';
+      + '<path d="M120 92 h60 v16 q20 8 20 28 v104 q0 16 -16 16 h-68 q-16 0 -16 -16 V136 q0 -20 20 -28 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="118" y="66" width="64" height="28" rx="9" ' + A('#cfe3fb','stroke-width="6"') + '/>'
+      + '<rect x="112" y="152" width="76" height="66" rx="10" ' + A('#dff0ff','stroke-width="5"') + '/>'
+      + '<line x1="124" y1="170" x2="176" y2="170" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
+      + '<line x1="124" y1="188" x2="164" y2="188" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
+      + '<line x1="124" y1="206" x2="170" y2="206" stroke="#5a7fae" stroke-width="6" stroke-linecap="round"/>'
+      + '<circle cx="214" cy="212" r="36" ' + A('#ffffff','fill-opacity="0.8"') + '/>'
+      + '<line x1="240" y1="238" x2="268" y2="266" stroke="' + INK + '" stroke-width="13" stroke-linecap="round"/>';
   },
   milkCup: function(){
     return BG('#eef4ff')
-      + glassArt('#fdfdff', 132)
-      + '<path d="M84 66 h56 l-6 32 h-44 Z" ' + A('#cfe3fb') + '/>'
-      + '<line x1="128" y1="98" x2="132" y2="124" stroke="#8fb2e0" stroke-width="7" stroke-linecap="round"/>'
-      + '<circle cx="136" cy="130" r="7" ' + N('#8fb2e0') + '/>';
+      + glassArt('#fdf3dd', 168)
+      + '<path d="M174 58 q26 -6 30 14 q2 16 -14 18" ' + A('#e6d3a8','stroke-width="6"') + '/>'
+      + '<path d="M150 96 q6 10 0 20 q-6 10 0 20" ' + LN('stroke-width="6"') + '/>'
+      + '<circle cx="140" cy="120" r="6" ' + N('#e6d3a8') + '/>'
+      + '<circle cx="164" cy="104" r="5" ' + N('#e6d3a8') + '/>';
   },
   spoonPowder: function(){
     return BG('#fdf5e4')
-      + '<ellipse cx="120" cy="120" rx="58" ry="40" ' + A('#ffffff') + '/>'
-      + '<path d="M96 104 Q120 78 146 104 Q130 118 104 118 Z" ' + A('#e6d3a8') + '/>'
-      + '<line x1="164" y1="146" x2="256" y2="232" stroke="' + INK + '" stroke-width="16" stroke-linecap="round"/>'
-      + '<path d="M70 220 q26 -18 52 0 q-26 20 -52 0 Z" ' + A('#e6d3a8') + '/>'
-      + '<circle cx="196" cy="86" r="10" ' + N('#e6d3a8') + '/>'
-      + '<circle cx="226" cy="112" r="7" ' + N('#e6d3a8') + '/>';
+      + '<ellipse cx="116" cy="128" rx="58" ry="40" ' + A('#ffffff') + '/>'
+      + '<path d="M72 120 q14 -34 44 -34 q30 0 44 34 q-44 16 -88 0 Z" ' + A('#e6d3a8') + '/>'
+      + '<line x1="162" y1="158" x2="250" y2="236" stroke="' + INK + '" stroke-width="18" stroke-linecap="round"/>'
+      + '<path d="M186 118 q26 -12 30 10 q4 20 -18 22" ' + A('#e6d3a8','stroke-width="5"') + '/>'
+      + '<circle cx="212" cy="86" r="9" ' + N('#e6d3a8') + '/>'
+      + '<circle cx="236" cy="112" r="6" ' + N('#e6d3a8') + '/>';
   },
   shaker: function(){
     return BG('#e8f6ef')
-      + '<path d="M114 100 h72 l-8 148 q-28 12 -56 0 Z" ' + A('#ffffff') + '/>'
-      + '<rect x="110" y="70" width="80" height="34" rx="12" ' + A('#a8d98b') + '/>'
-      + '<path d="M128 140 q22 26 44 0 q22 26 44 0" ' + LN('stroke="#7fb3e8" stroke-width="8"') + '/>'
-      + '<path d="M124 214 q26 22 52 0" ' + LN('stroke="#7fb3e8" stroke-width="8"') + '/>'
-      + '<path d="M226 132 a44 44 0 1 1 -14 -32" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
-      + '<path d="M206 88 l6 16 -18 2" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>';
+      + '<path d="M116 104 h68 l-8 138 q-26 12 -52 0 Z" ' + A('#ffffff') + '/>'
+      + '<rect x="112" y="72" width="76" height="34" rx="12" ' + A('#a8d98b') + '/>'
+      + '<path d="M126 136 q20 16 40 0 q18 16 36 0" ' + LN('stroke="#7fb3e8" stroke-width="8"') + '/>'
+      + '<path d="M126 178 q20 16 40 0 q18 16 36 0" ' + LN('stroke="#7fb3e8" stroke-width="8"') + '/>'
+      + '<path d="M80 132 q-16 30 0 60" ' + LN('stroke-width="7"') + '/>'
+      + '<path d="M64 150 q-10 22 0 44" ' + LN('stroke-width="7"') + '/>'
+      + '<path d="M220 132 q16 30 0 60" ' + LN('stroke-width="7"') + '/>'
+      + '<path d="M236 150 q10 22 0 44" ' + LN('stroke-width="7"') + '/>';
   },
   box: function(){
     return BG('#eef4fb')
@@ -446,33 +455,44 @@ var SC = {
   },
   fingerDot: function(){
     return BG('#fdf0f5')
-      + '<path d="M116 250 q-30 -46 -6 -62 q22 -14 34 12 l10 24 q6 -30 24 -26 q20 4 12 30 l-6 22 Z" ' + A('#f7d6bc') + '/>'
-      + '<path d="M142 200 q4 -52 22 -64 q16 -10 22 6 q6 16 -8 30 l-14 36" ' + A('#f7d6bc') + '/>'
-      + '<circle cx="182" cy="112" r="16" ' + A('#ffffff') + '/>';
+      + '<path d="M96 252 q-8 -60 0 -84 q10 -26 34 -22 q16 4 16 24 v54" ' + A('#f7d6bc') + '/>'
+      + '<path d="M146 172 q-4 -70 0 -84 q6 -22 24 -18 q18 4 16 26 l-4 76" ' + A('#f7d6bc') + '/>'
+      + '<path d="M182 168 q6 -26 22 -20 q16 6 8 30 l-12 46" ' + A('#f7d6bc') + '/>'
+      + '<line x1="150" y1="120" x2="150" y2="196" stroke="' + INK + '" stroke-width="5" stroke-linecap="round"/>'
+      + '<circle cx="222" cy="92" r="20" ' + A('#ffffff') + '/>';
   },
   sunMoon: function(){
     return BG('#f3f1fb')
-      + '<line x1="150" y1="40" x2="150" y2="260" stroke="#c9d5e6" stroke-width="5" stroke-dasharray="10 12"/>'
-      + sunArt(84, 128, 46) + moonArt(214, 140, 50)
-      + '<circle cx="72" cy="222" r="7" ' + N('#c9d5e6') + '/>'
-      + '<circle cx="226" cy="228" r="7" ' + N('#c9d5e6') + '/>';
+      + '<line x1="150" y1="44" x2="150" y2="256" stroke="#c9d5e6" stroke-width="5" stroke-dasharray="10 12"/>'
+      + sunArt(78, 126, 44)
+      + '<path d="M232 84 A52 52 0 1 0 232 180 A40 40 0 1 1 232 84 Z" ' + A('#ffe9a8') + '/>'
+      + '<circle cx="62" cy="216" r="7" ' + N('#c9d5e6') + '/>'
+      + '<circle cx="224" cy="228" r="7" ' + N('#c9d5e6') + '/>';
   },
   install: function(){
     return BG('#eef7e6')
-      + '<path d="M150 54 L246 128 V250 H54 V128 Z" ' + A('#ffffff') + '/>'
-      + '<path d="M110 250 V176 h80 v74" ' + A('#cfe3fb','stroke-width="5"') + '/>'
-      + '<path d="M186 196 a30 30 0 0 1 40 -34 l-16 16 10 22 Z" ' + A('#bfd8ef') + '/>'
-      + '<circle cx="206" cy="212" r="20" ' + A('#8fa5c3','stroke-width="6"') + '/>'
-      + '<path d="M110 216 h22" ' + LN('stroke-width="6"') + '/>';
+      + '<path d="M60 208 V128 q0 -12 12 -12 h84 l40 42 v50 Z" ' + A('#ffffff') + '/>'
+      + '<path d="M156 116 v42 h40" ' + LN('stroke-width="6"') + '/>'
+      + '<rect x="166" y="130" width="30" height="26" rx="6" ' + A('#cfe3fb','stroke-width="6"') + '/>'
+      + '<rect x="78" y="136" width="56" height="52" rx="8" ' + A('#e8d6b4','stroke-width="6"') + '/>'
+      + '<line x1="106" y1="136" x2="106" y2="188" stroke="' + INK + '" stroke-width="6"/>'
+      + '<line x1="60" y1="188" x2="196" y2="188" ' + LN('stroke-width="5"') + '/>'
+      + '<circle cx="96" cy="212" r="22" ' + A('#8fa5c3') + '/>'
+      + '<circle cx="96" cy="212" r="8" ' + N('#ffffff') + '/>'
+      + '<circle cx="176" cy="212" r="22" ' + A('#8fa5c3') + '/>'
+      + '<circle cx="176" cy="212" r="8" ' + N('#ffffff') + '/>'
+      + '<line x1="60" y1="234" x2="206" y2="234" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>';
   },
   filterChange: function(){
     return BG('#eaf3ff')
-      + '<rect x="106" y="86" width="88" height="132" rx="14" ' + A('#ffffff') + '/>'
-      + '<path d="M114 108 h72 M114 128 h72 M114 148 h72 M114 168 h72" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
-      + '<path d="M78 232 a72 72 0 0 1 -6 -72" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
-      + '<path d="M64 146 l6 18 18 -6" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
-      + '<path d="M222 232 a72 72 0 0 0 6 -72" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>'
-      + '<path d="M236 146 l-6 18 -18 -6" ' + LN('stroke="#1256b8" stroke-width="8"') + '/>';
+      + '<rect x="60" y="96" width="52" height="120" rx="14" ' + A('#e3e9f2') + '/>'
+      + '<path d="M68 116 h36 M68 136 h36 M68 156 h36 M68 176 h36" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
+      + '<rect x="188" y="96" width="52" height="120" rx="14" ' + A('#ffffff') + '/>'
+      + '<path d="M196 116 h36 M196 136 h36 M196 156 h36 M196 176 h36" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
+      + '<path d="M124 156 h48" ' + LN('stroke="#1256b8" stroke-width="9"') + '/>'
+      + '<path d="M158 140 l18 16 -18 16" ' + LN('stroke="#1256b8" stroke-width="9"') + '/>'
+      + '<path d="M86 78 q30 -20 60 0" ' + LN('stroke="#1256b8" stroke-width="7"') + '/>'
+      + '<path d="M140 78 l8 -14 8 14" ' + LN('stroke="#1256b8" stroke-width="7"') + '/>';
   },
   calendar: function(){
     var s = BG('#f3f1fb')
@@ -501,28 +521,32 @@ var SC = {
   },
   filterClean: function(){
     return BG('#eef8ee')
-      + '<rect x="96" y="80" width="86" height="130" rx="14" ' + A('#ffffff') + '/>'
-      + '<path d="M104 102 h70 M104 122 h70 M104 142 h70 M104 162 h70 M104 182 h70" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
-      + '<path d="M198 92 l16 30" stroke="' + INK + '" stroke-width="12" stroke-linecap="round"/>'
-      + '<rect x="180" y="120" width="52" height="26" rx="10" ' + A('#ffd0dc','stroke-width="6"') + '/>'
-      + '<path d="M196 156 q-14 18 0 36 M212 156 q14 18 0 36" ' + LN('stroke="#7fb3e8" stroke-width="6"') + '/>'
-      + '<path d="M74 210 q14 -14 28 0 M74 232 q14 -14 28 0" ' + LN('stroke="#a8d98b" stroke-width="6"') + '/>';
+      + '<rect x="92" y="84" width="86" height="132" rx="14" ' + A('#ffffff') + '/>'
+      + '<path d="M100 108 h70 M100 128 h70 M100 148 h70 M100 168 h70 M100 188 h70" ' + LN('stroke="#9fb8d4" stroke-width="5"') + '/>'
+      + '<rect x="182" y="150" width="22" height="46" rx="8" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + '<rect x="204" y="158" width="46" height="26" rx="12" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + '<path d="M186 196 v26 M196 196 v26 M206 196 v26 M216 196 v26" ' + LN('stroke="#8fa5c3" stroke-width="5"') + '/>'
+      + '<path d="M214 92 l10 10 M232 84 l0 14 M240 110 l10 -10" ' + LN('stroke="#7fb069" stroke-width="6"') + '/>'
+      + '<path d="M70 196 q12 -12 24 0 M70 218 q12 -12 24 0" ' + LN('stroke="#a8d98b" stroke-width="6"') + '/>';
   },
   toothpaste: function(){
     return BG('#eef4ff')
-      + '<path d="M96 74 h96 l14 26 v118 q-62 16 -124 0 V100 Z" ' + A('#ffffff') + '/>'
-      + '<rect x="86" y="52" width="116" height="26" rx="10" ' + A('#8fb2e0','stroke-width="6"') + '/>'
-      + '<path d="M118 210 q10 -20 24 -2 q12 -18 22 2 q-10 14 -22 6 q-14 8 -24 -6 Z" ' + A('#a8d98b','stroke-width="5"') + '/>'
-      + '<line x1="150" y1="128" x2="150" y2="168" stroke="#7fb3e8" stroke-width="8" stroke-linecap="round"/>'
-      + '<path d="M226 96 q18 -18 30 0 q-16 18 -30 0 Z" ' + A('#ffffff','stroke-width="5"') + '/>';
+      + '<g transform="rotate(-18 150 160)">'
+      + '<rect x="52" y="146" width="140" height="28" rx="14" ' + A('#ffd0dc') + '/>'
+      + '<rect x="186" y="130" width="66" height="60" rx="18" ' + A('#ffffff') + '/>'
+      + '<path d="M196 118 v14 M214 116 v16 M232 118 v14 M246 122 v12" ' + LN('stroke="#8fa5c3" stroke-width="6"') + '/>'
+      + '<path d="M196 108 q16 -14 30 -2 q14 -12 28 2 q-14 14 -28 4 q-16 10 -30 -4 Z" ' + A('#a8d98b','stroke-width="5"') + '/>'
+      + '</g>'
+      + '<path d="M74 236 q20 16 40 0" ' + LN('stroke="#7fb3e8" stroke-width="6"') + '/>';
   },
   brush3: function(){
     return BG('#eef4ff')
-      + '<rect x="96" y="228" width="120" height="24" rx="12" ' + A('#ffd0dc','stroke-width="6"') + '/>'
-      + '<rect x="118" y="96" width="76" height="140" rx="16" ' + A('#ffffff') + '/>'
-      + '<path d="M118 108 h76" ' + LN('stroke-width="6"') + '/>'
-      + '<path d="M128 140 q10 -16 22 -2 q12 -14 22 4 q-14 16 -22 6 q-12 8 -22 -8 Z" ' + A('#a8d98b','stroke-width="5"') + '/>'
-      + clockArt(232, 130, 44, 90, 0, '#fff6d9');
+      + clockArt(124, 150, 78, 92, 0, '#fff6d9')
+      + '<g transform="rotate(-24 220 210)">'
+      + '<rect x="176" y="198" width="86" height="22" rx="11" ' + A('#ffd0dc','stroke-width="6"') + '/>'
+      + '<rect x="252" y="184" width="40" height="50" rx="14" ' + A('#ffffff','stroke-width="6"') + '/>'
+      + '<path d="M260 176 v12 M272 176 v12 M284 176 v12" ' + LN('stroke="#8fa5c3" stroke-width="5"') + '/>'
+      + '</g>';
   },
   washer: function(){
     return BG('#eaf3ff')
@@ -552,16 +576,19 @@ var SC = {
   growth: function(){
     return BG('#eef8e6')
       + '<rect x="188" y="40" width="52" height="216" rx="10" ' + A('#fff8e8') + '/>'
-      + '<path d="M196 88 h36 M196 118 h36 M196 148 h36 M196 178 h36 M196 208 h36" ' + LN('stroke="#c9b98f" stroke-width="4"') + '/>'
-      + '<path d="M214 236 V64" ' + LN('stroke="#7fb069" stroke-width="9"') + '/>'
-      + '<path d="M200 80 l14 -20 14 20" ' + LN('stroke="#7fb069" stroke-width="9"') + '/>'
-      + '<circle cx="104" cy="118" r="30" ' + A('#f7d6bc') + '/>'
-      + '<path d="M86 108 q18 -18 36 0" ' + LN('stroke-width="6"') + '/>'
-      + '<circle cx="94" cy="118" r="5" ' + N(INK) + '/>'
-      + '<circle cx="114" cy="118" r="5" ' + N(INK) + '/>'
-      + '<path d="M96 130 q8 8 16 0" ' + LN('stroke-width="5"') + '/>'
-      + '<path d="M76 236 q0 -60 28 -60 q28 0 28 60" ' + A('#a8d98b') + '/>'
-      + '<line x1="76" y1="236" x2="132" y2="236" stroke="' + INK + '" stroke-width="8" stroke-linecap="round"/>';
+      + '<path d="M196 92 h36 M196 122 h36 M196 152 h36 M196 182 h36 M196 212 h36" ' + LN('stroke="#c9b98f" stroke-width="4"') + '/>'
+      + '<path d="M214 236 V66" ' + LN('stroke="#7fb069" stroke-width="9"') + '/>'
+      + '<path d="M200 82 l14 -20 14 20" ' + LN('stroke="#7fb069" stroke-width="9"') + '/>'
+      + '<circle cx="98" cy="104" r="30" ' + A('#f7d6bc') + '/>'
+      + '<path d="M70 96 q28 -26 56 0" ' + A('#7a5a44','stroke-width="6"') + '/>'
+      + '<circle cx="88" cy="106" r="5" ' + N(INK) + '/>'
+      + '<circle cx="108" cy="106" r="5" ' + N(INK) + '/>'
+      + '<path d="M90 118 q8 8 16 0" ' + LN('stroke-width="5"') + '/>'
+      + '<path d="M74 142 h48 q8 0 8 8 v46 q0 8 -8 8 h-48 q-8 0 -8 -8 v-46 q0 -8 8 -8 Z" ' + A('#a8d98b') + '/>'
+      + '<line x1="70" y1="170" x2="126" y2="170" stroke="' + INK + '" stroke-width="5"/>'
+      + '<line x1="86" y1="204" x2="86" y2="242" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>'
+      + '<line x1="112" y1="204" x2="112" y2="242" stroke="' + INK + '" stroke-width="9" stroke-linecap="round"/>'
+      + '<path d="M70 250 q16 8 32 0 M98 250 q16 8 32 0" ' + LN('stroke-width="8"') + '/>';
   },
   phoneApp: function(){
     return BG('#eaf3ff')
@@ -778,6 +805,7 @@ function openDetail(id){
   cur = p; si = 0;
   listView.style.display = 'none';
   detailEl.style.display = 'block';
+  document.body.classList.add('inDetail');
 
   var h = '';
   h += '<div class="bar">'
@@ -832,7 +860,7 @@ function setStep(i){
   document.getElementById('art').innerHTML =
     '<svg viewBox="0 0 300 300" role="img" aria-label="' + esc(st[0]) + '">' + art() + '</svg>';
   document.getElementById('stepNum').textContent = si + 1;
-  document.getElementById('stepCnt').textContent = '큰 숫자 ' + (si + 1) + ' / ' + cur.steps.length + ' 단계';
+  document.getElementById('stepCnt').textContent = (si + 1) + ' / ' + cur.steps.length + ' 단계';
   document.getElementById('say').textContent = st[0];
   document.getElementById('prevBtn').disabled = si === 0;
   document.getElementById('nextBtn').textContent = si === last ? '처음으로 ↺' : '다음 ▶';
@@ -846,6 +874,7 @@ function backToList(){
   cur = null;
   detailEl.style.display = 'none';
   detailEl.innerHTML = '';
+  document.body.classList.remove('inDetail');
   listView.style.display = 'block';
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
   window.scrollTo(0, 0);
