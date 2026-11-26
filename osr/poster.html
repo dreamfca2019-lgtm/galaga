@@ -9,7 +9,7 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html,body{width:100%;}
   body{
-    background:#e6e4de; margin:0; padding:18px 8px;
+    background:#f3e7ec; margin:0; padding:18px 8px;
     font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     display:flex; justify-content:center; align-items:flex-start;
   }
@@ -17,50 +17,66 @@
 
   .poster{
     width:210mm; height:297mm; flex:0 0 auto; transform-origin:top left; position:relative;
-    overflow:hidden; color:#16273d; display:flex; padding:12mm;
+    overflow:hidden; color:#4a2433; display:flex; padding:11mm;
     background:
-      radial-gradient(85% 55% at 12% 0%, rgba(198,218,238,.55) 0%, rgba(198,218,238,0) 62%),
-      radial-gradient(75% 50% at 100% 100%, rgba(228,213,185,.5) 0%, rgba(228,213,185,0) 64%),
-      linear-gradient(160deg,#ffffff 0%,#fbf9f5 48%,#f4f1ea 100%);
-    box-shadow:0 10px 50px rgba(0,0,0,.16);
+      radial-gradient(80% 50% at 10% 0%, rgba(255,214,229,.85) 0%, rgba(255,214,229,0) 62%),
+      radial-gradient(70% 45% at 100% 100%, rgba(255,226,238,.9) 0%, rgba(255,226,238,0) 65%),
+      linear-gradient(165deg,#fffdfe 0%,#fff6fa 45%,#ffeaf3 100%);
+    box-shadow:0 10px 50px rgba(160,90,120,.18);
   }
+
+  /* 눈 결정 */
+  .flake{position:absolute; color:#ffffff; pointer-events:none;}
+  .flake.f1{width:30mm; height:30mm; left:6mm; top:14mm; opacity:.95;}
+  .flake.f2{width:18mm; height:18mm; left:26mm; top:52mm; opacity:.8; transform:rotate(18deg);}
+  .flake.f3{width:24mm; height:24mm; left:9mm; bottom:34mm; opacity:.85; transform:rotate(-14deg);}
+  .flake.f4{width:14mm; height:14mm; left:40mm; bottom:12mm; opacity:.7; transform:rotate(30deg);}
+  .flake.f5{width:26mm; height:26mm; right:7mm; top:24mm; opacity:.9; transform:rotate(12deg);}
+  .flake.f6{width:16mm; height:16mm; right:30mm; top:58mm; opacity:.75; transform:rotate(-22deg);}
+  .flake.f7{width:28mm; height:28mm; right:10mm; bottom:30mm; opacity:.9; transform:rotate(-10deg);}
+  .flake.f8{width:15mm; height:15mm; right:38mm; bottom:11mm; opacity:.7; transform:rotate(26deg);}
+
+  .snow{position:absolute; inset:0; pointer-events:none;}
+  .snow span{
+    position:absolute; background:#fff; border-radius:50%; box-shadow:0 0 6px rgba(255,255,255,.9);
+  }
+
   .frame{
-    flex:1; border:0.35mm solid rgba(176,138,62,.45);
+    flex:1; border:0.35mm solid rgba(214,150,178,.55);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:20mm 16mm; position:relative; text-align:center;
+    padding:22mm 14mm; position:relative; text-align:center;
+    background:rgba(255,255,255,.35);
   }
   .frame::before{
-    content:""; position:absolute; inset:2.6mm; border:0.2mm solid rgba(176,138,62,.2); pointer-events:none;
+    content:""; position:absolute; inset:2.6mm; border:0.2mm solid rgba(214,150,178,.25); pointer-events:none;
   }
 
   .kicker{
-    font-size:9pt; letter-spacing:6px; color:#96825c; font-weight:700; text-transform:uppercase;
+    font-size:10.5pt; letter-spacing:7px; color:#c07f9c; font-weight:800; text-transform:uppercase;
     white-space:nowrap;
   }
 
   .title{
-    margin-top:11mm; font-size:23pt; font-weight:800; line-height:1.25; letter-spacing:-0.2px;
-    white-space:nowrap;
+    margin-top:12mm; font-size:27pt; font-weight:800; line-height:1.3; letter-spacing:-0.3px;
+    white-space:nowrap; color:#43202f;
   }
-  .title .en{font-family:Georgia,"Times New Roman",serif; letter-spacing:2.5px; font-weight:700;}
-  .title .sep{color:#c3a568; font-weight:400; margin:0 3.5mm; font-size:0.85em;}
-  .title .kr{letter-spacing:0.5px;}
+  .title .en{font-family:Georgia,"Times New Roman",serif; letter-spacing:3px; font-weight:700; color:#a8557a;}
+  .title .kr{letter-spacing:0.5px; display:block; margin-top:2mm; font-size:30pt;}
 
-  .divider{display:flex; align-items:center; gap:4mm; width:62mm; margin:12mm 0;}
-  .divider i{height:0.3mm; flex:1; background:linear-gradient(90deg, rgba(176,138,62,0), rgba(176,138,62,.8), rgba(176,138,62,0));}
-  .divider b{width:3.4px; height:3.4px; background:#b08a3e; transform:rotate(45deg);}
+  .divider{width:66mm; height:0.35mm; margin:12mm 0;
+    background:linear-gradient(90deg, rgba(214,150,178,0), rgba(214,150,178,.9), rgba(214,150,178,0));}
 
   .info{white-space:nowrap;}
-  .info .date{font-size:16pt; font-weight:800; letter-spacing:-0.3px;}
-  .info .date span{color:#a8813a;}
-  .info .date small{font-size:11.5pt; font-weight:600; color:#4d5b6e; margin-left:3mm;}
-  .info .place{margin-top:6mm; font-size:12pt; font-weight:700; color:#2d3f56;}
-  .info .addr{margin-top:2.5mm; font-size:9.5pt; font-weight:500; color:#6b7889;}
+  .info .date{font-size:20pt; font-weight:800; letter-spacing:-0.5px; color:#3c1c29;}
+  .info .date span{color:#b8587f;}
+  .info .date small{display:block; margin-top:3mm; font-size:14pt; font-weight:700; color:#7a5464;}
+  .info .place{margin-top:8mm; font-size:15pt; font-weight:800; color:#5d3345;}
+  .info .addr{margin-top:3mm; font-size:11pt; font-weight:600; color:#8a6473;}
 
   .slogan{
-    position:absolute; left:0; right:0; bottom:10mm; text-align:center;
-    font-family:Georgia,"Times New Roman",serif; font-style:italic; font-size:11pt;
-    color:#a8813a; letter-spacing:.4px; white-space:nowrap;
+    position:absolute; left:0; right:0; bottom:11mm; text-align:center;
+    font-family:Georgia,"Times New Roman",serif; font-style:italic; font-size:12.5pt;
+    color:#b8587f; letter-spacing:.4px; white-space:nowrap;
   }
 
   @media print{
@@ -74,18 +90,63 @@
 <body>
 <div class="stage">
 <div class="poster" id="poster">
+
+  <div class="snow" id="snow"></div>
+
+  <svg class="flake f1" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f2" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f3" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f4" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f5" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f6" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f7" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+  <svg class="flake f8" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
+    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
+    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
+  </svg>
+
   <div class="frame">
 
     <div class="kicker">2027 January</div>
 
     <h1 class="title">
-      <span class="en">FCA YOUNG</span><span class="sep">|</span><span class="kr">원데이 세미나</span>
+      <span class="en">FCA YOUNG</span>
+      <span class="kr">원데이 세미나</span>
     </h1>
 
-    <div class="divider"><i></i><b></b><i></i></div>
+    <div class="divider"></div>
 
     <div class="info">
-      <div class="date">2027년 <span>1월 9일</span> 토요일 <small>오전 10시 30분</small></div>
+      <div class="date">2027년 <span>1월 9일</span> 토요일<small>오전 10시 30분</small></div>
       <div class="place">전주 ABC 암웨이 매장</div>
       <div class="addr">전북 전주시 덕진구 세병2길 10 · 로마네시티 5차 6층</div>
     </div>
@@ -96,6 +157,21 @@
 </div>
 </div>
 <script>
+  // 내리는 눈
+  (function(){
+    var box = document.getElementById("snow");
+    for(var i=0;i<70;i++){
+      var s = document.createElement("span");
+      var d = (Math.random()*3.4 + 1.4).toFixed(1);
+      s.style.width = d + "px";
+      s.style.height = d + "px";
+      s.style.left = (Math.random()*100).toFixed(2) + "%";
+      s.style.top = (Math.random()*100).toFixed(2) + "%";
+      s.style.opacity = (Math.random()*0.6 + 0.35).toFixed(2);
+      box.appendChild(s);
+    }
+  })();
+
   function fit(){
     var p = document.getElementById("poster");
     if(!p) return;
