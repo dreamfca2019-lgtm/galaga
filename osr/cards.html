@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSR 인쇄용 카드 · 2027년 1월</title>
+<style>
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:#eef1f6; color:#101828;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  }
+  .toolbar{
+    position:sticky; top:0; z-index:10; background:#0d2b57; color:#fff;
+    padding:12px 16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  }
+  .toolbar b{font-size:16px; margin-right:auto;}
+  .toolbar button{
+    border:2px solid #fff; background:transparent; color:#fff; font-size:15px; font-weight:700;
+    padding:10px 16px; border-radius:10px; font-family:inherit; cursor:pointer;
+  }
+  .sheet{background:#fff; max-width:210mm; margin:16px auto; padding:12mm 10mm;}
+  .sheet > h2{font-size:17px; margin:0 0 4mm; color:#0d2b57;}
+  .sheet > .hint{font-size:12px; color:#5c6779; margin:0 0 6mm;}
+
+  .grid{display:grid; gap:4mm;}
+  .g2{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:1fr 1fr 1fr;}
+
+  .card{
+    border:1.5px dashed #9fb0c6; border-radius:3mm; padding:6mm 6mm;
+    min-height:52mm; display:flex; flex-direction:column;
+  }
+  .card .lb{font-size:11px; font-weight:800; letter-spacing:1.5px; color:#1f5fbf; margin-bottom:3mm;}
+  .card .big{font-size:19px; font-weight:800; line-height:1.45; letter-spacing:-0.3px;}
+  .card .sub{font-size:12px; color:#5c6779; line-height:1.6; margin-top:3mm;}
+  .card .fill{margin-top:auto; display:flex; flex-direction:column; gap:2mm;}
+  .card .fill div{font-size:11px; color:#8794a8; border-bottom:1px solid #cfd8e4; padding-bottom:1mm;}
+
+  .sit{min-height:60mm; border-style:solid; border-color:#cfd8e4;}
+  .sit .who{font-size:12px; font-weight:800; color:#fff; background:#1f5fbf; border-radius:2mm;
+    padding:1.5mm 3mm; align-self:flex-start; margin-bottom:3mm;}
+
+  table.cal{width:100%; border-collapse:collapse; margin-top:3mm;}
+  table.cal th,table.cal td{border:1px solid #cfd8e4; padding:0; height:26mm; vertical-align:top;}
+  table.cal th{font-size:12px; color:#0d2b57; background:#f2f6fc; height:auto; padding:2mm;}
+  table.cal th.sun{color:#c0392b;}
+  table.cal td .d{font-size:11px; color:#8794a8; padding:1.5mm 2mm;}
+  table.cal td.empty{background:#fafbfd;}
+
+  .lines{margin-top:5mm;}
+  .lines .ln{display:flex; align-items:flex-end; gap:3mm; margin-bottom:5mm;}
+  .lines .ln span{font-size:12px; font-weight:700; color:#0d2b57; white-space:nowrap;}
+  .lines .ln i{flex:1; border-bottom:1px dotted #a8b6c9; height:6mm;}
+
+  .note{font-size:11px; color:#8794a8; margin-top:6mm; line-height:1.6;}
+  .pagebreak{page-break-before:always;}
+
+  @media print{
+    body{background:#fff;}
+    .toolbar{display:none;}
+    .sheet{margin:0; padding:10mm 8mm; max-width:none;}
+    .card,table.cal tr{page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <b>OSR 인쇄용 카드 — 상황 카드 · 미션 카드 · 30일 달력</b>
+  <button onclick="window.print()">인쇄하기</button>
+</div>
+
+<!-- 1. 상황 카드 -->
+<div class="sheet">
+  <h2>상황 카드 · 첫 고객 역할극용</h2>
+  <p class="hint">가위로 잘라 테이블마다 한 벌씩. 3분씩 두 라운드, 손님과 사업자 역할을 바꿔서 합니다.</p>
+  <div class="grid g2" id="sitGrid"></div>
+</div>
+
+<!-- 2. 미션 카드 -->
+<div class="sheet pagebreak">
+  <h2>미션 카드 · 한 장씩 뽑기</h2>
+  <p class="hint">점선으로 잘라 25장. 뽑은 사람이 이름을 쓰고 서명합니다. 서명은 약속의 표시입니다.</p>
+  <div class="grid g3" id="misGrid"></div>
+</div>
+
+<!-- 3. 30일 달력 -->
+<div class="sheet pagebreak">
+  <h2>30일 달력 · 손으로 직접 채우기</h2>
+  <p class="hint">이름을 쓰고, 이번 달 안에 할 일 세 가지를 스스로 정해 날짜에 적습니다. 끝나면 사진으로 찍어 두세요.</p>
+  <div class="lines">
+    <div class="ln"><span>이름</span><i></i><span>뽑은 미션</span><i></i></div>
+  </div>
+  <table class="cal" id="cal"></table>
+  <div class="lines">
+    <div class="ln"><span>30일 안에 할 일 ①</span><i></i></div>
+    <div class="ln"><span>30일 안에 할 일 ②</span><i></i></div>
+    <div class="ln"><span>30일 안에 할 일 ③</span><i></i></div>
+  </div>
+  <p class="note">
+    다음 OSR에서 이 종이를 다시 확인합니다. 다 못 채우셔도 괜찮습니다. 몇 개 하셨는지만 같이 볼게요.<br>
+    제품 효능과 가격에 관한 표현은 제품 라벨과 공식 자료를 기준으로 확인해 주세요.
+  </p>
+</div>
+
+<script>
+const SIT = [
+  {who:"손님 역할", big:"“요즘 뭐 하세요?”", sub:"가볍게 물었습니다. 여기서 30초 안에 말해 보세요. 설명을 다 하려 하지 말고, 한 가지만 꺼내면 됩니다."},
+  {who:"손님 역할", big:"“값이 좀 비싼데요.”", sub:"흥정이 아니라 부담이라는 뜻입니다. 같은 제품을 더 싸게 파는 것과, 한 달에 얼마인지를 비교해 보세요."},
+  {who:"손님 역할", big:"“나중에 연락 드릴게요.”", sub:"거절이 아니라 시간이 필요하다는 말입니다. 언제 다시 말씀드리면 되는지만 정하고 마무리해 보세요."},
+  {who:"손님 역할", big:"“저는 이런 거 안 해요.”", sub:"권유가 부담스러운 상태입니다. 팔지 않고, 궁금하면 물어보라고만 남기고 끝내 보세요."},
+  {who:"사업자 역할", big:"“제가 쓰고 있는 제품인데…”", sub:"내가 쓰는 이유를 30초로. 성분 설명보다 내가 어떻게 쓰는지가 먼저입니다."},
+  {who:"사업자 역할", big:"“한 달 얼마인지 계산해 드릴게요.”", sub:"총액이 아니라 하루·한 달 기준으로. 계산기를 꺼내 같이 보는 게 좋습니다."}
+];
+
+const MIS = [
+  "이번 주에 가족 한 명에게 내가 쓰는 제품을 한 번 써 보게 하기",
+  "제품 후기 한 줄을 SNS에 올리기",
+  "첫 고객 한 명을 만나 인사만 하고 오기",
+  "지금 쓰는 제품의 라벨을 처음부터 끝까지 읽어 보기",
+  "친구 한 명에게 내가 하는 일을 처음으로 말해 보기",
+  "물건을 사 준 고객에게 안부 메시지 보내기",
+  "이번 주에 새로 만난 사람 세 명 메모해 두기",
+  "내가 자주 가는 가게 주인에게 명함 한 장 드리기",
+  "제품 사용 사진을 한 장 찍어 두기",
+  "가족에게 내 사업 이야기를 5분만 해 보기",
+  "지난달에 산 고객에게 잘 쓰고 계신지 물어보기",
+  "내 소개 문장을 세 줄로 적어 보기",
+  "제품 설명을 소리 내어 세 번 연습하기",
+  "카톡 프로필 사진을 내 사진으로 바꾸기",
+  "약속 장소에 10분 먼저 도착해 보기",
+  "고객이 자주 묻는 질문 3개를 적어 보기",
+  "제품 하나를 직접 써 보고 느낌을 메모하기",
+  "다음 달 달력에 만날 사람 세 명 적기",
+  "가족이나 친구에게 제품 하나 선물하기",
+  "모르는 사람에게 먼저 인사해 보기",
+  "이번 주에 들은 칭찬 한 마디를 적어 두기",
+  "제품을 왜 시작했는지 종이에 한 줄로 적기",
+  "고객 한 명의 생일을 달력에 적어 두기",
+  "선배 사업자에게 궁금한 것 하나 물어보기",
+  "30일 달력에 오늘 한 일을 하나 적기"
+];
+
+(function(){
+  const sg = document.getElementById("sitGrid");
+  SIT.forEach(s => {
+    const d = document.createElement("div");
+    d.className = "card sit";
+    d.innerHTML = '<div class="who">' + s.who + '</div>' +
+                  '<div class="big">' + s.big + '</div>' +
+                  '<div class="sub">' + s.sub + '</div>';
+    sg.appendChild(d);
+  });
+
+  const mg = document.getElementById("misGrid");
+  MIS.forEach(t => {
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerHTML = '<div class="lb">MISSION</div>' +
+                  '<div class="big" style="font-size:16px;">' + t + '</div>' +
+                  '<div class="fill"><div>이름</div><div>서명</div></div>';
+    mg.appendChild(d);
+  });
+
+  // 2027년 1월 달력 (1월 1일 금요일)
+  const startDow = 5; // 일=0 ... 금=5
+  const days = 31;
+  let h = '<tr><th class="sun">일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>';
+  let cells = 0;
+  for(let i=0;i<startDow;i++){ h += '<td class="empty"></td>'; cells++; }
+  for(let d=1; d<=days; d++){
+    h += '<td><div class="d">' + d + '</div></td>';
+    cells++;
+    if(cells % 7 === 0 && d < days){ h += '</tr><tr>'; }
+  }
+  while(cells % 7 !== 0){ h += '<td class="empty"></td>'; cells++; }
+  h += '</tr>';
+  document.getElementById("cal").innerHTML = h;
+})();
+</script>
+</body>
+</html>
