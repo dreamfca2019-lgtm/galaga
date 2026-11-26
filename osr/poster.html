@@ -5,75 +5,68 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FCA YOUNG 원데이 세미나 · 전주 ABC</title>
 <style>
-  @page{size:A4 landscape; margin:0;}
+  @page{size:A4 portrait; margin:0;}
   *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{width:100%;}
   body{
-    background:#e6e4de; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    display:flex; justify-content:center; align-items:flex-start; padding:24px 10px; margin:0;
+    background:#e6e4de; margin:0; padding:18px 8px;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    display:flex; justify-content:center; align-items:flex-start;
   }
-  .stage{display:flex; justify-content:center; align-items:flex-start; width:100%; overflow:hidden;}
+  .stage{display:flex; justify-content:flex-start; align-items:flex-start; width:100%; overflow:hidden;}
+
   .poster{
-    width:297mm; height:210mm; flex:0 0 auto; transform-origin:top center; position:relative; overflow:hidden; color:#16273d;
+    width:210mm; height:297mm; flex:0 0 auto; transform-origin:top left; position:relative;
+    overflow:hidden; color:#16273d; display:flex; padding:12mm;
     background:
-      radial-gradient(70% 90% at 15% 0%, rgba(196,216,236,.55) 0%, rgba(196,216,236,0) 60%),
-      radial-gradient(60% 80% at 100% 100%, rgba(226,210,180,.5) 0%, rgba(226,210,180,0) 62%),
-      linear-gradient(150deg,#ffffff 0%,#fbf9f5 45%,#f4f1ea 100%);
-    box-shadow:0 10px 50px rgba(0,0,0,.18);
-    display:flex; padding:13mm;
+      radial-gradient(85% 55% at 12% 0%, rgba(198,218,238,.55) 0%, rgba(198,218,238,0) 62%),
+      radial-gradient(75% 50% at 100% 100%, rgba(228,213,185,.5) 0%, rgba(228,213,185,0) 64%),
+      linear-gradient(160deg,#ffffff 0%,#fbf9f5 48%,#f4f1ea 100%);
+    box-shadow:0 10px 50px rgba(0,0,0,.16);
   }
   .frame{
     flex:1; border:0.35mm solid rgba(176,138,62,.45);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:16mm 20mm; position:relative;
+    padding:20mm 16mm; position:relative; text-align:center;
   }
   .frame::before{
-    content:""; position:absolute; inset:2.6mm; border:0.2mm solid rgba(176,138,62,.22); pointer-events:none;
+    content:""; position:absolute; inset:2.6mm; border:0.2mm solid rgba(176,138,62,.2); pointer-events:none;
   }
-
-  /* 은은한 눈 결정 */
-  .flake{position:absolute; color:#9dbad6; pointer-events:none;}
-  .flake.a{width:64mm; height:64mm; left:-16mm; top:-14mm; opacity:.16;}
-  .flake.b{width:44mm; height:44mm; right:-10mm; bottom:-8mm; opacity:.14;}
 
   .kicker{
     font-size:9pt; letter-spacing:6px; color:#96825c; font-weight:700; text-transform:uppercase;
+    white-space:nowrap;
   }
-  .title{
-    margin-top:9mm; font-size:33pt; font-weight:800; letter-spacing:-0.6px; line-height:1.15;
-    text-align:center; white-space:nowrap;
-  }
-  .title .en{font-family:Georgia,"Times New Roman",serif; letter-spacing:3px; font-weight:700;}
-  .title .sep{color:#c0a05e; font-weight:400; margin:0 3mm;}
-  .title .kr{letter-spacing:1px;}
 
-  .divider{display:flex; align-items:center; gap:4mm; width:64mm; margin:11mm 0 10mm;}
-  .divider i{height:0.3mm; flex:1; background:linear-gradient(90deg, rgba(176,138,62,0), rgba(176,138,62,.75), rgba(176,138,62,0));}
+  .title{
+    margin-top:11mm; font-size:23pt; font-weight:800; line-height:1.25; letter-spacing:-0.2px;
+    white-space:nowrap;
+  }
+  .title .en{font-family:Georgia,"Times New Roman",serif; letter-spacing:2.5px; font-weight:700;}
+  .title .sep{color:#c3a568; font-weight:400; margin:0 3.5mm; font-size:0.85em;}
+  .title .kr{letter-spacing:0.5px;}
+
+  .divider{display:flex; align-items:center; gap:4mm; width:62mm; margin:12mm 0;}
+  .divider i{height:0.3mm; flex:1; background:linear-gradient(90deg, rgba(176,138,62,0), rgba(176,138,62,.8), rgba(176,138,62,0));}
   .divider b{width:3.4px; height:3.4px; background:#b08a3e; transform:rotate(45deg);}
 
-  .info{text-align:center;}
-  .info .date{
-    font-size:17pt; font-weight:800; letter-spacing:-0.3px; color:#16273d;
-  }
+  .info{white-space:nowrap;}
+  .info .date{font-size:16pt; font-weight:800; letter-spacing:-0.3px;}
   .info .date span{color:#a8813a;}
-  .info .date small{font-size:12pt; font-weight:600; color:#4d5b6e; margin-left:3mm;}
-  .info .place{
-    margin-top:5mm; font-size:12.5pt; font-weight:700; color:#2d3f56;
-  }
-  .info .place .bar{color:#cbb894; margin:0 3mm;}
-  .info .addr{
-    margin-top:2.5mm; font-size:10pt; font-weight:500; color:#6b7889; letter-spacing:0;
-  }
+  .info .date small{font-size:11.5pt; font-weight:600; color:#4d5b6e; margin-left:3mm;}
+  .info .place{margin-top:6mm; font-size:12pt; font-weight:700; color:#2d3f56;}
+  .info .addr{margin-top:2.5mm; font-size:9.5pt; font-weight:500; color:#6b7889;}
 
   .slogan{
-    position:absolute; left:0; right:0; bottom:9mm; text-align:center;
+    position:absolute; left:0; right:0; bottom:10mm; text-align:center;
     font-family:Georgia,"Times New Roman",serif; font-style:italic; font-size:11pt;
-    color:#a8813a; letter-spacing:.4px;
+    color:#a8813a; letter-spacing:.4px; white-space:nowrap;
   }
 
   @media print{
     body{background:#fff; padding:0; display:block;}
     .stage{display:block; overflow:visible;}
-    .poster{box-shadow:none; transform:none !important;}
+    .poster{box-shadow:none; transform:none !important; margin:0;}
     *{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
   }
 </style>
@@ -81,21 +74,9 @@
 <body>
 <div class="stage">
 <div class="poster" id="poster">
-
-  <svg class="flake a" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
-    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
-    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
-  </svg>
-  <svg class="flake b" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
-    <path d="M50 4V96"/><path d="M50 4 39 15M50 4l11 11"/><path d="M50 96 39 85M50 96l11-11"/>
-    <path d="M10 27 90 73"/><path d="M10 27l1 15M10 27l15-2"/><path d="M90 73l-1-15M90 73l-15 2"/>
-    <path d="M90 27 10 73"/><path d="M90 27l-1 15M90 27l-15-2"/><path d="M10 73l1-15M10 73l15 2"/>
-  </svg>
-
   <div class="frame">
 
-    <div class="kicker">2027 · January</div>
+    <div class="kicker">2027 January</div>
 
     <h1 class="title">
       <span class="en">FCA YOUNG</span><span class="sep">|</span><span class="kr">원데이 세미나</span>
@@ -117,24 +98,23 @@
 <script>
   function fit(){
     var p = document.getElementById("poster");
+    if(!p) return;
     var stage = p.parentNode;
     p.style.transform = "none";
     stage.style.height = "auto";
     var w = p.offsetWidth, h = p.offsetHeight;
-    var avail = Math.min(window.innerWidth - 16, w);
+    var avail = Math.min(window.innerWidth - 20, w);
     var s = Math.min(1, avail / w);
     if(s < 1){
       p.style.transform = "scale(" + s + ")";
       stage.style.height = (h * s) + "px";
-    } else {
-      stage.style.height = "auto";
     }
   }
   window.addEventListener("resize", fit);
-  window.addEventListener("orientationchange", function(){ setTimeout(fit, 120); });
+  window.addEventListener("orientationchange", function(){ setTimeout(fit, 150); });
   window.addEventListener("load", fit);
   fit();
-  setTimeout(fit, 60);
+  setTimeout(fit, 80);
 </script>
 </body>
 </html>
