@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<title>암웨이 제품 쉽게 설명하기</title>
+<style>
+  :root{
+    --bg:#ffffff; --card:#ffffff; --line:#c9d3e2; --text:#101828; --dim:#44506a;
+    --navy:#0d2b57; --blue:#1f5fbf; --gold:#a86b00; --soft:#eef4fd;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    font-size:20px; line-height:1.7; padding-bottom:30px;
+  }
+  button{font-family:inherit; cursor:pointer;}
+
+  header{background:var(--navy); color:#fff; padding:20px 18px 18px;}
+  header .in{max-width:700px; margin:0 auto;}
+  header h1{font-size:26px; margin:0 0 6px; letter-spacing:-0.5px;}
+  header p{font-size:17px; margin:0; color:#c6d8f2; line-height:1.5;}
+  .search{margin-top:16px; position:relative;}
+  .search input{
+    width:100%; border:2px solid #fff; border-radius:14px; padding:16px 16px 16px 18px;
+    font-size:20px; font-family:inherit; color:var(--text); background:#fff;
+  }
+  .sizeRow{display:flex; gap:10px; margin-top:14px;}
+  .sizeRow button{
+    flex:1; border:2px solid #6f8fbd; background:transparent; color:#fff;
+    border-radius:12px; padding:12px; font-size:18px; font-weight:700;
+  }
+  .sizeRow button.on{background:#fff; color:var(--navy); border-color:#fff;}
+
+  .wrap{max-width:700px; margin:0 auto; padding:16px 18px 0;}
+
+  .list{display:flex; flex-direction:column; gap:12px;}
+  .item{
+    display:flex; gap:14px; align-items:center; width:100%; text-align:left;
+    background:var(--card); border:2px solid var(--line); border-radius:16px; padding:18px;
+  }
+  .item:active{background:var(--soft);}
+  .item .em{font-size:34px; flex:0 0 auto;}
+  .item .txt{flex:1; min-width:0;}
+  .item .nm{font-size:23px; font-weight:800; letter-spacing:-0.4px; display:block; margin-bottom:4px;}
+  .item .ds{font-size:17px; color:var(--dim); display:block; line-height:1.5;}
+  .empty{text-align:center; color:var(--dim); padding:50px 0; font-size:19px;}
+
+  #detail{display:none;}
+  .back{
+    border:2px solid var(--line); background:#fff; color:var(--navy); font-size:19px; font-weight:800;
+    padding:14px 18px; border-radius:14px; margin:6px 0 14px; width:100%;
+  }
+  .hero{background:var(--soft); border-radius:18px; padding:20px; margin-bottom:14px;}
+  .hero .brand{display:inline-block; font-size:16px; font-weight:800; color:var(--blue);
+    background:#fff; border-radius:8px; padding:4px 10px; margin-bottom:12px;}
+  .hero h2{font-size:27px; margin:0 0 10px; letter-spacing:-0.6px; line-height:1.35;}
+  .hero p{margin:0; font-size:20px; line-height:1.65;}
+  .hero .price{margin-top:14px; font-size:19px; font-weight:800; color:var(--gold);}
+
+  .sec{background:#fff; border:2px solid var(--line); border-radius:16px; padding:18px; margin-bottom:14px;}
+  .sec h3{font-size:19px; margin:0 0 12px; color:var(--blue); letter-spacing:-0.2px;}
+  .say{font-size:22px; line-height:1.85; color:#101828; white-space:pre-line; font-weight:600;}
+  .sec ul{margin:0; padding:0; list-style:none;}
+  .sec li{font-size:20px; line-height:1.7; padding-left:26px; position:relative; margin-bottom:12px;}
+  .sec li:last-child{margin-bottom:0;}
+  .sec li::before{content:"•"; position:absolute; left:6px; color:var(--blue); font-weight:900;}
+  .qa{border-top:2px dashed var(--line); padding-top:14px; margin-top:14px;}
+  .qa:first-of-type{border-top:0; padding-top:0; margin-top:0;}
+  .qa .q{font-size:20px; font-weight:800; margin-bottom:8px;}
+  .qa .a{font-size:19px; color:var(--dim); line-height:1.7;}
+
+  .bigbtns{display:flex; flex-direction:column; gap:10px; margin:6px 0 18px;}
+  .bigbtns button{
+    width:100%; border-radius:16px; padding:20px; font-size:21px; font-weight:800;
+    border:2px solid var(--navy); background:#fff; color:var(--navy);
+  }
+  .bigbtns .primary{background:var(--navy); color:#fff;}
+  .bigbtns .ask{background:var(--blue); border-color:var(--blue); color:#fff;}
+
+  .note{font-size:17px; color:#6b7688; line-height:1.7; padding:10px 2px 20px; text-align:center;}
+
+  /* 큰 글씨 발표 모드 */
+  #show{display:none; position:fixed; inset:0; background:#0d1626; color:#fff; z-index:50; flex-direction:column;}
+  #show.on{display:flex;}
+  .slide{flex:1; display:flex; flex-direction:column; justify-content:center; padding:30px 26px; overflow-y:auto;}
+  .slide .kick{font-size:19px; color:#9dc0ee; font-weight:800; margin-bottom:16px;}
+  .slide .big{font-size:34px; font-weight:800; line-height:1.5; letter-spacing:-0.6px;}
+  .slide .sub{font-size:24px; color:#c3d5ee; line-height:1.7; margin-top:18px;}
+  .showbar{display:flex; gap:12px; padding:16px 20px 26px; border-top:2px solid rgba(255,255,255,.15);}
+  .showbar button{
+    flex:1; border:0; border-radius:14px; padding:18px; font-size:20px; font-weight:800;
+    background:rgba(255,255,255,.16); color:#fff;
+  }
+  .showbar .nx{background:#1f5fbf;}
+  .showbar .cnt{flex:0 0 auto; display:flex; align-items:center; font-size:18px; color:#9fb0c9; padding:0 6px;}
+
+  .toast{
+    position:fixed; left:50%; bottom:28px; transform:translate(-50%, 20px); opacity:0;
+    background:#101828; color:#fff; font-size:18px; padding:16px 22px; border-radius:14px;
+    max-width:88%; text-align:center; transition:.25s; pointer-events:none; z-index:99;
+  }
+  .toast.on{opacity:1; transform:translate(-50%,0);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="in">
+    <h1>암웨이 제품 쉽게 설명하기</h1>
+    <p>글씨 크게, 말은 짧게. 그대로 읽어 주시면 됩니다.</p>
+    <div class="search">
+      <input id="q" type="search" placeholder="제품 이름이나 궁금한 곳을 적어 주세요">
+    </div>
+    <div class="sizeRow">
+      <button data-sz="1" class="on">보통 글씨</button>
+      <button data-sz="2">아주 크게</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="listView">
+    <div class="list" id="list"></div>
+    <div class="empty" id="empty" style="display:none;">찾는 제품이 없습니다. 다른 말로 적어 보세요.</div>
+    <div class="note">
+      건강기능식품의 효능 문구는 제품 라벨을 그대로 확인해 주세요.<br>
+      가격은 바뀔 수 있으니 주문 전에 공식몰에서 확인해 주세요.
+    </div>
+  </div>
+  <div id="detail"></div>
+</div>
+
+<div id="show">
+  <div class="slide" id="slide"></div>
+  <div class="showbar">
+    <div class="cnt" id="cnt">1 / 1</div>
+    <button id="prevBtn">이전</button>
+    <button class="nx" id="nextBtn">다음</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const P = [
+  {id:"doublex", brand:"뉴트리라이트", em:"💊", name:"더블엑스",
+   one:"여러 영양제를 한 번에 챙기는 종합영양제입니다.",
+   say:"이건 뉴트리라이트에서 제일 기본이 되는 종합영양제예요.\n비타민 하나, 미네랄 하나 따로 사면 개수도 많고 챙기기도 번거롭잖아요.\n이건 한 팩으로 정리되는 구성이에요. 하루로 계산하면 3천 원 정도입니다.",
+   points:["31일분 구성입니다.","여러 제품을 하나로 줄이고 싶은 분께 맞습니다.","라벨에 적힌 함량을 같이 확인해 드리세요."],
+   price:"91,000원 · 124정 3팩 (31일분)",
+   faq:[{q:"다른 종합비타민과 뭐가 다른가요?", a:"성분과 함량을 나란히 놓고 보시는 게 제일 정확합니다. 라벨을 같이 보면서 설명해 드리면 됩니다."}]},
+
+  {id:"joint", brand:"뉴트리라이트", em:"🦵", name:"조인트 가드",
+   one:"관절이 신경 쓰이는 분께 먼저 꺼내는 제품입니다.",
+   say:"계단 오르내리실 때 무릎이 불편하다고 하시면 이걸 먼저 보여드려요.\n한 달에 6만 3천 원이고, 꾸준히 드시는 걸 전제로 만든 구성입니다.\n어떤 효능이 있다고 말씀드리기보다 라벨에 적힌 문구를 같이 읽어 보시는 게 정확해요.",
+   points:["30일분 구성입니다.","드시는 약이 있으면 의사나 약사에게 먼저 확인하시라고 말해 주세요.","부모님 선물 상담에서 반응이 좋습니다."],
+   price:"63,000원 · 180정 (30일분)",
+   faq:[{q:"약이랑 같이 먹어도 되나요?", a:"드시는 약이 있으면 의사나 약사에게 먼저 확인하시는 게 안전합니다."}]},
+
+  {id:"acerola", brand:"뉴트리라이트", em:"🍒", name:"아세로라 C",
+   one:"비타민C만 따로 챙기고 싶을 때 가장 단순한 제품입니다.",
+   say:"비타민C 하나만 챙기고 싶으시면 이게 제일 단순해요.\n300정에 100일분이라 하루 800원이 안 됩니다.\n이미 드시는 게 있으면 이것 하나만 더하시는 걸로 정리해 드릴게요.",
+   points:["100일분 구성입니다.","오래 드시는 분에게 유리합니다.","아세로라 열매에서 얻은 원료를 앞세운 제품입니다."],
+   price:"76,000원 · 300정 (100일분)",
+   faq:[{q:"시중 비타민C와 차이가 뭔가요?", a:"원료와 함량을 라벨로 비교해 보시면 됩니다. 아세로라 열매 유래 원료를 쓰는 게 특징입니다."}]},
+
+  {id:"calmag", brand:"뉴트리라이트", em:"🦴", name:"칼맥 디",
+   one:"칼슘과 마그네슘, 비타민D를 함께 담은 제품입니다.",
+   say:"칼슘 챙기시는 분들한테 이걸 보여드려요.\n칼슘만 드시면 흡수를 돕는 성분을 따로 사야 하는데, 이건 같이 들어 있습니다.\n3개월 구성이라 한 번 사두면 오래 드실 수 있어요.",
+   points:["90일분 구성입니다.","우유를 잘 안 드시는 분께 자주 권합니다.","가격은 주문 전에 공식몰에서 확인해 주세요."],
+   price:"360정 (90일분)",
+   faq:[{q:"우유만 마시면 충분하지 않나요?", a:"드시는 양에 따라 다릅니다. 부족하다 싶을 때 보충하는 용도로 설명드립니다."}]},
+
+  {id:"protein", brand:"뉴트리라이트", em:"🥤", name:"뉴트리 파이토 푸로틴",
+   one:"단백질이 부족한 식사를 채워 주는 제품입니다.",
+   say:"끼니를 자주 거르시거나 단백질이 부족하다 싶으면 이걸 말씀드려요.\n밥을 대신하는 게 아니라, 부족한 부분을 채우는 쪽입니다.\n우유나 물에 타서 드시면 되니까 드시기 편하세요.",
+   points:["900g 통입니다.","끼니 대용이 아니라고 꼭 말해 주세요.","식사량이 줄어든 어르신께 자주 권합니다."],
+   price:"85,000원 · 900g",
+   faq:[{q:"밥 대신 먹어도 되나요?", a:"식사를 대신하는 용도보다는 부족한 영양을 채우는 쪽으로 설명드립니다. 식사는 그대로 하시는 게 좋습니다."}]},
+
+  {id:"mylab", brand:"뉴트리라이트", em:"🧪", name:"마이랩 바이 뉴트리라이트",
+   one:"장내 미생물 분석을 바탕으로 맞추는 유산균입니다.",
+   say:"유산균을 여러 개 바꿔 드셔 봤는데 잘 모르겠다는 분한테 말씀드려요.\n그냥 파는 유산균이 아니라, 분석을 한 번 하고 그 결과에 맞춰 주는 방식입니다.\n분석에 시간이 걸린다는 점은 미리 알려 드려야 합니다.",
+   points:["2022년에 나온 제품입니다.","분석 절차와 기간을 먼저 설명하세요.","가격은 공식몰에서 확인해 주세요."],
+   price:"분석 연동 상품",
+   faq:[{q:"분석은 어떻게 하나요?", a:"검체를 보내는 절차가 있고 결과까지 기간이 걸립니다. 순서를 같이 확인해 드리면 됩니다."}]},
+
+  {id:"derma", brand:"아티스트리", em:"✨", name:"더마아키텍트",
+   one:"집에서 쓰는 피부 관리 기기입니다.",
+   say:"집에서 피부 관리를 하고 싶다는 분한테 보여드려요.\n아티스트리에서 2025년에 낸 기기인데, 만든 건 국내 회사이고 해외 36개국에 나가고 있습니다.\n기기라서 말로 설명하는 것보다 한 번 보여드리는 게 나아요.",
+   points:["기기라서 사용법 설명이 중요합니다.","가격과 구성품은 공식몰에서 확인하세요.","시술이 아니라 홈케어 기기라고 분명히 말해 주세요."],
+   price:"가격 확인 필요",
+   faq:[{q:"피부과 시술과 비교하면 어떤가요?", a:"시술이 아니라 집에서 쓰는 기기입니다. 같은 것으로 비교하기는 어렵습니다."}]},
+
+  {id:"cleanser", brand:"아티스트리", em:"🧴", name:"무스 클렌저",
+   one:"세안하고 나면 피부가 당기는 분께 꺼내는 제품입니다.",
+   say:"세안하고 나면 당긴다는 분한테 이걸 먼저 보여드려요.\n아티스트리는 1958년부터 시작한 브랜드입니다.\n거품형이라 쓰기 편하고, 세안제는 부담이 적어서 처음 시작하시기 좋아요.",
+   points:["145ml 제품입니다.","민감한 분은 팔 안쪽에 먼저 테스트해 보시라고 권하세요.","첫 구매로 부담이 적습니다."],
+   price:"145ml",
+   faq:[{q:"민감한 피부인데 괜찮을까요?", a:"먼저 팔 안쪽에 소량 발라 보시길 권합니다. 성분표도 같이 확인해 드리면 됩니다."}]},
+
+  {id:"proteincream", brand:"아티스트리", em:"🫧", name:"프로틴 아키텍처 크림",
+   one:"건조함이 고민인 분께 붙여서 설명하는 크림입니다.",
+   say:"세안하고 나서 당김이 심하다는 분한테는 세안제랑 이 크림을 같이 보여드려요.\n단백질 구조에 착안한 라인입니다.\n같이 쓰실 때 바르는 순서를 알려드리는 게 제일 도움이 됩니다.",
+   points:["50g 제품입니다.","세안제와 세트로 제안하기 좋습니다.","가격은 공식몰에서 확인하세요."],
+   price:"50g",
+   faq:[{q:"쓰던 크림이 있는데요?", a:"지금 쓰시는 제품과 순서가 겹치지 않게 정리해 드리면 됩니다."}]},
+
+  {id:"esping", brand:"홈케어", em:"💧", name:"이스프링 정수기",
+   one:"설치와 관리가 따라오는 제품입니다.",
+   say:"정수기는 물건만 파는 게 아니라 설치랑 관리가 따라옵니다.\n그래서 렌탈 조건, 관리 주기, 필터 교체 일정을 종이에 적어서 드려요.\n정수기와 공기청정기는 만족 보증 기간이 한 달이라, 그 부분도 꼭 미리 말씀드립니다.",
+   points:["계약서에 적힌 금액과 기간을 같이 읽어 드리세요.","해지 조건도 사인 전에 확인하세요.","관리 주기를 적어 드리면 신뢰가 생깁니다."],
+   price:"모델과 조건에 따라 다름",
+   faq:[{q:"설치비나 관리비가 따로 있나요?", a:"조건에 따라 다릅니다. 계약서에 적힌 금액과 관리 주기를 같이 확인해 드리면 됩니다."}]},
+
+  {id:"atmosphere", brand:"홈케어", em:"🌬️", name:"엣모스피어 공기청정기",
+   one:"미세먼지 철에 문의가 많은 제품입니다.",
+   say:"아이나 반려동물이 있으면 공기청정기를 많이 찾으세요.\n필터를 언제 갈아야 하는지가 중요해서 그 일정을 미리 알려드립니다.\n놓을 자리도 같이 봐 드리면 설명이 쉬워집니다.",
+   points:["필터 교체 주기와 비용을 먼저 알려 주세요.","만족 보증 기간은 1개월입니다.","정수기와 함께 제안하기 좋습니다."],
+   price:"모델과 조건에 따라 다름",
+   faq:[{q:"필터는 얼마나 자주 갈아야 하나요?", a:"사용 환경에 따라 다릅니다. 권장 주기와 교체 비용을 계약 전에 확인해 드리면 됩니다."}]},
+
+  {id:"glister", brand:"퍼스널케어", em:"🦷", name:"글리스터",
+   one:"치약과 구강청결제입니다. 설명이 짧아도 됩니다.",
+   say:"치약은 어차피 계속 사야 하잖아요.\n글리스터는 한 번 써보시고 맞으면 계속 쓰시는 제품입니다.\n부담 없이 시작하시라고 이걸 첫 제품으로 권해 드려요.",
+   points:["소모품이라 다시 찾으시는 분이 많습니다.","아이에게 쓸 때는 라벨의 대상 연령을 확인하세요.","가격은 공식몰에서 확인하세요."],
+   price:"구강케어 제품",
+   faq:[{q:"아이가 써도 되나요?", a:"연령별로 권장되는 제품이 다를 수 있습니다. 라벨의 대상 연령을 확인해 드리면 됩니다."}]},
+
+  {id:"home", brand:"퍼스널케어", em:"🧺", name:"암웨이홈",
+   one:"세탁세제와 주방세제 같은 생활용품입니다.",
+   say:"세제 같은 건 매달 나가는 돈입니다.\n농축이라 한 통 쓰는 기간이 길어서, 한 달 기준으로 계산해서 보여드리면 반응이 좋아요.\n부담 없이 하나만 바꿔 보시는 걸로 시작하시면 됩니다.",
+   points:["농축 제품이라 쓰는 기간이 깁니다.","한 달 기준으로 계산해 보여 주세요.","정기 구매로 이어지기 쉽습니다."],
+   price:"생활용품",
+   faq:[{q:"일반 세제보다 비싼 것 같은데요?", a:"한 통으로 쓰는 기간과 한 번에 쓰는 양을 같이 계산해서 보여드리면 됩니다."}]},
+
+  {id:"growing", brand:"기타", em:"🌱", name:"그로잉랩",
+   one:"아이 성장을 기록하고 관리하는 서비스입니다.",
+   say:"아이 키나 성장이 신경 쓰인다는 부모님한테 말씀드려요.\n제품이 아니라 성장을 기록하고 관리하는 서비스입니다.\n막연히 키 크는 걸 찾기보다, 기록을 남기고 같이 보자는 쪽이 반응이 좋아요.",
+   points:["2023년에 나온 서비스입니다.","키가 큰다고 보장하는 건 아니라고 분명히 말하세요.","이용 방법과 비용은 공식 채널에서 확인하세요."],
+   price:"이용 조건 확인 필요",
+   faq:[{q:"키가 큰다고 보장되나요?", a:"그런 보장은 없습니다. 성장을 기록하고 생활 습관을 관리하는 걸 돕는 서비스입니다."}]},
+
+  {id:"bodykey", brand:"기타", em:"⚖️", name:"바디키",
+   one:"체중 관리 프로그램입니다. 과정으로 설명합니다.",
+   say:"바디키는 제품 하나가 아니라 몇 주 동안 하는 과정입니다.\n그래서 어떤 순서로 하는지를 먼저 설명드리는 게 좋아요.\n혼자 하면 중간에 놓치기 쉬워서, 기록하는 걸 같이 하자고 말씀드립니다.",
+   points:["제품이 아니라 프로그램입니다.","순서와 기간을 먼저 설명하세요.","가격과 구성은 공식몰에서 확인하세요."],
+   price:"구성에 따라 다름",
+   faq:[{q:"운동도 같이 해야 하나요?", a:"프로그램 안내에 따라 하시면 되고, 활동량은 함께 조정하는 게 좋습니다."}]}
+];
+
+const listEl = document.getElementById("list");
+const emptyEl = document.getElementById("empty");
+const listView = document.getElementById("listView");
+const detailEl = document.getElementById("detail");
+const qEl = document.getElementById("q");
+const toastEl = document.getElementById("toast");
+
+let keyword = "";
+
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add("on");
+  clearTimeout(toastEl._t);
+  toastEl._t = setTimeout(() => toastEl.classList.remove("on"), 2600);
+}
+
+function match(p){
+  if(!keyword) return true;
+  const hay = (p.name + " " + p.one + " " + p.say + " " + p.brand + " " + p.points.join(" ")).toLowerCase();
+  return hay.indexOf(keyword.toLowerCase()) >= 0;
+}
+
+function renderList(){
+  detailEl.style.display = "none";
+  listView.style.display = "block";
+  listEl.innerHTML = "";
+  const rows = P.filter(match);
+  emptyEl.style.display = rows.length ? "none" : "block";
+  rows.forEach(p => {
+    const b = document.createElement("button");
+    b.className = "item";
+    b.innerHTML =
+      '<span class="em">' + p.em + '</span>' +
+      '<span class="txt"><span class="nm">' + p.name + '</span>' +
+      '<span class="ds">' + p.one + '</span></span>';
+    b.addEventListener("click", () => openDetail(p.id));
+    listEl.appendChild(b);
+  });
+}
+
+function askPickle(p){
+  const msg = "암웨이 " + p.name + " 제품을 어르신 고객에게 쉽게 설명하려고 해. 3문장으로 짧게, 어려운 말 없이 설명 멘트 만들어 줘.";
+  const done = () => toast("복사했어요. 피클 채팅에 붙여넣으면 바로 답해 줍니다.");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(done).catch(() => fallbackCopy(msg, done));
+  } else {
+    fallbackCopy(msg, done);
+  }
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta);
+  ta.select();
+  try{ document.execCommand("copy"); done(); }catch(e){ toast("복사가 안 됐어요. 다시 눌러 주세요."); }
+  document.body.removeChild(ta);
+}
+
+function openDetail(id){
+  const p = P.find(x => x.id === id);
+  if(!p) return;
+  listView.style.display = "none";
+  detailEl.style.display = "block";
+  window.scrollTo(0,0);
+
+  let h = "";
+  h += '<button class="back" id="backBtn">← 목록으로 돌아가기</button>';
+  h += '<div class="hero">';
+  h += '<span class="brand">' + p.brand + '</span>';
+  h += '<h2>' + p.em + ' ' + p.name + '</h2>';
+  h += '<p>' + p.one + '</p>';
+  h += '<div class="price">' + p.price + '</div>';
+  h += '</div>';
+
+  h += '<div class="sec"><h3>이렇게 말하세요</h3><div class="say">' + p.say + '</div></div>';
+  h += '<div class="sec"><h3>꼭 기억할 점</h3><ul>' + p.points.map(t => '<li>' + t + '</li>').join('') + '</ul></div>';
+  if(p.faq && p.faq.length){
+    h += '<div class="sec"><h3>고객이 물으면</h3>' +
+      p.faq.map(f => '<div class="qa"><div class="q">Q. ' + f.q + '</div><div class="a">' + f.a + '</div></div>').join('') +
+      '</div>';
+  }
+  h += '<div class="bigbtns">' +
+    '<button class="primary" id="showBtn">고객에게 크게 보여주기</button>' +
+    '<button class="ask" id="askBtn">피클에게 설명 도움 받기</button>' +
+    '</div>';
+  h += '<div class="note">건강기능식품 효능 문구와 가격은 라벨과 공식몰에서 확인해 주세요.</div>';
+
+  detailEl.innerHTML = h;
+  document.getElementById("backBtn").addEventListener("click", renderList);
+  document.getElementById("showBtn").addEventListener("click", () => startShow(p));
+  document.getElementById("askBtn").addEventListener("click", () => askPickle(p));
+}
+
+let slides = [], sIdx = 0;
+function buildSlides(p){
+  const s = [];
+  s.push({kick:p.brand, big:p.name, sub:p.one});
+  s.push({kick:"이렇게 말하세요", big:p.say});
+  s.push({kick:"가격", big:p.price});
+  p.points.forEach((t,i) => s.push({kick:"기억할 점 " + (i+1), big:t}));
+  if(p.faq) p.faq.forEach(f => s.push({kick:"고객이 물으면", big:"Q. " + f.q, sub:"→ " + f.a}));
+  return s;
+}
+function renderSlide(){
+  const s = slides[sIdx];
+  let h = "";
+  if(s.kick) h += '<div class="kick">' + s.kick + '</div>';
+  if(s.big) h += '<div class="big">' + s.big + '</div>';
+  if(s.sub) h += '<div class="sub">' + s.sub + '</div>';
+  document.getElementById("slide").innerHTML = h;
+  document.getElementById("cnt").textContent = (sIdx+1) + " / " + slides.length;
+  document.getElementById("nextBtn").textContent = sIdx === slides.length - 1 ? "닫기" : "다음";
+}
+function startShow(p){
+  slides = buildSlides(p);
+  sIdx = 0;
+  document.getElementById("show").classList.add("on");
+  renderSlide();
+}
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if(sIdx >= slides.length - 1){ document.getElementById("show").classList.remove("on"); return; }
+  sIdx++; renderSlide();
+});
+document.getElementById("prevBtn").addEventListener("click", () => {
+  if(sIdx > 0){ sIdx--; renderSlide(); }
+});
+document.getElementById("slide").addEventListener("click", () => {
+  if(sIdx < slides.length - 1){ sIdx++; renderSlide(); }
+});
+
+qEl.addEventListener("input", () => { keyword = qEl.value.trim(); renderList(); });
+
+document.querySelectorAll(".sizeRow button").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll(".sizeRow button").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    document.body.style.fontSize = b.dataset.sz === "2" ? "23px" : "20px";
+  });
+});
+
+renderList();
+</script>
+</body>
+</html>
